@@ -44,16 +44,16 @@ export function addSecurityHeaders(response: NextResponse): NextResponse {
 }
 
 export function addCORSHeaders(response: NextResponse, origin?: string): NextResponse {
-  // CORS Configuration
-  const allowedOrigins = [
-    'http://localhost:3000',
-    'https://yourdomain.com', // استبدل بالدومين الخاص بك
-  ]
-  
-  if (origin && allowedOrigins.includes(origin)) {
-    response.headers.set('Access-Control-Allow-Origin', origin)
+  // CORS Configuration - Allow all origins for production
+  if (process.env.NODE_ENV === 'production') {
+    response.headers.set('Access-Control-Allow-Origin', origin || '*')
   } else {
-    response.headers.set('Access-Control-Allow-Origin', 'http://localhost:3000')
+    // Development - only allow localhost
+    if (origin && (origin.includes('localhost') || origin.includes('127.0.0.1'))) {
+      response.headers.set('Access-Control-Allow-Origin', origin)
+    } else {
+      response.headers.set('Access-Control-Allow-Origin', 'http://localhost:3000')
+    }
   }
   
   response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')

@@ -4,6 +4,10 @@ import jwt from "jsonwebtoken"
 import { createClient } from "@/lib/supabase/server"
 import { addSecurityHeaders, addCORSHeaders } from "@/lib/security-headers"
 
+export async function OPTIONS(req: NextRequest) {
+  return new NextResponse(null, { status: 200 })
+}
+
 export async function POST(req: NextRequest) {
   // حماية Rate Limiting للمصادقة
   const rateLimitResponse = rateLimit(req, true);

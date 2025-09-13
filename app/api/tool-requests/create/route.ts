@@ -10,6 +10,10 @@ import {
   sanitizeString 
 } from "@/lib/validation";
 
+export async function OPTIONS(req: NextRequest) {
+  return new NextResponse(null, { status: 200 })
+}
+
 export async function POST(req: NextRequest) {
   // حماية Rate Limiting
   const rateLimitResponse = rateLimit(req);

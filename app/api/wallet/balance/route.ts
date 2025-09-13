@@ -3,6 +3,10 @@ import jwt from "jsonwebtoken";
 import { createAdminClient } from "@/lib/supabase/server";
 import { rateLimit } from "@/lib/rate-limit";
 
+export async function OPTIONS(req: NextRequest) {
+  return new NextResponse(null, { status: 200 })
+}
+
 export async function POST(req: NextRequest) {
   // حماية Rate Limiting
   const rateLimitResponse = rateLimit(req);

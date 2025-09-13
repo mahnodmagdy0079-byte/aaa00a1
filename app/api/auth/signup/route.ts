@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from "next/server"
 import { rateLimit } from "@/lib/rate-limit"
 import { createAdminClient } from "@/lib/supabase/server"
 
+export async function OPTIONS(req: NextRequest) {
+  return new NextResponse(null, { status: 200 })
+}
+
 export async function POST(req: NextRequest) {
   // حماية Rate Limiting
   const rateLimitResponse = rateLimit(req);
