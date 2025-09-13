@@ -40,6 +40,10 @@ export default function PackagesPage() {
       if (savedLicense && savedPlan) {
         // Verify the license is still valid
         const supabase = createClient()
+        if (!supabase) {
+          console.log("[v0] Supabase client not available")
+          return
+        }
         const { data, error } = await supabase
           .from("licenses")
           .select("*")
@@ -65,6 +69,10 @@ export default function PackagesPage() {
 
       // Check Supabase authentication
       const supabase = createClient()
+      if (!supabase) {
+        console.log("[v0] Supabase client not available")
+        return
+      }
       const {
         data: { user },
       } = await supabase.auth.getUser()
@@ -98,6 +106,10 @@ export default function PackagesPage() {
   const checkUser = async () => {
     try {
       const supabase = createClient()
+      if (!supabase) {
+        console.log("[v0] Supabase client not available")
+        return
+      }
       const {
         data: { user },
       } = await supabase.auth.getUser()
@@ -118,6 +130,10 @@ export default function PackagesPage() {
 
     try {
       const supabase = createClient()
+      if (!supabase) {
+        setLoginError(language === "ar" ? "خطأ في الاتصال" : "Connection error")
+        return
+      }
 
       console.log("[v0] Searching for license:", license.trim())
 

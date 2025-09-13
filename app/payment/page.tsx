@@ -32,6 +32,10 @@ export default function PaymentPage() {
 
     try {
       const supabase = createClient()
+      if (!supabase) {
+        console.log("[v0] Supabase client not available")
+        return
+      }
 
       const {
         data: { user },

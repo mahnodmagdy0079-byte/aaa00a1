@@ -239,7 +239,8 @@ export default function AdminPage() {
       const result = await assignPackageToUser(userId, assignPackageType)
 
       if (result.success) {
-        alert(`تم تعيين الباقة بنجاح! مفتاح الترخيص: ${result.licenseKey}`)
+        const licenseKey = 'licenseKey' in result ? result.licenseKey : 'تم التحديث'
+        alert(`تم تعيين الباقة بنجاح! مفتاح الترخيص: ${licenseKey}`)
         loadRegisteredUsers() // Refresh the list
         setShowAssignModal(false) // Close modal
       } else {

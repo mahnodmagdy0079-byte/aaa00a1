@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
     const decoded = jwt.verify(token, jwtSecret);
     console.log("[API] Wallet balance - Token verified successfully");
   } catch (err) {
-    console.log("[API] Wallet balance - Token verification failed:", err.message);
+    console.log("[API] Wallet balance - Token verification failed:", err instanceof Error ? err.message : 'Unknown error');
     return NextResponse.json({ success: false, error: "Invalid or expired token" }, { status: 401 });
   }
   try {

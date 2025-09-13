@@ -27,6 +27,10 @@ export default function ToolsPage() {
       if (savedLicense && savedPlan) {
         // Verify the license is still valid
         const supabase = createClient()
+        if (!supabase) {
+          console.log("[v0] Supabase client not available")
+          return
+        }
         const { data, error } = await supabase
           .from("licenses")
           .select("*")
@@ -52,6 +56,10 @@ export default function ToolsPage() {
 
       // Check Supabase authentication
       const supabase = createClient()
+      if (!supabase) {
+        console.log("[v0] Supabase client not available")
+        return
+      }
       const {
         data: { user },
       } = await supabase.auth.getUser()
