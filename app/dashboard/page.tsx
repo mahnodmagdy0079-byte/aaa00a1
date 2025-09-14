@@ -281,22 +281,34 @@ export default function Dashboard() {
       // باقي الكود كما هو (Supabase للبيانات الأخرى)
       const supabase = createClient()
 
-      await updateExpiredToolRequestsAction()
+      try {
+        await updateExpiredToolRequestsAction()
+      } catch (error) {
+        // Handle error silently
+      }
 
       setIsLoadingTools(true)
       if (supabase) {
-        const { data: tools, error: toolsError } = await supabase.from("tools").select("*").order("name")
-        if (tools && !toolsError) {
-          setAvailableTools(tools)
+        try {
+          const { data: tools, error: toolsError } = await supabase.from("tools").select("*").order("name")
+          if (tools && !toolsError) {
+            setAvailableTools(tools)
+          }
+        } catch (error) {
+          // Handle error silently
         }
       }
       setIsLoadingTools(false)
 
       setIsLoadingActiveTools(true)
       if (supabase) {
-        const activeToolsResult = await getActiveToolRequestsAction(currentUser.email)
-        if (activeToolsResult.success) {
-          setActiveToolRequests(activeToolsResult.toolRequests)
+        try {
+          const activeToolsResult = await getActiveToolRequestsAction(currentUser.email)
+          if (activeToolsResult.success) {
+            setActiveToolRequests(activeToolsResult.toolRequests)
+          }
+        } catch (error) {
+          // Handle error silently
         }
       }
       setIsLoadingActiveTools(false)
@@ -304,58 +316,62 @@ export default function Dashboard() {
       // جلب رصيد المستخدم من API وليس مباشرة من Supabase
       
       if (token) {
-        const walletRes = await fetch("/api/wallet/balance", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
-          },
-          body: JSON.stringify({ user_id: currentUser.id })
-        })
-        const walletResult = await walletRes.json()
+        try {
+          const walletRes = await fetch("/api/wallet/balance", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`,
+            },
+            body: JSON.stringify({ user_id: currentUser.id })
+          })
+          const walletResult = await walletRes.json()
 
-        
-        if (walletResult.success) {
-          setWalletBalance(walletResult.balance)
-        } else {
+          if (walletResult.success) {
+            setWalletBalance(walletResult.balance)
+          } else {
+            setWalletBalance(0)
+          }
+        } catch (error) {
           setWalletBalance(0)
         }
       } else {
-
         setWalletBalance(0)
       }
 
-      const pendingResult = await checkUserPendingRequest(currentUser.email)
-      if (pendingResult.hasPendingRequest) {
-        setHasPendingRequest(true)
-        setPendingRequest(pendingResult.request)
+      try {
+        const pendingResult = await checkUserPendingRequest(currentUser.email)
+        if (pendingResult.hasPendingRequest) {
+          setHasPendingRequest(true)
+          setPendingRequest(pendingResult.request)
+        }
+      } catch (error) {
+        // Handle error silently
       }
 
       // تحقق من الاشتراك عبر API وليس مباشرة من Supabase
       if (token) {
-        const licenseRes = await fetch("/api/license/check", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
-          },
-        })
-        const licenseResult = await licenseRes.json()
+        try {
+          const licenseRes = await fetch("/api/license/check", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`,
+            },
+          })
+          const licenseResult = await licenseRes.json()
 
-
-        if (licenseResult.valid && licenseResult.license) {
-          setLicenseData(licenseResult.license)
-          const endDate = new Date(licenseResult.license.end_date)
-          const now = new Date()
-          const diffTime = endDate.getTime() - now.getTime()
-          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-          setDaysRemaining(Math.max(0, diffDays))
-
-        } else {
-
+          if (licenseResult.valid && licenseResult.license) {
+            setLicenseData(licenseResult.license)
+            const endDate = new Date(licenseResult.license.end_date)
+            const now = new Date()
+            const diffTime = endDate.getTime() - now.getTime()
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+            setDaysRemaining(Math.max(0, diffDays))
+          }
+        } catch (error) {
+          // Handle error silently
         }
-      } else {
-
       }
 
 
@@ -534,9 +550,12 @@ export default function Dashboard() {
   }
 
   useEffect(() => {
-    fetchUserData()
-    fetchPhoneListings()
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+    const loadData = async () => {
+      await fetchUserData()
+      await fetchPhoneListings()
+    }
+    loadData()
+  }, [])
 
   useEffect(() => {
     if (user?.email) {
