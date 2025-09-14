@@ -28,7 +28,7 @@ export default function ToolsPage() {
         // Verify the license is still valid
         const supabase = createClient()
         if (!supabase) {
-          console.log("[v0] Supabase client not available")
+
           return
         }
         const { data, error } = await supabase
@@ -57,7 +57,7 @@ export default function ToolsPage() {
       // Check Supabase authentication
       const supabase = createClient()
       if (!supabase) {
-        console.log("[v0] Supabase client not available")
+
         return
       }
       const {
@@ -84,7 +84,7 @@ export default function ToolsPage() {
         }
       }
     } catch (error) {
-      console.log("[v0] Auth check error:", error)
+
     } finally {
       setAuthLoading(false)
     }

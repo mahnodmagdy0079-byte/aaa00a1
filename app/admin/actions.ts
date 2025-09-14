@@ -55,7 +55,7 @@ interface ToolAccount {
 }
 
 export async function loadRegisteredUsers() {
-  console.log("[v0] Server action: Loading registered users...")
+
 
   const supabase = await createAdminClient()
 
@@ -65,10 +65,10 @@ export async function loadRegisteredUsers() {
     .select("*")
     .order("created_at", { ascending: false })
 
-  console.log("[v0] Server action: Users query result:", { users, usersError })
+
 
   if (usersError) {
-    console.log("[v0] Server action: Error loading users:", usersError.message)
+
     return { users: [], error: usersError.message }
   }
 
@@ -99,13 +99,13 @@ export async function loadRegisteredUsers() {
     }),
   )
 
-  console.log("[v0] Server action: Users with license status:", usersWithLicenseStatus)
+
 
   return { users: usersWithLicenseStatus, error: null }
 }
 
 export async function addUserCredit(userEmail: string, amount: number, description = "Admin credit addition") {
-  console.log("[v0] Server action: Adding credit to user:", { userEmail, amount, description })
+
 
   const supabase = await createAdminClient()
 
@@ -119,20 +119,20 @@ export async function addUserCredit(userEmail: string, amount: number, descripti
     })
 
     if (error) {
-      console.log("[v0] Server action: Error adding credit:", error)
+
       return { success: false, error: error.message }
     }
 
-    console.log("[v0] Server action: Successfully added credit to user wallet")
+
     return { success: true }
   } catch (error) {
-    console.log("[v0] Server action: Exception adding credit:", error)
+
     return { success: false, error: "Failed to add credit" }
   }
 }
 
 export async function getUserWalletBalance(userEmail: string) {
-  console.log("[v0] Server action: Getting wallet balance for user:", userEmail)
+
 
   const supabase = await createAdminClient()
 
@@ -143,7 +143,7 @@ export async function getUserWalletBalance(userEmail: string) {
     .maybeSingle()
 
   if (error) {
-    console.log("[v0] Server action: Error getting wallet balance:", error)
+
     return { balance: 0, error: error.message }
   }
 
@@ -151,7 +151,7 @@ export async function getUserWalletBalance(userEmail: string) {
 }
 
 export async function getUserWalletTransactions(userEmail: string) {
-  console.log("[v0] Server action: Getting wallet transactions for user:", userEmail)
+
 
   const supabase = await createAdminClient()
 
@@ -163,7 +163,7 @@ export async function getUserWalletTransactions(userEmail: string) {
     .limit(50)
 
   if (error) {
-    console.log("[v0] Server action: Error getting wallet transactions:", error)
+
     return { transactions: [], error: error.message }
   }
 
@@ -171,7 +171,7 @@ export async function getUserWalletTransactions(userEmail: string) {
 }
 
 export async function loadPurchaseRequests() {
-  console.log("[v0] Server action: Loading purchase requests...")
+
 
   const supabase = await createAdminClient()
 
@@ -180,10 +180,10 @@ export async function loadPurchaseRequests() {
     .select("*")
     .order("created_at", { ascending: false })
 
-  console.log("[v0] Server action: Purchase requests result:", { requests, error })
+
 
   if (error) {
-    console.log("[v0] Server action: Error loading purchase requests:", error.message)
+
     return { requests: [], error: error.message }
   }
 
@@ -191,7 +191,7 @@ export async function loadPurchaseRequests() {
 }
 
 export async function updatePurchaseRequestStatus(requestId: string, status: string) {
-  console.log("[v0] Server action: Updating purchase request status:", { requestId, status })
+
 
   const supabase = await createAdminClient()
 
@@ -202,19 +202,19 @@ export async function updatePurchaseRequestStatus(requestId: string, status: str
     .single()
 
   if (fetchError || !purchaseRequest) {
-    console.log("[v0] Server action: Error fetching purchase request:", fetchError)
+
     return { success: false, error: "Purchase request not found" }
   }
 
   const { error } = await supabase.from("purchase_requests").update({ status }).eq("id", requestId)
 
   if (error) {
-    console.log("[v0] Server action: Error updating purchase request:", error)
+
     return { success: false, error: error.message }
   }
 
   if (status === "approved") {
-    console.log("[v0] Server action: Creating license for approved purchase request:", purchaseRequest)
+
 
     // Find the user by email
     const { data: user, error: userError } = await supabase
@@ -224,7 +224,7 @@ export async function updatePurchaseRequestStatus(requestId: string, status: str
       .single()
 
     if (userError || !user) {
-      console.log("[v0] Server action: User not found for email:", purchaseRequest.user_email)
+
       return { success: false, error: "User not found for this email" }
     }
 
@@ -239,7 +239,7 @@ export async function updatePurchaseRequestStatus(requestId: string, status: str
       .maybeSingle()
 
     if (existingLicense) {
-      console.log("[v0] Server action: User already has active license, extending it")
+
       // Extend existing license
       const currentEndDate = new Date(existingLicense.end_date)
       const packageDuration = getPackageDuration(purchaseRequest.package_name)
@@ -256,11 +256,11 @@ export async function updatePurchaseRequestStatus(requestId: string, status: str
         .eq("id", existingLicense.id)
 
       if (updateError) {
-        console.log("[v0] Server action: Error extending license:", updateError)
+
         return { success: false, error: "Failed to extend existing license" }
       }
 
-      console.log("[v0] Server action: Successfully extended existing license")
+
       return { success: true, licenseKey: existingLicense.license_key }
     } else {
       // Create new license
@@ -283,16 +283,16 @@ export async function updatePurchaseRequestStatus(requestId: string, status: str
         end_date: endDate.toISOString(),
       }
 
-      console.log("[v0] Server action: Creating new license:", licenseData)
+
 
       const { error: licenseError } = await supabase.from("licenses").insert(licenseData)
 
       if (licenseError) {
-        console.log("[v0] Server action: Error creating license:", licenseError)
+
         return { success: false, error: "Failed to create license: " + licenseError.message }
       }
 
-      console.log("[v0] Server action: Successfully created new license")
+
       return { success: true, licenseKey }
     }
   }
@@ -301,17 +301,17 @@ export async function updatePurchaseRequestStatus(requestId: string, status: str
 }
 
 export async function assignPackageToUser(userId: string, packageType: string) {
-  console.log("[v0] Server action: Assigning package to user:", { userId, packageType })
+
 
   const supabase = await createAdminClient()
 
   // Get user details
   const { data: user, error: userError } = await supabase.from("users").select("*").eq("id", userId).single()
 
-  console.log("[v0] Server action: User lookup result:", { user, userError })
+
 
   if (userError || !user) {
-    console.log("[v0] Server action: User not found or error:", userError)
+
     return { success: false, error: "User not found" }
   }
 
@@ -324,17 +324,17 @@ export async function assignPackageToUser(userId: string, packageType: string) {
     .limit(1)
     .maybeSingle()
 
-  console.log("[v0] Server action: Existing license check:", { existingLicense, licenseCheckError })
+
 
   if (existingLicense) {
-    console.log("[v0] Server action: User already has active license, updating instead")
+
     return await updateUserPackage(userId, packageType)
   }
 
   // Generate license key
   const licenseKey = Array.from({ length: 4 }, () => Math.random().toString(36).substring(2, 6).toUpperCase()).join("-")
 
-  console.log("[v0] Server action: Generated license key:", licenseKey)
+
 
   // Set package details based on type
   const packageDetails = {
@@ -346,20 +346,15 @@ export async function assignPackageToUser(userId: string, packageType: string) {
   const selectedPackage = packageDetails[packageType as keyof typeof packageDetails]
 
   if (!selectedPackage) {
-    console.log("[v0] Server action: Invalid package type:", packageType)
+
     return { success: false, error: "Invalid package type" }
   }
 
-  console.log("[v0] Server action: Selected package details:", selectedPackage)
+
 
   const startDate = new Date()
   const endDate = new Date()
   endDate.setDate(startDate.getDate() + selectedPackage.duration)
-
-  console.log("[v0] Server action: License dates:", {
-    startDate: startDate.toISOString(),
-    endDate: endDate.toISOString(),
-  })
 
   const licenseData = {
     license_key: licenseKey,
@@ -373,7 +368,7 @@ export async function assignPackageToUser(userId: string, packageType: string) {
     end_date: endDate.toISOString(),
   }
 
-  console.log("[v0] Server action: Inserting license data:", licenseData)
+
 
   const { data: insertedLicense, error: licenseError } = await supabase
     .from("licenses")
@@ -381,19 +376,19 @@ export async function assignPackageToUser(userId: string, packageType: string) {
     .select()
     .single()
 
-  console.log("[v0] Server action: License insert result:", { insertedLicense, licenseError })
+
 
   if (licenseError) {
-    console.log("[v0] Server action: Error creating license:", licenseError)
+
     return { success: false, error: licenseError.message }
   }
 
-  console.log("[v0] Server action: Successfully assigned package to user")
+
   return { success: true, licenseKey }
 }
 
 export async function updateUserPackage(userId: string, packageType: string) {
-  console.log("[v0] Server action: Updating user package:", { userId, packageType })
+
 
   const supabase = await createAdminClient()
 
@@ -440,7 +435,7 @@ export async function updateUserPackage(userId: string, packageType: string) {
     .eq("id", existingLicense.id)
 
   if (updateError) {
-    console.log("[v0] Server action: Error updating license:", updateError)
+
     return { success: false, error: updateError.message }
   }
 
@@ -448,7 +443,7 @@ export async function updateUserPackage(userId: string, packageType: string) {
 }
 
 export async function deleteUserPackage(userId: string) {
-  console.log("[v0] Server action: Deleting user package:", { userId })
+
 
   const supabase = await createAdminClient()
 
@@ -463,7 +458,7 @@ export async function deleteUserPackage(userId: string) {
   const { error: deleteError } = await supabase.from("licenses").delete().eq("user_name", user.full_name)
 
   if (deleteError) {
-    console.log("[v0] Server action: Error deleting license:", deleteError)
+
     return { success: false, error: deleteError.message }
   }
 
@@ -471,7 +466,7 @@ export async function deleteUserPackage(userId: string) {
 }
 
 export async function fetchAdminStats() {
-  console.log("[v0] Server action: Fetching admin statistics...")
+
 
   const supabase = await createAdminClient()
 
@@ -482,7 +477,7 @@ export async function fetchAdminStats() {
       .select("*", { count: "exact", head: true })
 
     if (usersError) {
-      console.log("[v0] Error fetching users count:", usersError)
+
     }
 
     // Get active licenses count
@@ -492,7 +487,7 @@ export async function fetchAdminStats() {
       .gte("end_date", new Date().toISOString())
 
     if (licensesError) {
-      console.log("[v0] Error fetching active licenses count:", licensesError)
+
     }
 
     // Get pending purchase requests count
@@ -502,7 +497,7 @@ export async function fetchAdminStats() {
       .eq("status", "pending")
 
     if (requestsError) {
-      console.log("[v0] Error fetching pending requests count:", requestsError)
+
     }
 
     // Get total phone listings count
@@ -512,7 +507,7 @@ export async function fetchAdminStats() {
       .eq("status", "active")
 
     if (listingsError) {
-      console.log("[v0] Error fetching phone listings count:", listingsError)
+
     }
 
     const stats = {
@@ -522,11 +517,11 @@ export async function fetchAdminStats() {
       totalListings: totalListings || 0,
     }
 
-    console.log("[v0] Admin stats fetched:", stats)
+
 
     return { stats, error: null }
   } catch (error) {
-    console.log("[v0] Error fetching admin stats:", error)
+
     return {
       stats: { totalUsers: 0, activeLicenses: 0, pendingRequests: 0, totalListings: 0 },
       error: "Failed to fetch statistics",
@@ -535,7 +530,7 @@ export async function fetchAdminStats() {
 }
 
 export async function checkUserPendingRequest(userEmail: string) {
-  console.log("[v0] Server action: Checking pending request for user:", userEmail)
+
 
   const supabase = await createAdminClient()
 
@@ -548,10 +543,10 @@ export async function checkUserPendingRequest(userEmail: string) {
     .limit(1)
     .maybeSingle()
 
-  console.log("[v0] Server action: Pending request result:", { pendingRequest, error })
+
 
   if (error) {
-    console.log("[v0] Server action: Error checking pending request:", error.message)
+
     return { hasPendingRequest: false, request: null, error: error.message }
   }
 
@@ -563,7 +558,7 @@ export async function checkUserPendingRequest(userEmail: string) {
 }
 
 export async function loadToolRequests() {
-  console.log("[v0] Server action: Loading tool requests...")
+
 
   const supabase = await createAdminClient()
 
@@ -572,10 +567,10 @@ export async function loadToolRequests() {
     .select("*")
     .order("created_at", { ascending: false })
 
-  console.log("[v0] Server action: Tool requests result:", { requests, error })
+
 
   if (error) {
-    console.log("[v0] Server action: Error loading tool requests:", error.message)
+
     return { requests: [], error: error.message }
   }
 
@@ -589,13 +584,6 @@ export async function purchaseToolWithCredits(
   durationHours: number,
   requiresCredit = true,
 ) {
-  console.log("[v0] Server action: Purchasing tool with credits:", {
-    userEmail,
-    toolName,
-    toolPrice,
-    durationHours,
-    requiresCredit,
-  })
 
   const supabase = await createAdminClient()
 
@@ -610,20 +598,20 @@ export async function purchaseToolWithCredits(
     })
 
     if (error) {
-      console.log("[v0] Server action: Error purchasing tool:", error)
+
       return { success: false, error: error.message }
     }
 
-    console.log("[v0] Server action: Tool purchase result:", data)
+
     return data
   } catch (error) {
-    console.log("[v0] Server action: Exception purchasing tool:", error)
+
     return { success: false, error: "Failed to purchase tool" }
   }
 }
 
 export async function activateToolRequest(requestId: string, actualAccount: string, success = true) {
-  console.log("[v0] Server action: Activating tool request:", { requestId, actualAccount, success })
+
 
   const supabase = await createAdminClient()
 
@@ -637,7 +625,7 @@ export async function activateToolRequest(requestId: string, actualAccount: stri
         .single()
 
       if (fetchError || !request) {
-        console.log("[v0] Server action: Error fetching tool request:", fetchError)
+
         return { success: false, error: "Tool request not found" }
       }
 
@@ -657,11 +645,11 @@ export async function activateToolRequest(requestId: string, actualAccount: stri
         .eq("id", requestId)
 
       if (updateError) {
-        console.log("[v0] Server action: Error activating tool request:", updateError)
+
         return { success: false, error: updateError.message }
       }
 
-      console.log("[v0] Server action: Successfully activated tool request")
+
       return { success: true, activationEnd: activationEnd.toISOString() }
     } else {
       // Mark request as failed and refund user
@@ -696,13 +684,13 @@ export async function activateToolRequest(requestId: string, actualAccount: stri
       return { success: true, refunded: true }
     }
   } catch (error) {
-    console.log("[v0] Server action: Exception activating tool request:", error)
+
     return { success: false, error: "Failed to activate tool request" }
   }
 }
 
 export async function getUserActiveToolRequests(userEmail: string) {
-  console.log("[v0] Server action: Getting active tool requests for user:", userEmail)
+
 
   const supabase = await createAdminClient()
 
@@ -717,7 +705,7 @@ export async function getUserActiveToolRequests(userEmail: string) {
     .order("created_at", { ascending: false })
 
   if (error) {
-    console.log("[v0] Server action: Error getting active tool requests:", error)
+
     return { requests: [], error: error.message }
   }
 
@@ -725,7 +713,7 @@ export async function getUserActiveToolRequests(userEmail: string) {
 }
 
 export async function purchasePackageWithCredits(userEmail: string, packageType: string) {
-  console.log("[v0] Server action: Purchasing package with credits:", { userEmail, packageType })
+
 
   const supabase = await createAdminClient()
 
@@ -834,7 +822,7 @@ export async function purchasePackageWithCredits(userEmail: string, packageType:
       return { success: true, created: true, licenseKey, endDate: endDate.toISOString() }
     }
   } catch (error) {
-    console.log("[v0] Server action: Exception purchasing package:", error)
+
     return { success: false, error: "Failed to purchase package" }
   }
 }
@@ -853,7 +841,7 @@ function getPackageDuration(packageName: string): number {
 }
 
 export async function loadTools() {
-  console.log("[v0] Server action: Loading tools...")
+
 
   const supabase = await createAdminClient()
 
@@ -864,7 +852,7 @@ export async function loadTools() {
     .order("created_at", { ascending: false })
 
   if (toolsError) {
-    console.log("[v0] Server action: Error loading tools:", toolsError.message)
+
     return { tools: [], error: toolsError.message }
   }
 
@@ -877,7 +865,7 @@ export async function loadTools() {
         .eq("tool_name", tool.name)
 
       if (countError) {
-        console.log("[v0] Error counting accounts for tool:", tool.name, countError.message)
+
       }
 
       return {
@@ -887,7 +875,7 @@ export async function loadTools() {
     }),
   )
 
-  console.log("[v0] Server action: Tools loaded successfully:", toolsWithCount.length)
+
   return { tools: toolsWithCount, error: null }
 }
 
@@ -898,14 +886,14 @@ export async function addTool(toolData: {
   duration_hours: number
   requires_credit: boolean
 }) {
-  console.log("[v0] Server action: Adding tool:", toolData)
+
 
   const supabase = await createAdminClient()
 
   const { error } = await supabase.from("tools").insert(toolData)
 
   if (error) {
-    console.log("[v0] Server action: Error adding tool:", error.message)
+
     return { success: false, error: error.message }
   }
 
@@ -922,14 +910,14 @@ export async function updateTool(
     requires_credit: boolean
   },
 ) {
-  console.log("[v0] Server action: Updating tool:", { toolId, toolData })
+
 
   const supabase = await createAdminClient()
 
   const { error } = await supabase.from("tools").update(toolData).eq("id", toolId)
 
   if (error) {
-    console.log("[v0] Server action: Error updating tool:", error.message)
+
     return { success: false, error: error.message }
   }
 
@@ -937,7 +925,7 @@ export async function updateTool(
 }
 
 export async function deleteTool(toolId: string) {
-  console.log("[v0] Server action: Deleting tool:", toolId)
+
 
   const supabase = await createAdminClient()
 
@@ -948,7 +936,7 @@ export async function deleteTool(toolId: string) {
   const { error } = await supabase.from("tools").delete().eq("id", toolId)
 
   if (error) {
-    console.log("[v0] Server action: Error deleting tool:", error.message)
+
     return { success: false, error: error.message }
   }
 
@@ -956,7 +944,7 @@ export async function deleteTool(toolId: string) {
 }
 
 export async function loadToolAccounts(toolId: string) {
-  console.log("[v0] Server action: Loading tool accounts for tool:", toolId)
+
 
   const supabase = await createAdminClient()
 
@@ -973,7 +961,7 @@ export async function loadToolAccounts(toolId: string) {
     .order("created_at", { ascending: false })
 
   if (error) {
-    console.log("[v0] Server action: Error loading tool accounts:", error.message)
+
     return { accounts: [], error: error.message }
   }
 
@@ -988,7 +976,7 @@ export async function addToolAccount(
     notes: string
   },
 ) {
-  console.log("[v0] Server action: Adding tool account:", { toolId, accountData })
+
 
   const supabase = await createAdminClient()
 
@@ -1007,7 +995,7 @@ export async function addToolAccount(
   })
 
   if (error) {
-    console.log("[v0] Server action: Error adding tool account:", error.message)
+
     return { success: false, error: error.message }
   }
 
@@ -1015,14 +1003,14 @@ export async function addToolAccount(
 }
 
 export async function deleteToolAccount(accountId: string) {
-  console.log("[v0] Server action: Deleting tool account:", accountId)
+
 
   const supabase = await createAdminClient()
 
   const { error } = await supabase.from("tool_accounts").delete().eq("id", accountId)
 
   if (error) {
-    console.log("[v0] Server action: Error deleting tool account:", error.message)
+
     return { success: false, error: error.message }
   }
 

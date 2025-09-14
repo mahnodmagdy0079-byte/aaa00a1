@@ -80,20 +80,20 @@ export default function Dashboard() {
   const [userRequests, setUserRequests] = useState<any[]>([])
   const [isAdmin, setIsAdmin] = useState(false)
 
-    // معلومات المستخدم: جلب عنوان IP
+    // معلومات المستخدم: جلب عنوان IP (مؤقتاً معطل)
     const [userIp, setUserIp] = useState("")
-    useEffect(() => {
-      const fetchIp = async () => {
-        try {
-          const res = await fetch("https://api.ipify.org?format=json")
-          const data = await res.json()
-          setUserIp(data.ip)
-        } catch (err) {
-          setUserIp("")
-        }
-      }
-      fetchIp()
-    }, [])
+    // useEffect(() => {
+    //   const fetchIp = async () => {
+    //     try {
+    //       const res = await fetch("https://api.ipify.org?format=json")
+    //       const data = await res.json()
+    //       setUserIp(data.ip)
+    //     } catch (err) {
+    //       setUserIp("")
+    //     }
+    //   }
+    //   fetchIp()
+    // }, [])
 
   const router = useRouter()
 
@@ -361,7 +361,6 @@ export default function Dashboard() {
 
       setLoading(false)
     } catch (error) {
-      console.error("[v0] Error fetching user data:", error)
       setLoading(false)
     }
   }
@@ -377,14 +376,12 @@ export default function Dashboard() {
           .order("created_at", { ascending: false })
 
         if (error) {
-          console.error("Error fetching phone listings:", error)
           return
         }
 
         setPhoneListings(data || [])
       }
     } catch (error) {
-      console.error("Error fetching phone listings:", error)
     }
   }
 
@@ -533,15 +530,13 @@ export default function Dashboard() {
         setUserRequests([])
       }
     } catch (error) {
-      console.error("[v0] Error fetching user requests:", error)
     }
   }
 
   useEffect(() => {
-
     fetchUserData()
     fetchPhoneListings()
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (user?.email) {
@@ -580,7 +575,6 @@ export default function Dashboard() {
         setPurchaseMessage(result.message)
       }
     } catch (error) {
-      console.error("[v0] Error purchasing tool:", error)
       setPurchaseMessage("حدث خطأ أثناء شراء الأداة. حاول مرة أخرى.")
     } finally {
       setIsPurchasingTool(false)

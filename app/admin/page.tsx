@@ -151,84 +151,84 @@ export default function AdminPage() {
   }, [])
 
   const loadStats = async () => {
-    console.log("[v0] Loading admin stats...")
+
     setIsLoadingStats(true)
 
     try {
       const result = await fetchAdminStats()
 
-      console.log("[v0] Admin stats result:", result)
+
 
       if (result.error) {
-        console.error("Error loading admin stats:", result.error)
+
         return
       }
 
       setStats(result.stats)
     } catch (error) {
-      console.error("Error loading admin stats:", error)
+
     } finally {
       setIsLoadingStats(false)
     }
   }
 
   const loadRegisteredUsers = async () => {
-    console.log("[v0] Loading registered users...")
+
     setIsLoadingRegisteredUsers(true)
 
     try {
       const result = await loadUsersAction()
 
-      console.log("[v0] Registered users result:", result)
+
 
       if (result.error) {
-        console.error("Error loading registered users:", result.error)
+
         return
       }
 
       setRegisteredUsers(result.users)
     } catch (error) {
-      console.error("Error loading registered users:", error)
+
     } finally {
       setIsLoadingRegisteredUsers(false)
     }
   }
 
   const loadTools = async () => {
-    console.log("[v0] Loading tools...")
+
     setIsLoadingTools(true)
 
     try {
       const result = await loadToolsAction()
 
       if (result.error) {
-        console.error("Error loading tools:", result.error)
+
         return
       }
 
       setTools(result.tools)
     } catch (error) {
-      console.error("Error loading tools:", error)
+
     } finally {
       setIsLoadingTools(false)
     }
   }
 
   const loadToolAccountsForTool = async (toolId: string) => {
-    console.log("[v0] Loading tool accounts for tool:", toolId)
+
     setIsLoadingToolAccounts(true)
 
     try {
       const result = await loadToolAccounts(toolId)
 
       if (result.error) {
-        console.error("Error loading tool accounts:", result.error)
+
         return
       }
 
       setToolAccounts(result.accounts)
     } catch (error) {
-      console.error("Error loading tool accounts:", error)
+
     } finally {
       setIsLoadingToolAccounts(false)
     }
@@ -247,7 +247,7 @@ export default function AdminPage() {
         alert(`حدث خطأ في تعيين الباقة: ${result.error}`)
       }
     } catch (error) {
-      console.error("Error assigning package:", error)
+
       alert("حدث خطأ في تعيين الباقة")
     }
   }
@@ -282,7 +282,7 @@ export default function AdminPage() {
         alert(`حدث خطأ في إضافة الرصيد: ${result.error}`)
       }
     } catch (error) {
-      console.error("Error adding credit:", error)
+
       alert("حدث خطأ في إضافة الرصيد")
     } finally {
       setIsAddingCredit(false)
@@ -325,7 +325,7 @@ export default function AdminPage() {
         alert(`حدث خطأ في خصم الرصيد: ${result.error}`)
       }
     } catch (error) {
-      console.error("Error deducting credit:", error)
+
       alert("حدث خطأ في خصم الرصيد")
     } finally {
       setIsDeductingCredit(false)
@@ -356,7 +356,7 @@ export default function AdminPage() {
         alert(`حدث خطأ في إضافة الأداة: ${result.error}`)
       }
     } catch (error) {
-      console.error("Error adding tool:", error)
+
       alert("حدث خطأ في إضافة الأداة")
     }
   }
@@ -383,7 +383,7 @@ export default function AdminPage() {
         alert(`حدث خطأ في إضافة الحساب: ${result.error}`)
       }
     } catch (error) {
-      console.error("Error adding account:", error)
+
       alert("حدث خطأ في إضافة الحساب")
     }
   }

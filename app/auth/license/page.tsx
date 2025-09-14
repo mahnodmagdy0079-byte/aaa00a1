@@ -33,7 +33,7 @@ export default function LicensePage() {
   }, [router])
 
   const handleLicenseSubmit = async (e: React.FormEvent) => {
-    console.log("[FRONT] handleLicenseSubmit تم استدعاؤها")
+
     e.preventDefault()
     setIsLoading(true)
     setError("")

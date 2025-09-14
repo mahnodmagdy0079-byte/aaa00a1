@@ -33,7 +33,7 @@ export default function PaymentPage() {
     try {
       const supabase = createClient()
       if (!supabase) {
-        console.log("[v0] Supabase client not available")
+
         return
       }
 
@@ -57,14 +57,14 @@ export default function PaymentPage() {
       })
 
       if (error) {
-        console.error("Error saving purchase request:", error)
+
         alert("حدث خطأ في إرسال الطلب. حاول مرة أخرى.")
         return
       }
 
       setIsSubmitted(true)
     } catch (error) {
-      console.error("Error:", error)
+
       alert("حدث خطأ في إرسال الطلب. حاول مرة أخرى.")
     } finally {
       setIsLoading(false)

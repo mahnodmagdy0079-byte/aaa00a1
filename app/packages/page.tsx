@@ -41,7 +41,7 @@ export default function PackagesPage() {
         // Verify the license is still valid
         const supabase = createClient()
         if (!supabase) {
-          console.log("[v0] Supabase client not available")
+
           return
         }
         const { data, error } = await supabase
@@ -70,7 +70,7 @@ export default function PackagesPage() {
       // Check Supabase authentication
       const supabase = createClient()
       if (!supabase) {
-        console.log("[v0] Supabase client not available")
+
         return
       }
       const {
@@ -97,7 +97,7 @@ export default function PackagesPage() {
         }
       }
     } catch (error) {
-      console.log("[v0] Auth check error:", error)
+
     } finally {
       setAuthLoading(false)
     }
@@ -107,7 +107,7 @@ export default function PackagesPage() {
     try {
       const supabase = createClient()
       if (!supabase) {
-        console.log("[v0] Supabase client not available")
+
         return
       }
       const {
@@ -115,7 +115,7 @@ export default function PackagesPage() {
       } = await supabase.auth.getUser()
       setUser(user)
     } catch (error) {
-      console.log("[v0] Supabase client error:", error)
+
       // Set user to null if Supabase is not configured
       setUser(null)
     } finally {
@@ -135,20 +135,20 @@ export default function PackagesPage() {
         return
       }
 
-      console.log("[v0] Searching for license:", license.trim())
+
 
       const { data, error } = await supabase.from("licenses").select("*").eq("license_key", license.trim()).single()
 
-      console.log("[v0] Query result:", { data, error })
+
 
       if (error) {
-        console.log("[v0] Database error:", error)
+
         setLoginError(language === "ar" ? "الترخيص غير صحيح أو منتهي الصلاحية" : "Invalid or expired license")
         return
       }
 
       if (!data) {
-        console.log("[v0] No license found")
+
         setLoginError(language === "ar" ? "الترخيص غير صحيح أو منتهي الصلاحية" : "Invalid or expired license")
         return
       }
@@ -156,7 +156,7 @@ export default function PackagesPage() {
       const expiryDate = new Date(data.end_date)
       const now = new Date()
 
-      console.log("[v0] Expiry date:", expiryDate, "Current date:", now)
+
 
       if (expiryDate < now) {
         setLoginError(language === "ar" ? "الترخيص منتهي الصلاحية" : "License has expired")
@@ -172,9 +172,9 @@ export default function PackagesPage() {
 
       window.location.href = "/dashboard"
 
-      console.log("[v0] Login successful for plan:", data.package_name)
+
     } catch (error) {
-      console.log("[v0] Login error:", error)
+
       setLoginError(language === "ar" ? "حدث خطأ في الاتصال بالخادم" : "Server connection error occurred")
     } finally {
       setIsLoading(false)

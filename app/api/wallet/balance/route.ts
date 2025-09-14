@@ -14,26 +14,26 @@ export async function POST(req: NextRequest) {
   
   // تحقق من وجود توكن في الهيدر
   const authHeader = req.headers.get("authorization");
-  console.log("[API] Wallet balance - Auth header:", authHeader ? "Present" : "Missing");
+
   
   if (!authHeader) {
     return NextResponse.json({ success: false, error: "Missing token" }, { status: 401 });
   }
   
   const token = authHeader.replace("Bearer ", "");
-  console.log("[API] Wallet balance - Token length:", token.length);
+
   
   const jwtSecret = process.env.JWT_SECRET || process.env.SUPABASE_SERVICE_ROLE_KEY
   if (!jwtSecret) {
-    console.log("[API] Wallet balance - JWT secret not configured");
+
     return NextResponse.json({ success: false, error: "JWT secret not configured" }, { status: 500 })
   }
   
   try {
     const decoded = jwt.verify(token, jwtSecret);
-    console.log("[API] Wallet balance - Token verified successfully");
+
   } catch (err) {
-    console.log("[API] Wallet balance - Token verification failed:", err instanceof Error ? err.message : 'Unknown error');
+
     return NextResponse.json({ success: false, error: "Invalid or expired token" }, { status: 401 });
   }
   try {

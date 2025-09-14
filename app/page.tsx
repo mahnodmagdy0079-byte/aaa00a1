@@ -36,7 +36,7 @@ export default function PricingPage() {
         // Verify the license is still valid
         const supabase = createClient()
         if (!supabase) {
-          console.log("[v0] Supabase client not available")
+
           return
         }
         const { data, error } = await supabase
@@ -65,7 +65,7 @@ export default function PricingPage() {
       // Check Supabase authentication
       const supabase = createClient()
       if (!supabase) {
-        console.log("[v0] Supabase client not available")
+
         return
       }
       const {
@@ -92,7 +92,7 @@ export default function PricingPage() {
         }
       }
     } catch (error) {
-      console.log("[v0] Auth check error:", error)
+
     } finally {
       setAuthLoading(false)
     }
@@ -110,20 +110,20 @@ export default function PricingPage() {
         return
       }
 
-      console.log("[v0] Searching for license:", license.trim())
+
 
       const { data, error } = await supabase.from("licenses").select("*").eq("license_key", license.trim()).single()
 
-      console.log("[v0] Query result:", { data, error })
+
 
       if (error) {
-        console.log("[v0] Database error:", error)
+
         setLoginError(language === "ar" ? "الترخيص غير صحيح أو منتهي الصلاحية" : "Invalid or expired license")
         return
       }
 
       if (!data) {
-        console.log("[v0] No license found")
+
         setLoginError(language === "ar" ? "الترخيص غير صحيح أو منتهي الصلاحية" : "Invalid or expired license")
         return
       }
@@ -131,7 +131,7 @@ export default function PricingPage() {
       const expiryDate = new Date(data.end_date)
       const now = new Date()
 
-      console.log("[v0] Expiry date:", expiryDate, "Current date:", now)
+
 
       if (expiryDate < now) {
         setLoginError(language === "ar" ? "الترخيص منتهي الصلاحية" : "License has expired")
@@ -147,9 +147,9 @@ export default function PricingPage() {
 
       window.location.href = "/dashboard"
 
-      console.log("[v0] Login successful for plan:", data.package_name)
+
     } catch (error) {
-      console.log("[v0] Login error:", error)
+
       setLoginError(language === "ar" ? "حدث خطأ أثناء تسجيل الدخول" : "An error occurred during login")
     } finally {
       setIsLoading(false)
@@ -413,7 +413,7 @@ export default function PricingPage() {
                 <a
                   href="/tools"
                   onClick={(e) => {
-                    console.log("[v0] Services link clicked, navigating to /tools")
+
                     // Let the default navigation happen
                   }}
                   className="text-white hover:text-orange-300 transition-all duration-300 font-medium text-base px-4 py-2 rounded-full hover:bg-orange-500/10"
@@ -500,7 +500,7 @@ export default function PricingPage() {
                 <a
                   href="/tools"
                   onClick={(e) => {
-                    console.log("[v0] Mobile Services link clicked, navigating to /tools")
+
                     setIsMobileMenuOpen(false)
                   }}
                   className="text-white hover:text-orange-400 transition-colors duration-300 font-medium py-2 text-base"

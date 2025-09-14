@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
       }
     }
   try {
-    console.log("[API] تم استقبال طلب تسجيل دخول عبر /api/auth/signin")
+
     const { email, password } = await req.json()
     if (!email || !password) {
       return NextResponse.json({ error: "Email and password are required" }, { status: 400 })

@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
   const rateLimitResponse = rateLimit(req);
   if (rateLimitResponse) return rateLimitResponse;
   try {
-    console.log("[API] تم استقبال طلب إنشاء حساب عبر /api/auth/signup")
+
     const { name, email, password } = await req.json()
     if (!name || !email || !password) {
       return NextResponse.json({ error: "All fields are required" }, { status: 400 })

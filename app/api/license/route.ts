@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
   if (rateLimitResponse) return rateLimitResponse;
   try {
     // طباعة في التيرمنال عند استقبال أي طلب
-    console.log("[API] تم استقبال طلب تحقق ترخيص عبر /api/license")
+
     const { licenseKey } = await req.json()
     if (!licenseKey || typeof licenseKey !== "string") {
       return NextResponse.json({ error: "License key is required" }, { status: 400 })

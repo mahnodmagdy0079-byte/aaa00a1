@@ -69,7 +69,7 @@ export async function purchaseToolAction(toolName: string, userEmail: string, pr
       .single()
 
     if (requestError) {
-      console.error("Error creating tool request:", requestError)
+
       return { success: false, message: "خطأ في إنشاء طلب الأداة" }
     }
 
@@ -87,7 +87,7 @@ export async function purchaseToolAction(toolName: string, userEmail: string, pr
       },
     }
   } catch (error) {
-    console.error("Error in purchaseToolAction:", error)
+
     return { success: false, message: "حدث خطأ أثناء طلب الأداة" }
   }
 }
@@ -108,13 +108,13 @@ export async function getActiveToolRequestsAction(userEmail: string) {
       .order("created_at", { ascending: false })
 
     if (error) {
-      console.error("Error fetching active tool requests:", error)
+
       return { success: false, toolRequests: [] }
     }
 
     return { success: true, toolRequests: toolRequests || [] }
   } catch (error) {
-    console.error("Error in getActiveToolRequestsAction:", error)
+
     return { success: false, toolRequests: [] }
   }
 }
@@ -130,13 +130,13 @@ export async function updateExpiredToolRequestsAction() {
       .eq("status_ar", "قيد التشغيل")
 
     if (error) {
-      console.error("Error updating expired tool requests:", error)
+
       return { success: false }
     }
 
     return { success: true }
   } catch (error) {
-    console.error("Error in updateExpiredToolRequestsAction:", error)
+
     return { success: false }
   }
 }
@@ -148,13 +148,13 @@ export async function updateSharedEmailAction(requestId: string, sharedEmail: st
     const { error } = await supabase.from("tool_requests").update({ ultra_id: sharedEmail }).eq("id", requestId)
 
     if (error) {
-      console.error("Error updating shared email:", error)
+
       return { success: false, message: "خطأ في تحديث الإيميل المشارك" }
     }
 
     return { success: true, message: "تم تحديث الإيميل المشارك بنجاح" }
   } catch (error) {
-    console.error("Error in updateSharedEmailAction:", error)
+
     return { success: false, message: "حدث خطأ أثناء تحديث الإيميل" }
   }
 }
@@ -176,7 +176,7 @@ export async function getUserSubscriptionStatusAction(userEmail: string) {
       license: activeLicense,
     }
   } catch (error) {
-    console.error("Error checking subscription status:", error)
+
     return { success: false, hasActiveSubscription: false, license: null }
   }
 }

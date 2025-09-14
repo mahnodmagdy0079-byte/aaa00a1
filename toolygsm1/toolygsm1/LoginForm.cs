@@ -73,7 +73,8 @@ namespace toolygsm1
             {
                 userId = loginResult["user"]?["id"]?.ToString();
                 fullName = loginResult["user"]?["user_metadata"]?["full_name"]?.ToString() ?? email;
-                string token = loginResult["access_token"]?.ToString() ?? "";
+                string token = loginResult["token"]?.ToString() ?? "";
+                
                 this.Tag = new Tuple<string, string, string, string>(userId, fullName, email, token);
                 MessageBox.Show("تم تسجيل الدخول بنجاح!", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.OK;
@@ -81,8 +82,9 @@ namespace toolygsm1
             }
             else
             {
-                var errorContent = await GetLastErrorContent(email, password);
-                MessageBox.Show($"اسم المستخدم أو كلمة المرور غير صحيحة!\n\nتفاصيل الخطأ:\n{errorContent}", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // تسجيل محاولة تسجيل دخول فاشلة
+                LogError("LoginAttempt", new Exception("Invalid credentials"));
+                MessageBox.Show("اسم المستخدم أو كلمة المرور غير صحيحة!", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -91,7 +93,10 @@ namespace toolygsm1
             using (var client = new HttpClient())
             {
                 // استخدام API endpoint الجديد بدلاً من Supabase مباشرة
-                client.BaseAddress = new Uri("https://eskuly.org");
+                var apiBaseUrl = SecurityConfig.GetApiBaseUrl();
+                client.BaseAddress = new Uri(apiBaseUrl);
+                client.DefaultRequestHeaders.Add("Origin", apiBaseUrl);
+                client.DefaultRequestHeaders.Add("User-Agent", "TOOLY-GSM-Desktop/1.0");
                 var data = new JObject
                 {
                     ["email"] = email,
@@ -113,7 +118,10 @@ namespace toolygsm1
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://eskuly.org");
+                var apiBaseUrl = SecurityConfig.GetApiBaseUrl();
+                client.BaseAddress = new Uri(apiBaseUrl);
+                client.DefaultRequestHeaders.Add("Origin", apiBaseUrl);
+                client.DefaultRequestHeaders.Add("User-Agent", "TOOLY-GSM-Desktop/1.0");
                 var data = new JObject
                 {
                     ["email"] = email,
@@ -133,6 +141,23 @@ namespace toolygsm1
         private void lblCreateAccount_Click(object sender, EventArgs e)
         {
 
+        }
+
+        // دالة تسجيل الأخطاء الآمنة
+        private void LogError(string methodName, Exception ex)
+        {
+            try
+            {
+                // تسجيل الخطأ في ملف log آمن
+                var logMessage = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {methodName}: {ex.GetType().Name} - {ex.Message}";
+                
+                // في الإنتاج، يجب إرسال الـ logs إلى خدمة logging آمنة
+                System.Diagnostics.Debug.WriteLine(logMessage);
+            }
+            catch
+            {
+                // في حالة فشل تسجيل الخطأ، لا نفعل شيئاً
+            }
         }
     }
 }

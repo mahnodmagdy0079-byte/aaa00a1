@@ -106,7 +106,8 @@ namespace ToolyGsm
 
     public static class SupabaseConfig
     {
-        public const string BaseUrl = "https://ewkzduhofisinbhjrzzu.supabase.co";
-        public const string ApiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV3a3pkdWhvZmlzaW5iaGpyenp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU3MzE3OTYsImV4cCI6MjA3MTMwNzc5Nn0.k_xa-C5jYCiCQ3KK6Xj4hyyfLIR1uWXeOZ0RQB8KUwI";
+        // استخدام SecurityConfig للحصول على القيم الآمنة
+        public static string BaseUrl => SecurityConfig.GetSupabaseBaseUrl();
+        public static string ApiKey => SecurityConfig.GetSupabaseApiKey();
     }
 }

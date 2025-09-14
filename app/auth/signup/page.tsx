@@ -72,7 +72,7 @@ export default function SignUpPage() {
         }, 2000)
       }
     } catch (err) {
-      console.error("[v0] Signup error:", err)
+
       setError(language === "ar" ? "حدث خطأ في التسجيل. حاول مرة أخرى" : "Registration error. Please try again")
     } finally {
       setIsLoading(false)
