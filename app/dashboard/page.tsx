@@ -201,7 +201,6 @@ export default function Dashboard() {
     try {
       // إرسال طلب الأداة عبر API
       const token = typeof window !== "undefined" ? localStorage.getItem("token") : "";
-      console.log("[v0] Tool request - Token:", token ? "Present" : "Missing");
       
       if (!token) {
         setToolSubmitMessage("يرجى تسجيل الدخول مرة أخرى")
@@ -255,7 +254,6 @@ export default function Dashboard() {
 
   const fetchUserData = async () => {
     try {
-      console.log("[v0] Starting fetchUserData (localStorage)")
       // جلب بيانات المستخدم من localStorage
       let currentUser = null
       let token = null
@@ -269,19 +267,15 @@ export default function Dashboard() {
       }
 
       if (!currentUser) {
-        console.log("[v0] No authenticated user, redirecting to signin")
         router.push("/auth/signin")
         return
       }
 
       if (!token) {
-        console.log("[v0] No token found, redirecting to signin")
         router.push("/auth/signin")
         return
       }
 
-      console.log("[v0] Authenticated user found:", currentUser.email)
-      console.log("[v0] Token found:", token ? "Present" : "Missing")
       setUser(currentUser)
 
       // باقي الكود كما هو (Supabase للبيانات الأخرى)
@@ -308,7 +302,6 @@ export default function Dashboard() {
       setIsLoadingActiveTools(false)
 
       // جلب رصيد المستخدم من API وليس مباشرة من Supabase
-      console.log("[v0] Token from localStorage:", token ? "Present" : "Missing");
       
       if (token) {
         const walletRes = await fetch("/api/wallet/balance", {
@@ -320,7 +313,7 @@ export default function Dashboard() {
           body: JSON.stringify({ user_id: currentUser.id })
         })
         const walletResult = await walletRes.json()
-        console.log("[v0] Wallet balance result:", walletResult);
+
         
         if (walletResult.success) {
           setWalletBalance(walletResult.balance)
@@ -328,7 +321,7 @@ export default function Dashboard() {
           setWalletBalance(0)
         }
       } else {
-        console.log("[v0] No token found, setting wallet balance to 0");
+
         setWalletBalance(0)
       }
 
@@ -348,7 +341,7 @@ export default function Dashboard() {
           },
         })
         const licenseResult = await licenseRes.json()
-        console.log("[v0] License check result:", licenseResult);
+
 
         if (licenseResult.valid && licenseResult.license) {
           setLicenseData(licenseResult.license)
@@ -357,15 +350,15 @@ export default function Dashboard() {
           const diffTime = endDate.getTime() - now.getTime()
           const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
           setDaysRemaining(Math.max(0, diffDays))
-          console.log("[v0] License found - Days remaining:", diffDays)
+
         } else {
-          console.log("[v0] No license found for user:", currentUser.id)
+
         }
       } else {
-        console.log("[v0] No token for license check");
+
       }
 
-      console.log("[v0] User data fetched successfully")
+
       setLoading(false)
     } catch (error) {
       console.error("[v0] Error fetching user data:", error)
@@ -453,12 +446,6 @@ export default function Dashboard() {
   }
 
   const getSubscriptionStatus = () => {
-    console.log("[v0] Checking subscription status:", {
-      licenseData,
-      daysRemaining,
-      currentDate: new Date().toISOString(),
-      licenseEndDate: licenseData?.end_date,
-    })
 
     if (!licenseData) return { text: currentContent.notSubscribed, color: "text-gray-400" }
     if (daysRemaining > 0) return { text: currentContent.subscribed, color: "text-green-400" }
@@ -521,14 +508,14 @@ export default function Dashboard() {
   }
 
   const fetchUserRequests = async (userEmail: string) => {
-    console.log("[v0] fetchUserRequests called, userEmail:", userEmail)
+
 
     if (!userEmail) {
-      console.log("[v0] No user email found, skipping requests fetch")
+
       return
     }
 
-    console.log("[v0] User email for requests query:", userEmail)
+
 
     try {
       // جلب سجل الأدوات من API بدون توكن، فقط user_email
@@ -551,7 +538,7 @@ export default function Dashboard() {
   }
 
   useEffect(() => {
-    console.log("[v0] Dashboard useEffect triggered, user:", user)
+
     fetchUserData()
     fetchPhoneListings()
   }, [])
