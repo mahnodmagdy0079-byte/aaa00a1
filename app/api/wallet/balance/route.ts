@@ -35,21 +35,19 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: false, error: "Invalid or expired token" }, { status: 401 });
   }
   try {
-    // استخراج user_id من التوكن فقط
-    const decoded = jwt.decode(token);
-    let user_id = undefined;
-    if (typeof decoded === "object" && decoded !== null) {
-      user_id = (decoded as any).user_id;
-    }
-    if (!user_id) {
-      return NextResponse.json({ success: false, error: "User ID is required" }, { status: 400 });
+    // استخراج user_email/user_id من التوكن فقط
+    const decoded = jwt.decode(token) as any
+    const user_id = decoded?.user_id
+    const user_email = decoded?.user_email
+    if (!user_id && !user_email) {
+      return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
     }
 
     const supabase = createAdminClient();
     const { data: wallet, error } = await supabase
       .from("user_wallets")
       .select("balance")
-      .eq("user_id", user_id)
+      .or(`user_id.eq.${user_id},user_email.eq.${user_email}`)
       .single();
 
     if (error || !wallet) {

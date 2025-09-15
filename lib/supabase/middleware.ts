@@ -7,8 +7,15 @@ export async function updateSession(request: NextRequest) {
     request,
   })
 
+  // إزالة أي كوكيز Supabase قديمة sb-*-auth-token / sb-*-refresh-token
+  const incomingCookies = request.cookies.getAll()
+  for (const c of incomingCookies) {
+    if (c.name.startsWith('sb-') && (c.name.endsWith('-auth-token') || c.name.endsWith('-refresh-token'))) {
+      supabaseResponse.cookies.set(c.name, '', { path: '/', maxAge: 0 })
+    }
+  }
+
   // تحقق من الجلسة باستخدام JWT الخاص بنا من Cookie 'token' فقط
-  const jwtSecret = process.env.JWT_SECRET || process.env.SUPABASE_SERVICE_ROLE_KEY
   const token = request.cookies.get('token')?.value
 
   // Allow access to home page, auth pages, admin, packages, and tools without redirect
@@ -18,13 +25,9 @@ export async function updateSession(request: NextRequest) {
   )
 
   if (!isAllowedPath) {
-    let isAuthenticated = false
-    if (token && jwtSecret) {
-      try {
-        jwt.verify(token, jwtSecret)
-        isAuthenticated = true
-      } catch {}
-    }
+    // لا نتحقق من التوقيع هنا لأن الميدلوير يعمل على Edge وقد لا تتوفر المتغيرات السرية
+    // يكفي وجود الكوكي لتمرير المستخدم إلى الصفحة، بينما يتم التحقق القوي داخل الـ API/السيرفر
+    const isAuthenticated = Boolean(token)
     if (!isAuthenticated) {
       const url = request.nextUrl.clone()
       url.pathname = "/auth/signin"

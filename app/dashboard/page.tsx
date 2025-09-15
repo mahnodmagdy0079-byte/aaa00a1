@@ -254,12 +254,10 @@ export default function Dashboard() {
         }
       }
 
-      if (!currentUser) {
-        router.push("/auth/signin")
-        return
+      // السماح بالمتابعة حتى لو لم توجد بيانات مستخدم في localStorage
+      if (currentUser) {
+        setUser(currentUser)
       }
-
-      setUser(currentUser)
 
       try {
         await updateExpiredToolRequestsAction()
@@ -297,7 +295,7 @@ export default function Dashboard() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ user_id: currentUser.id })
+          body: JSON.stringify({})
         })
         const walletResult = await walletRes.json()
 

@@ -56,7 +56,10 @@ export default function SignInPage() {
         try { localStorage.removeItem("token") } catch {}
       }
       setMessage(language === "ar" ? "تم تسجيل الدخول بنجاح! جاري التوجيه..." : "Login successful! Redirecting...")
-      router.push("/dashboard")
+      // استخدم إعادة توجيه كاملة لضمان إرسال الكوكي HttpOnly مع الطلب التالي
+      if (typeof window !== "undefined") {
+        window.location.href = "/dashboard"
+      }
     } catch (err) {
       setError(language === "ar" ? "حدث خطأ غير متوقع" : "An unexpected error occurred")
     } finally {
