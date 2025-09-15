@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+import { getTokenFromCookie } from "@/lib/utils/getTokenFromCookie"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -19,8 +20,8 @@ export default function LicensePage() {
 
   const router = useRouter()
 
-  // جلب التوكن من localStorage كما كان سابقاً
-  const token = typeof window !== "undefined" ? localStorage.getItem("token") : "";
+  // جلب التوكن من الكوكيز (HttpOnly cookie)
+  const token = typeof window !== "undefined" ? getTokenFromCookie() : "";
 
   useEffect(() => {
     // تحقق من وجود مستخدم في localStorage فقط (لا تعتمد على التوكن)
