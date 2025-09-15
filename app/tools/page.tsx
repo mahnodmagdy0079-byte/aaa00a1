@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import Link from "next/link"
 import Image from "next/image"
-import { createClient } from "@/lib/supabase/client"
 
 export default function ToolsPage() {
   const [language, setLanguage] = useState<"ar" | "en">("ar")
@@ -20,71 +19,15 @@ export default function ToolsPage() {
 
   const checkAuthStatus = async () => {
     try {
-      // First check localStorage for license-based auth
       const savedLicense = localStorage.getItem("userLicense")
       const savedPlan = localStorage.getItem("userPlan")
-
       if (savedLicense && savedPlan) {
-        // Verify the license is still valid
-        const supabase = createClient()
-        if (!supabase) {
-
-          return
-        }
-        const { data, error } = await supabase
-          .from("licenses")
-          .select("*")
-          .eq("license_key", savedLicense.trim())
-          .single()
-
-        if (data && !error) {
-          const expiryDate = new Date(data.end_date)
-          const now = new Date()
-
-          if (expiryDate > now) {
-            setIsLoggedIn(true)
-            setUserPlan(savedPlan)
-            setAuthLoading(false)
-            return
-          } else {
-            // License expired, clear localStorage
-            localStorage.removeItem("userLicense")
-            localStorage.removeItem("userPlan")
-          }
-        }
+        setIsLoggedIn(true)
+        setUserPlan(savedPlan)
+      } else {
+        setIsLoggedIn(false)
+        setUserPlan("")
       }
-
-      // Check Supabase authentication
-      const supabase = createClient()
-      if (!supabase) {
-
-        return
-      }
-      const {
-        data: { user },
-      } = await supabase.auth.getUser()
-
-      if (user) {
-        // User is authenticated with Supabase, check for active license
-        const { data: licenseData } = await supabase
-          .from("licenses")
-          .select("*")
-          .eq("user_id", user.id)
-          .gte("end_date", new Date().toISOString())
-          .order("end_date", { ascending: false })
-          .limit(1)
-          .single()
-
-        if (licenseData) {
-          setIsLoggedIn(true)
-          setUserPlan(licenseData.package_name)
-          // Update localStorage for faster future checks
-          localStorage.setItem("userLicense", licenseData.license_key)
-          localStorage.setItem("userPlan", licenseData.package_name)
-        }
-      }
-    } catch (error) {
-
     } finally {
       setAuthLoading(false)
     }

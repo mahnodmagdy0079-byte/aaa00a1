@@ -9,7 +9,6 @@ import { ArrowLeft, Phone, CreditCard, Shield, CheckCircle } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 import { useSearchParams } from "next/navigation"
-import { createClient } from "@/lib/supabase/client"
 
 export default function PaymentPage() {
   const [phoneNumber, setPhoneNumber] = useState("")
@@ -31,40 +30,25 @@ export default function PaymentPage() {
     setIsLoading(true)
 
     try {
-      const supabase = createClient()
-      if (!supabase) {
-
-        return
-      }
-
-      const {
-        data: { user },
-      } = await supabase.auth.getUser()
-
-      if (!user) {
-        alert("يجب تسجيل الدخول أولاً")
-        return
-      }
-
-      const { error } = await supabase.from("purchase_requests").insert({
-        user_email: user.email,
-        package_name: packageName,
-        package_price: price,
-        package_period: period,
-        currency: currency,
-        phone_number: phoneNumber,
-        status: "pending",
+      // استدعاء API Route لإدخال طلب الشراء باستخدام جلسة HttpOnly
+      const res = await fetch("/api/purchase/request", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          package_name: packageName,
+          package_price: price,
+          package_period: period,
+          currency,
+          phone_number: phoneNumber,
+        })
       })
-
-      if (error) {
-
+      const result = await res.json()
+      if (!res.ok || !result.success) {
         alert("حدث خطأ في إرسال الطلب. حاول مرة أخرى.")
         return
       }
-
       setIsSubmitted(true)
     } catch (error) {
-
       alert("حدث خطأ في إرسال الطلب. حاول مرة أخرى.")
     } finally {
       setIsLoading(false)

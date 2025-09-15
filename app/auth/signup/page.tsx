@@ -4,7 +4,6 @@ import type React from "react"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { useLanguage } from "@/contexts/LanguageContext"
-import { createClient } from "@/lib/supabase/client"
 
 export default function SignUpPage() {
   const [name, setName] = useState("")

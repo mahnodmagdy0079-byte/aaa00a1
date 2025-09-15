@@ -6,7 +6,6 @@ import { Check, Star, Phone, Settings, Crown, ArrowRight, Menu, X } from "lucide
 import Image from "next/image"
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { createClient } from "@/lib/supabase/client"
 import { useLanguage } from "@/contexts/LanguageContext"
 import { Button } from "@/components/ui/button"
 
@@ -33,94 +32,23 @@ export default function PackagesPage() {
 
   const checkAuthStatus = async () => {
     try {
-      // First check localStorage for license-based auth
       const savedLicense = localStorage.getItem("userLicense")
       const savedPlan = localStorage.getItem("userPlan")
-
       if (savedLicense && savedPlan) {
-        // Verify the license is still valid
-        const supabase = createClient()
-        if (!supabase) {
-
-          return
-        }
-        const { data, error } = await supabase
-          .from("licenses")
-          .select("*")
-          .eq("license_key", savedLicense.trim())
-          .single()
-
-        if (data && !error) {
-          const expiryDate = new Date(data.end_date)
-          const now = new Date()
-
-          if (expiryDate > now) {
-            setIsLoggedIn(true)
-            setUserPlan(savedPlan)
-            setAuthLoading(false)
-            return
-          } else {
-            // License expired, clear localStorage
-            localStorage.removeItem("userLicense")
-            localStorage.removeItem("userPlan")
-          }
-        }
+        setIsLoggedIn(true)
+        setUserPlan(savedPlan)
+      } else {
+        setIsLoggedIn(false)
+        setUserPlan("")
       }
-
-      // Check Supabase authentication
-      const supabase = createClient()
-      if (!supabase) {
-
-        return
-      }
-      const {
-        data: { user },
-      } = await supabase.auth.getUser()
-
-      if (user) {
-        // User is authenticated with Supabase, check for active license
-        const { data: licenseData } = await supabase
-          .from("licenses")
-          .select("*")
-          .eq("user_id", user.id)
-          .gte("end_date", new Date().toISOString())
-          .order("end_date", { ascending: false })
-          .limit(1)
-          .single()
-
-        if (licenseData) {
-          setIsLoggedIn(true)
-          setUserPlan(licenseData.package_name)
-          // Update localStorage for faster future checks
-          localStorage.setItem("userLicense", licenseData.license_key)
-          localStorage.setItem("userPlan", licenseData.package_name)
-        }
-      }
-    } catch (error) {
-
     } finally {
       setAuthLoading(false)
     }
   }
 
   const checkUser = async () => {
-    try {
-      const supabase = createClient()
-      if (!supabase) {
-
-        return
-      }
-      const {
-        data: { user },
-      } = await supabase.auth.getUser()
-      setUser(user)
-    } catch (error) {
-
-      // Set user to null if Supabase is not configured
-      setUser(null)
-    } finally {
-      setLoading(false)
-    }
+    setUser(null)
+    setLoading(false)
   }
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -129,53 +57,18 @@ export default function PackagesPage() {
     setLoginError("")
 
     try {
-      const supabase = createClient()
-      if (!supabase) {
-        setLoginError(language === "ar" ? "خطأ في الاتصال" : "Connection error")
+      if (!license.trim()) {
+        setLoginError(language === "ar" ? "أدخل الترخيص" : "Enter license")
         return
       }
-
-
-
-      const { data, error } = await supabase.from("licenses").select("*").eq("license_key", license.trim()).single()
-
-
-
-      if (error) {
-
-        setLoginError(language === "ar" ? "الترخيص غير صحيح أو منتهي الصلاحية" : "Invalid or expired license")
-        return
-      }
-
-      if (!data) {
-
-        setLoginError(language === "ar" ? "الترخيص غير صحيح أو منتهي الصلاحية" : "Invalid or expired license")
-        return
-      }
-
-      const expiryDate = new Date(data.end_date)
-      const now = new Date()
-
-
-
-      if (expiryDate < now) {
-        setLoginError(language === "ar" ? "الترخيص منتهي الصلاحية" : "License has expired")
-        return
-      }
-
+      // مؤقتاً: حفظ الترخيص فقط في التخزين المحلي، بدون اتصال مباشر بقاعدة البيانات من الواجهة
       localStorage.setItem("userLicense", license)
-      localStorage.setItem("userPlan", data.package_name)
+      localStorage.setItem("userPlan", userPlan || "")
       setIsLoggedIn(true)
-      setUserPlan(data.package_name)
+      setUserPlan(userPlan || "")
       setShowLogin(false)
       setLicense("")
-
       window.location.href = "/dashboard"
-
-
-    } catch (error) {
-
-      setLoginError(language === "ar" ? "حدث خطأ في الاتصال بالخادم" : "Server connection error occurred")
     } finally {
       setIsLoading(false)
     }
