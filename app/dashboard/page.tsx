@@ -199,20 +199,11 @@ export default function Dashboard() {
 
     setIsSubmittingTool(true)
     try {
-      // إرسال طلب الأداة عبر API
-      const token = typeof window !== "undefined" ? localStorage.getItem("token") : "";
-      
-      if (!token) {
-        setToolSubmitMessage("يرجى تسجيل الدخول مرة أخرى")
-        setToolSubmitSuccess(false)
-        return
-      }
-      
+      // إرسال طلب الأداة عبر API - الاعتماد على Cookie HttpOnly بدلاً من Authorization من localStorage
       const res = await fetch("/api/tool-requests/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify({
           user_id: user.id,
@@ -256,22 +247,15 @@ export default function Dashboard() {
     try {
       // جلب بيانات المستخدم من localStorage
       let currentUser = null
-      let token = null
       
       if (typeof window !== "undefined") {
         const userStr = localStorage.getItem("user")
-        token = localStorage.getItem("token")
         if (userStr) {
           currentUser = JSON.parse(userStr)
         }
       }
 
       if (!currentUser) {
-        router.push("/auth/signin")
-        return
-      }
-
-      if (!token) {
         router.push("/auth/signin")
         return
       }
@@ -315,27 +299,22 @@ export default function Dashboard() {
 
       // جلب رصيد المستخدم من API وليس مباشرة من Supabase
       
-      if (token) {
-        try {
-          const walletRes = await fetch("/api/wallet/balance", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${token}`,
-            },
-            body: JSON.stringify({ user_id: currentUser.id })
-          })
-          const walletResult = await walletRes.json()
+      try {
+        const walletRes = await fetch("/api/wallet/balance", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ user_id: currentUser.id })
+        })
+        const walletResult = await walletRes.json()
 
-          if (walletResult.success) {
-            setWalletBalance(walletResult.balance)
-          } else {
-            setWalletBalance(0)
-          }
-        } catch (error) {
+        if (walletResult.success) {
+          setWalletBalance(walletResult.balance)
+        } else {
           setWalletBalance(0)
         }
-      } else {
+      } catch (error) {
         setWalletBalance(0)
       }
 
@@ -350,28 +329,25 @@ export default function Dashboard() {
       }
 
       // تحقق من الاشتراك عبر API وليس مباشرة من Supabase
-      if (token) {
-        try {
-          const licenseRes = await fetch("/api/license/check", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${token}`,
-            },
-          })
-          const licenseResult = await licenseRes.json()
+      try {
+        const licenseRes = await fetch("/api/license/check", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        const licenseResult = await licenseRes.json()
 
-          if (licenseResult.valid && licenseResult.license) {
-            setLicenseData(licenseResult.license)
-            const endDate = new Date(licenseResult.license.end_date)
-            const now = new Date()
-            const diffTime = endDate.getTime() - now.getTime()
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-            setDaysRemaining(Math.max(0, diffDays))
-          }
-        } catch (error) {
-          // Handle error silently
+        if (licenseResult.valid && licenseResult.license) {
+          setLicenseData(licenseResult.license)
+          const endDate = new Date(licenseResult.license.end_date)
+          const now = new Date()
+          const diffTime = endDate.getTime() - now.getTime()
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+          setDaysRemaining(Math.max(0, diffDays))
         }
+      } catch (error) {
+        // Handle error silently
       }
 
 
