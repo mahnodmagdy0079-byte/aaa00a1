@@ -9,9 +9,10 @@ export async function OPTIONS(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    // استخراج user_id من التوكن فقط
+    // استخراج user_id من التوكن: Authorization أو الكوكيز HttpOnly
     const authHeader = req.headers.get("authorization");
-    const token = authHeader?.replace("Bearer ", "");
+    const cookieToken = req.cookies.get("token")?.value;
+    const token = authHeader ? authHeader.replace("Bearer ", "") : cookieToken;
     const jwtSecret = process.env.JWT_SECRET || process.env.SUPABASE_SERVICE_ROLE_KEY
     if (!jwtSecret) {
       return NextResponse.json({ valid: false, error: "JWT secret not configured" }, { status: 500 });
@@ -20,12 +21,13 @@ export async function POST(req: NextRequest) {
     let decoded = null;
     let user_email = undefined;
     
-    if (token) {
-      try {
-        decoded = jwt.verify(token, jwtSecret);
-      } catch (err) {
-        return NextResponse.json({ valid: false, error: "Invalid or expired token" }, { status: 401 });
-      }
+    if (!token) {
+      return NextResponse.json({ valid: false, error: "Missing token" }, { status: 401 });
+    }
+    try {
+      decoded = jwt.verify(token, jwtSecret);
+    } catch (err) {
+      return NextResponse.json({ valid: false, error: "Invalid or expired token" }, { status: 401 });
     }
     
     // حماية Rate Limiting

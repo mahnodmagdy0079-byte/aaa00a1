@@ -12,15 +12,13 @@ export async function POST(req: NextRequest) {
   const rateLimitResponse = rateLimit(req);
   if (rateLimitResponse) return rateLimitResponse;
   
-  // تحقق من وجود توكن في الهيدر
+  // قراءة التوكن من Authorization أو من الكوكيز HttpOnly
   const authHeader = req.headers.get("authorization");
-
-  
-  if (!authHeader) {
+  const cookieToken = req.cookies.get("token")?.value;
+  const token = authHeader ? authHeader.replace("Bearer ", "") : cookieToken;
+  if (!token) {
     return NextResponse.json({ success: false, error: "Missing token" }, { status: 401 });
   }
-  
-  const token = authHeader.replace("Bearer ", "");
 
   
   const jwtSecret = process.env.JWT_SECRET || process.env.SUPABASE_SERVICE_ROLE_KEY
