@@ -119,6 +119,67 @@ export async function getActiveToolRequestsAction(userEmail: string) {
   }
 }
 
+export async function getToolsAction() {
+  try {
+    const supabase = await createClient()
+    const { data: tools, error } = await supabase.from("tools").select("*").order("name")
+    if (error) {
+      return { success: false, tools: [] }
+    }
+    return { success: true, tools: tools || [] }
+  } catch (error) {
+    return { success: false, tools: [] }
+  }
+}
+
+export async function getPhoneListingsAction() {
+  try {
+    const supabase = await createClient()
+    const { data, error } = await supabase
+      .from("phone_listings")
+      .select("*")
+      .eq("status", "active")
+      .order("created_at", { ascending: false })
+    if (error) {
+      return { success: false, listings: [] }
+    }
+    return { success: true, listings: data || [] }
+  } catch (error) {
+    return { success: false, listings: [] }
+  }
+}
+
+export async function createPhoneListingAction(payload: {
+  user_id: string
+  user_name: string
+  phone_model: string
+  problem_type: string
+  description: string
+  budget?: string
+  location?: string
+}) {
+  try {
+    const supabase = await createClient()
+    const { error } = await supabase.from("phone_listings").insert(payload)
+    if (error) {
+      return { success: false, message: "خطأ أثناء إنشاء الطلب" }
+    }
+    return { success: true, message: "تم نشر طلبك بنجاح" }
+  } catch (error) {
+    return { success: false, message: "حدث خطأ غير متوقع" }
+  }
+}
+
+export async function signOutAction() {
+  try {
+    const supabase = await createClient()
+    await supabase.auth.signOut()
+    return { success: true }
+  } catch (error) {
+    return { success: false }
+  }
+}
+
 export async function updateExpiredToolRequestsAction() {
   try {
     const supabase = await createClient()

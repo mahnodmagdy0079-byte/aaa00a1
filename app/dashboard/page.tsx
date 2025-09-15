@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { createClient } from "@/lib/supabase/client"
 import { checkUserPendingRequest } from "@/app/admin/actions"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -34,9 +33,9 @@ import {
   UserPlus,
   Shield,
 } from "lucide-react"
-import { getTokenFromCookie } from "@/lib/utils/getTokenFromCookie"
+ 
 
-import { purchaseToolAction, getActiveToolRequestsAction, updateExpiredToolRequestsAction } from "./actions"
+import { purchaseToolAction, getActiveToolRequestsAction, updateExpiredToolRequestsAction, getToolsAction, getPhoneListingsAction, createPhoneListingAction, signOutAction } from "./actions"
 
 export default function Dashboard() {
   const [user, setUser] = useState<any>(null)
@@ -262,9 +261,6 @@ export default function Dashboard() {
 
       setUser(currentUser)
 
-      // باقي الكود كما هو (Supabase للبيانات الأخرى)
-      const supabase = createClient()
-
       try {
         await updateExpiredToolRequestsAction()
       } catch (error) {
@@ -272,28 +268,24 @@ export default function Dashboard() {
       }
 
       setIsLoadingTools(true)
-      if (supabase) {
-        try {
-          const { data: tools, error: toolsError } = await supabase.from("tools").select("*").order("name")
-          if (tools && !toolsError) {
-            setAvailableTools(tools)
-          }
-        } catch (error) {
-          // Handle error silently
+      try {
+        const toolsResult = await getToolsAction()
+        if (toolsResult.success) {
+          setAvailableTools(toolsResult.tools)
         }
+      } catch (error) {
+        // Handle error silently
       }
       setIsLoadingTools(false)
 
       setIsLoadingActiveTools(true)
-      if (supabase) {
-        try {
-          const activeToolsResult = await getActiveToolRequestsAction(currentUser.email)
-          if (activeToolsResult.success) {
-            setActiveToolRequests(activeToolsResult.toolRequests)
-          }
-        } catch (error) {
-          // Handle error silently
+      try {
+        const activeToolsResult = await getActiveToolRequestsAction(currentUser.email)
+        if (activeToolsResult.success) {
+          setActiveToolRequests(activeToolsResult.toolRequests)
         }
+      } catch (error) {
+        // Handle error silently
       }
       setIsLoadingActiveTools(false)
 
@@ -359,21 +351,12 @@ export default function Dashboard() {
 
   const fetchPhoneListings = async () => {
     try {
-      const supabase = createClient()
-      if (supabase) {
-        const { data, error } = await supabase
-          .from("phone_listings")
-          .select("*")
-          .eq("status", "active")
-          .order("created_at", { ascending: false })
-
-        if (error) {
-          return
-        }
-
-        setPhoneListings(data || [])
+      const result = await getPhoneListingsAction()
+      if (result.success) {
+        setPhoneListings(result.listings)
       }
     } catch (error) {
+      // Handle error silently
     }
   }
 
@@ -386,34 +369,31 @@ export default function Dashboard() {
 
     setIsSubmitting(true)
     try {
-      const supabase = createClient()
-      if (supabase) {
-        const { error } = await supabase.from("phone_listings").insert({
-          user_id: user.id,
-          user_name: user.user_metadata?.full_name || user.email,
-          phone_model: newPhoneRequest.phoneModel,
-          problem_type: newPhoneRequest.problemType,
-          description: newPhoneRequest.description,
-          budget: newPhoneRequest.budget,
-          location: newPhoneRequest.location,
-        })
+      const result = await createPhoneListingAction({
+        user_id: user.id,
+        user_name: user.user_metadata?.full_name || user.email,
+        phone_model: newPhoneRequest.phoneModel,
+        problem_type: newPhoneRequest.problemType,
+        description: newPhoneRequest.description,
+        budget: newPhoneRequest.budget,
+        location: newPhoneRequest.location,
+      })
 
-        if (error) {
-          setSubmitMessage("حدث خطأ أثناء نشر الطلب")
-          setSubmitSuccess(false)
-        } else {
-          setSubmitMessage("تم نشر طلبك بنجاح!")
-          setSubmitSuccess(true)
-          setNewPhoneRequest({
-            phoneModel: "",
-            problemType: "",
-            description: "",
-            budget: "",
-            location: "",
-          })
-          setShowAddPhone(false)
-          fetchPhoneListings()
-        }
+      if (!result.success) {
+        setSubmitMessage("حدث خطأ أثناء نشر الطلب")
+        setSubmitSuccess(false)
+      } else {
+        setSubmitMessage("تم نشر طلبك بنجاح!")
+        setSubmitSuccess(true)
+        setNewPhoneRequest({
+          phoneModel: "",
+          problemType: "",
+          description: "",
+          budget: "",
+          location: "",
+        })
+        setShowAddPhone(false)
+        fetchPhoneListings()
       }
     } catch (error) {
       setSubmitMessage("حدث خطأ أثناء نشر الطلب")
@@ -427,10 +407,9 @@ export default function Dashboard() {
   }
 
   const handleLogout = async () => {
-    const supabase = createClient()
-    if (supabase) {
-      await supabase.auth.signOut()
-    }
+    await signOutAction()
+    // تنظيف أي توكن قديم من التخزين المحلي
+    try { if (typeof window !== "undefined") localStorage.removeItem("token") } catch {}
     router.push("/")
   }
 

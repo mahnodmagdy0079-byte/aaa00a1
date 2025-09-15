@@ -52,6 +52,8 @@ export default function SignInPage() {
       // حفظ بيانات المستخدم فقط في localStorage (بدون حفظ التوكن)
       if (typeof window !== "undefined") {
         localStorage.setItem("user", JSON.stringify(result.user))
+        // إزالة أي توكن قديم محفوظ سابقاً
+        try { localStorage.removeItem("token") } catch {}
       }
       setMessage(language === "ar" ? "تم تسجيل الدخول بنجاح! جاري التوجيه..." : "Login successful! Redirecting...")
       router.push("/dashboard")
