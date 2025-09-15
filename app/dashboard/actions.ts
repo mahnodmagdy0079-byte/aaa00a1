@@ -174,6 +174,9 @@ export async function signOutAction() {
   try {
     const supabase = await createClient()
     await supabase.auth.signOut()
+    // تنظيف أي كوكيز sb-* قد تكون موجودة
+    // لا يمكننا تعديل كوكيز من هنا مباشرة بدون NextResponse،
+    // لذا يُفضّل إنشاء API /api/auth/signout لمسح الكوكيز أيضاً إن لزم
     return { success: true }
   } catch (error) {
     return { success: false }

@@ -65,6 +65,16 @@ export async function POST(req: NextRequest) {
       path: '/',
       maxAge: 7 * 24 * 60 * 60, // أسبوع
     })
+    // إزالة أي كوكيز مصادقة تابعة لـ Supabase في المتصفح
+    const allCookies = req.cookies.getAll()
+    for (const c of allCookies) {
+      if (c.name.startsWith('sb-') && c.name.endsWith('-auth-token')) {
+        response.cookies.set(c.name, '', { path: '/', maxAge: 0 })
+      }
+      if (c.name.startsWith('sb-') && c.name.endsWith('-refresh-token')) {
+        response.cookies.set(c.name, '', { path: '/', maxAge: 0 })
+      }
+    }
     
     // إضافة رؤوس الأمان
     const origin = req.headers.get('origin')
