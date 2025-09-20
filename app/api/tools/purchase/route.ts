@@ -105,50 +105,51 @@ export async function POST(req: NextRequest) {
     let assignedAccount = null;
     console.log(`Searching for tool: "${toolName}"`);
     
-    if (toolName.toLowerCase().includes("unlock") || toolName.toLowerCase().includes("tool")) {
-      try {
-        console.log(`Looking for accounts with tool_name: "${toolName}"`);
-        
-        const { data: availableAccounts, error: accountError } = await supabase
+    // البحث عن حساب متاح للأداة (اختياري تماماً)
+    try {
+      console.log(`Looking for accounts with tool_name: "${toolName}"`);
+      
+      const { data: availableAccounts, error: accountError } = await supabase
+        .from("tool_accounts")
+        .select("*")
+        .eq("tool_name", toolName)
+        .eq("is_available", true)
+        .limit(1);
+
+      console.log(`Query result:`, { availableAccounts, accountError });
+
+      const availableAccount = availableAccounts && availableAccounts.length > 0 ? availableAccounts[0] : null;
+      console.log(`Available account found:`, availableAccount);
+
+      if (!accountError && availableAccount) {
+        // تخصيص الحساب للمستخدم
+        const { data: assignedAccountData, error: assignError } = await supabase
           .from("tool_accounts")
-          .select("*")
-          .eq("tool_name", toolName)
-          .eq("is_available", true)
-          .limit(1);
+          .update({
+            is_available: false,
+            assigned_to_user: userEmail,
+            assigned_at: new Date().toISOString(),
+            user_id: decoded.user_id,
+            updated_at: new Date().toISOString()
+          })
+          .eq("id", availableAccount.id)
+          .select()
+          .single();
 
-        console.log(`Query result:`, { availableAccounts, accountError });
-
-        const availableAccount = availableAccounts && availableAccounts.length > 0 ? availableAccounts[0] : null;
-        console.log(`Available account found:`, availableAccount);
-
-        if (!accountError && availableAccount) {
-          // تخصيص الحساب للمستخدم
-          const { data: assignedAccountData, error: assignError } = await supabase
-            .from("tool_accounts")
-            .update({
-              is_available: false,
-              assigned_to_user: userEmail,
-              assigned_at: new Date().toISOString(),
-              user_id: decoded.user_id,
-              updated_at: new Date().toISOString()
-            })
-            .eq("id", availableAccount.id)
-            .select()
-            .single();
-
-          if (!assignError && assignedAccountData) {
-            assignedAccount = assignedAccountData;
-            console.log(`Account assigned: ${assignedAccount.account_username}`);
-          } else {
-            console.log("Failed to assign account:", assignError);
-          }
+        if (!assignError && assignedAccountData) {
+          assignedAccount = assignedAccountData;
+          console.log(`Account assigned: ${assignedAccount.account_username}`);
         } else {
-          console.log("No available accounts found for tool:", toolName);
+          console.log("Failed to assign account:", assignError);
         }
-      } catch (error) {
-        console.log("Error in account assignment process:", error);
-        // لا نوقف العملية إذا فشل تخصيص الحساب
+      } else {
+        console.log("No available accounts found for tool:", toolName);
+        console.log("Continuing without account assignment...");
       }
+    } catch (error) {
+      console.log("Error in account assignment process:", error);
+      console.log("Continuing without account assignment...");
+      // لا نوقف العملية إذا فشل تخصيص الحساب
     }
 
     // إنشاء طلب الأداة
@@ -183,6 +184,9 @@ export async function POST(req: NextRequest) {
     }
 
     const purchaseType = isSubscriptionBased ? "ضمن الاشتراك" : "شراء بالرصيد";
+
+    console.log(`Purchase successful for tool: ${toolName}`);
+    console.log(`Account assigned:`, assignedAccount ? "Yes" : "No");
 
     return NextResponse.json({
       success: true,
