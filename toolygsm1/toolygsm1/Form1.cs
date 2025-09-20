@@ -1467,21 +1467,19 @@ namespace toolygsm1
                     
                     var purchaseData = new JObject
                     {
-                        ["user_id"] = userId,
-                        ["user_name"] = fullName,
-                        ["tool_name"] = toolName,
-                        ["tool_price"] = toolPrice,
-                        ["purchase_type"] = "credit",
-                        ["request_id"] = requestId,
-                        ["timestamp"] = timestamp
+                        ["toolName"] = toolName,
+                        ["price"] = toolPrice,
+                        ["durationHours"] = 6 // Default duration for tools
                     };
                     
                     var purchaseContent = new StringContent(purchaseData.ToString(), Encoding.UTF8, "application/json");
-                    var purchaseResponse = await purchaseClient.PostAsync("/api/tool-requests/purchase", purchaseContent);
+                    var purchaseResponse = await purchaseClient.PostAsync("/api/tools/purchase", purchaseContent);
                     
                     if (purchaseResponse.IsSuccessStatusCode)
                     {
                         var purchaseJson = await purchaseResponse.Content.ReadAsStringAsync();
+                        LogError("PurchaseResponse", new Exception($"API Response: {purchaseJson}"));
+                        
                         var purchaseObj = JObject.Parse(purchaseJson);
                         
                         if (purchaseObj["success"]?.ToString().ToLower() == "true")
@@ -1493,6 +1491,8 @@ namespace toolygsm1
                                 var username = account["username"]?.ToString();
                                 var password = account["password"]?.ToString();
                                 var accountId = account["account_id"]?.ToString();
+                                
+                                LogError("AccountInfo", new Exception($"Account: {username}, ID: {accountId}"));
                                 
                                 if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
                                 {
@@ -1507,6 +1507,7 @@ namespace toolygsm1
                         {
                             // معالجة آمنة للأخطاء
                             var errorMsg = purchaseObj["error"]?.ToString() ?? "خطأ غير معروف";
+                            LogError("PurchaseError", new Exception($"API Error: {errorMsg}"));
                             
                             // تصنيف الأخطاء وإعطاء رسائل آمنة
                             if (errorMsg.Contains("insufficient") || errorMsg.Contains("balance"))
@@ -1521,16 +1522,21 @@ namespace toolygsm1
                             {
                                 return new PurchaseResult { Success = false, ErrorMessage = "تم تجاوز الحد المسموح من الطلبات. يرجى المحاولة لاحقاً" };
                             }
+                            else if (errorMsg.Contains("No available accounts"))
+                            {
+                                return new PurchaseResult { Success = false, ErrorMessage = "لا توجد حسابات متاحة لهذه الأداة حالياً. يرجى المحاولة لاحقاً" };
+                            }
                             else
                             {
-                                return new PurchaseResult { Success = false, ErrorMessage = "حدث خطأ أثناء معالجة طلبك. يرجى المحاولة مرة أخرى" };
+                                return new PurchaseResult { Success = false, ErrorMessage = $"حدث خطأ أثناء معالجة طلبك: {errorMsg}" };
                             }
                         }
                     }
                     else
                     {
                         var errorContent = await purchaseResponse.Content.ReadAsStringAsync();
-                        return new PurchaseResult { Success = false, ErrorMessage = "فشل في الاتصال بالخادم" };
+                        LogError("PurchaseHTTPError", new Exception($"HTTP {purchaseResponse.StatusCode}: {errorContent}"));
+                        return new PurchaseResult { Success = false, ErrorMessage = $"فشل في الاتصال بالخادم (HTTP {purchaseResponse.StatusCode})" };
                     }
                 }
             }
