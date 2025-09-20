@@ -13,13 +13,36 @@ export async function POST(req: NextRequest) {
   if (rateLimitResponse) return rateLimitResponse;
 
   try {
-    const { device_id, app_version, timestamp } = await req.json();
+    const { 
+      device_id, 
+      app_version, 
+      timestamp, 
+      nonce, 
+      signature, 
+      hardware_info 
+    } = await req.json();
     
     if (!device_id) {
       return NextResponse.json({ 
         success: false, 
         error: "Device ID is required" 
       }, { status: 400 });
+    }
+
+    // التحقق من التوقيع
+    if (!validateRequestSignature(device_id, timestamp, nonce, signature, hardware_info)) {
+      return NextResponse.json({ 
+        success: false, 
+        error: "Invalid request signature" 
+      }, { status: 401 });
+    }
+
+    // التحقق من timestamp (منع replay attacks)
+    if (!validateTimestamp(timestamp)) {
+      return NextResponse.json({ 
+        success: false, 
+        error: "Request timestamp is invalid or expired" 
+      }, { status: 401 });
     }
 
     const supabase = createAdminClient();
@@ -81,11 +104,16 @@ export async function POST(req: NextRequest) {
       }, { status: 500 });
     }
 
+    // إنشاء توقيع للاستجابة
+    const responseSignature = createResponseSignature(device_id, newSecretKey, expiresAt.toISOString());
+
     return NextResponse.json({
       success: true,
       secret_key: newSecretKey,
       expires_at: expiresAt.toISOString(),
-      device_id: device_id
+      device_id: device_id,
+      response_signature: responseSignature,
+      timestamp: new Date().toISOString()
     });
 
   } catch (err) {
@@ -102,6 +130,67 @@ function generateSecureKey(): string {
   // إنشاء مفتاح عشوائي قوي
   const randomBytes = crypto.randomBytes(32);
   return randomBytes.toString('base64');
+}
+
+// التحقق من توقيع الطلب
+function validateRequestSignature(
+  deviceId: string, 
+  timestamp: string, 
+  nonce: string, 
+  signature: string, 
+  hardwareInfo: string
+): boolean {
+  try {
+    // إنشاء البيانات الموقعة
+    const dataToSign = `${deviceId}_${timestamp}_${nonce}_${hardwareInfo}`;
+    
+    // استخدام مفتاح سري للتحقق (يجب أن يكون نفس المفتاح المستخدم في البرنامج)
+    const secretKey = process.env.TOOLY_SECRET_KEY || "FallbackKey2024";
+    
+    // إنشاء HMAC
+    const hmac = crypto.createHmac('sha256', secretKey);
+    hmac.update(dataToSign);
+    const expectedSignature = hmac.digest('base64');
+    
+    // مقارنة التوقيعات
+    return crypto.timingSafeEqual(
+      Buffer.from(signature, 'base64'),
+      Buffer.from(expectedSignature, 'base64')
+    );
+  } catch (error) {
+    console.error("Signature validation error:", error);
+    return false;
+  }
+}
+
+// التحقق من timestamp
+function validateTimestamp(timestamp: string): boolean {
+  try {
+    const requestTime = new Date(timestamp);
+    const now = new Date();
+    const timeDiff = Math.abs(now.getTime() - requestTime.getTime());
+    
+    // الطلب يجب أن يكون حديث (أقل من 5 دقائق)
+    return timeDiff < 5 * 60 * 1000;
+  } catch (error) {
+    console.error("Timestamp validation error:", error);
+    return false;
+  }
+}
+
+// إنشاء توقيع للاستجابة
+function createResponseSignature(deviceId: string, secretKey: string, expiresAt: string): string {
+  try {
+    const dataToSign = `${deviceId}_${secretKey}_${expiresAt}`;
+    const serverSecretKey = process.env.SERVER_SECRET_KEY || "ServerSecretKey2024";
+    
+    const hmac = crypto.createHmac('sha256', serverSecretKey);
+    hmac.update(dataToSign);
+    return hmac.digest('base64');
+  } catch (error) {
+    console.error("Response signature creation error:", error);
+    return "DefaultResponseSignature";
+  }
 }
 
 // تحديث آخر استخدام للمفتاح

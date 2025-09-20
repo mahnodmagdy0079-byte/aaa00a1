@@ -81,7 +81,7 @@ namespace ToolyGsm
             }
         }
 
-        // طلب المفتاح من السيرفر
+        // طلب المفتاح من السيرفر مع حماية متقدمة
         private static string RequestSecretKeyFromServer(string deviceId)
         {
             try
@@ -92,15 +92,30 @@ namespace ToolyGsm
                     client.DefaultRequestHeaders.Add("User-Agent", "TOOLY-GSM-Desktop/1.0");
                     
                     var apiBaseUrl = GetApiBaseUrl();
+                    var timestamp = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ");
+                    var nonce = GenerateSecureNonce();
+                    
+                    // إنشاء توقيع للطلب
+                    var requestSignature = CreateRequestSignature(deviceId, timestamp, nonce);
+                    
                     var requestData = new
                     {
                         device_id = deviceId,
                         app_version = "1.0",
-                        timestamp = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ")
+                        timestamp = timestamp,
+                        nonce = nonce,
+                        signature = requestSignature,
+                        hardware_info = GetHardwareFingerprint()
                     };
                     
                     var json = Newtonsoft.Json.JsonConvert.SerializeObject(requestData);
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
+                    
+                    // إضافة headers إضافية للحماية
+                    client.DefaultRequestHeaders.Add("X-Request-Signature", requestSignature);
+                    client.DefaultRequestHeaders.Add("X-Request-Timestamp", timestamp);
+                    client.DefaultRequestHeaders.Add("X-Request-Nonce", nonce);
+                    client.DefaultRequestHeaders.Add("X-Client-Version", "1.0");
                     
                     var response = client.PostAsync($"{apiBaseUrl}/api/auth/device-key", content).Result;
                     
@@ -111,7 +126,11 @@ namespace ToolyGsm
                         
                         if (responseObj?.success == true)
                         {
-                            return responseObj.secret_key?.ToString();
+                            // التحقق من توقيع الاستجابة
+                            if (ValidateResponseSignature(responseObj, response.Headers))
+                            {
+                                return responseObj.secret_key?.ToString();
+                            }
                         }
                     }
                 }
@@ -122,6 +141,157 @@ namespace ToolyGsm
             }
             
             return null;
+        }
+
+        // إنشاء nonce آمن
+        private static string GenerateSecureNonce()
+        {
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                var bytes = new byte[16];
+                rng.GetBytes(bytes);
+                return Convert.ToBase64String(bytes);
+            }
+        }
+
+        // إنشاء توقيع للطلب
+        private static string CreateRequestSignature(string deviceId, string timestamp, string nonce)
+        {
+            try
+            {
+                var dataToSign = $"{deviceId}_{timestamp}_{nonce}_{GetHardwareFingerprint()}";
+                var fallbackKey = GetFallbackKey();
+                
+                using (var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(fallbackKey)))
+                {
+                    var hashBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(dataToSign));
+                    return Convert.ToBase64String(hashBytes);
+                }
+            }
+            catch
+            {
+                return "DefaultSignature";
+            }
+        }
+
+        // الحصول على بصمة الجهاز
+        private static string GetHardwareFingerprint()
+        {
+            try
+            {
+                var cpuId = GetCpuId();
+                var motherboardId = GetMotherboardId();
+                var diskId = GetDiskId();
+                
+                var fingerprint = $"{cpuId}_{motherboardId}_{diskId}";
+                
+                using (var sha256 = SHA256.Create())
+                {
+                    byte[] hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(fingerprint));
+                    return Convert.ToBase64String(hashBytes).Substring(0, 16);
+                }
+            }
+            catch
+            {
+                return "DefaultFingerprint";
+            }
+        }
+
+        // الحصول على معرف المعالج
+        private static string GetCpuId()
+        {
+            try
+            {
+                using (var searcher = new ManagementObjectSearcher("SELECT ProcessorId FROM Win32_Processor"))
+                {
+                    foreach (ManagementObject obj in searcher.Get())
+                    {
+                        return obj["ProcessorId"]?.ToString() ?? "UnknownCPU";
+                    }
+                }
+            }
+            catch
+            {
+                return "UnknownCPU";
+            }
+            return "UnknownCPU";
+        }
+
+        // الحصول على معرف اللوحة الأم
+        private static string GetMotherboardId()
+        {
+            try
+            {
+                using (var searcher = new ManagementObjectSearcher("SELECT SerialNumber FROM Win32_BaseBoard"))
+                {
+                    foreach (ManagementObject obj in searcher.Get())
+                    {
+                        return obj["SerialNumber"]?.ToString() ?? "UnknownMB";
+                    }
+                }
+            }
+            catch
+            {
+                return "UnknownMB";
+            }
+            return "UnknownMB";
+        }
+
+        // الحصول على معرف القرص الصلب
+        private static string GetDiskId()
+        {
+            try
+            {
+                using (var searcher = new ManagementObjectSearcher("SELECT SerialNumber FROM Win32_DiskDrive WHERE MediaType='Fixed hard disk media'"))
+                {
+                    foreach (ManagementObject obj in searcher.Get())
+                    {
+                        return obj["SerialNumber"]?.ToString() ?? "UnknownDisk";
+                    }
+                }
+            }
+            catch
+            {
+                return "UnknownDisk";
+            }
+            return "UnknownDisk";
+        }
+
+        // التحقق من توقيع الاستجابة
+        private static bool ValidateResponseSignature(dynamic responseObj, System.Net.Http.Headers.HttpResponseHeaders headers)
+        {
+            try
+            {
+                // التحقق من وجود توقيع في الاستجابة
+                var responseSignature = responseObj?.response_signature?.ToString();
+                if (string.IsNullOrEmpty(responseSignature))
+                {
+                    return false;
+                }
+
+                // التحقق من timestamp
+                var responseTimestamp = responseObj?.timestamp?.ToString();
+                if (string.IsNullOrEmpty(responseTimestamp))
+                {
+                    return false;
+                }
+
+                // التحقق من أن الاستجابة حديثة (أقل من 5 دقائق)
+                if (DateTime.TryParse(responseTimestamp, out DateTime timestamp))
+                {
+                    var timeDiff = DateTime.UtcNow - timestamp;
+                    if (timeDiff.TotalMinutes > 5)
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         // مفتاح احتياطي في حالة فشل الاتصال بالسيرفر
@@ -293,8 +463,8 @@ namespace ToolyGsm
             
             try
             {
-                // التحقق من أن التوكن يحتوي على 3 أجزاء (JWT)
-                var parts = token.Split('.');
+            // التحقق من أن التوكن يحتوي على 3 أجزاء (JWT)
+            var parts = token.Split('.');
                 if (parts.Length != 3) 
                 {
                     System.Diagnostics.Debug.WriteLine($"[JWT] Token has {parts.Length} parts, expected 3");

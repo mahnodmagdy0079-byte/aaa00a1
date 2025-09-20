@@ -156,6 +156,22 @@ export async function POST(req: NextRequest) {
     const startTime = new Date();
     const endTime = new Date(startTime.getTime() + durationHours * 60 * 60 * 1000);
 
+    console.log("Creating tool request with data:", {
+      user_email: userEmail,
+      user_id: decoded.user_id,
+      tool_name: toolName,
+      start_time: startTime.toISOString(),
+      end_time: endTime.toISOString(),
+      price: price,
+      duration_hours: durationHours,
+      status_ar: "قيد التشغيل",
+      purchase_type: isSubscriptionBased ? "subscription" : "credit",
+      ultra_id: assignedAccount ? assignedAccount.account_username : "",
+      user_name: userEmail.split("@")[0],
+      notes: `Tool purchased ${isSubscriptionBased ? "with subscription" : "with credits"}${assignedAccount ? ` - Account: ${assignedAccount.account_username}` : ""}`,
+      requested_at: new Date().toISOString(),
+    });
+
     const { data: toolRequest, error: requestError } = await supabase
       .from("tool_requests")
       .insert({
@@ -172,14 +188,18 @@ export async function POST(req: NextRequest) {
         user_name: userEmail.split("@")[0], // Extract username from email
         notes: `Tool purchased ${isSubscriptionBased ? "with subscription" : "with credits"}${assignedAccount ? ` - Account: ${assignedAccount.account_username}` : ""}`,
         requested_at: new Date().toISOString(),
+        is_subscription_based: isSubscriptionBased,
+        shared_email: null, // Will be filled by Windows program
+        wallet_transaction_id: null // Will be filled if needed
       })
       .select()
       .single();
 
     if (requestError) {
+      console.error("Tool request creation error:", requestError);
       return NextResponse.json({ 
         success: false, 
-        error: "خطأ في إنشاء طلب الأداة" 
+        error: `خطأ في إنشاء طلب الأداة: ${requestError.message}` 
       }, { status: 500 });
     }
 
