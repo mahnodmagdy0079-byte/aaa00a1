@@ -31,6 +31,7 @@ export async function POST(req: NextRequest) {
     let decoded: any;
     try {
       decoded = jwt.verify(token, jwtSecret);
+      console.log("JWT decoded:", decoded);
     } catch (err) {
       return NextResponse.json({ success: false, error: "Invalid or expired token" }, { status: 401 });
     }
@@ -46,10 +47,21 @@ export async function POST(req: NextRequest) {
     }
 
     const userEmail = decoded.user_email;
+    const userId = decoded.user_id || decoded.sub;
+    
+    console.log("User info:", { userEmail, userId });
+    
     if (!userEmail) {
       return NextResponse.json({ 
         success: false, 
         error: "User email is required" 
+      }, { status: 400 });
+    }
+    
+    if (!userId) {
+      return NextResponse.json({ 
+        success: false, 
+        error: "User ID is required" 
       }, { status: 400 });
     }
 
@@ -70,7 +82,7 @@ export async function POST(req: NextRequest) {
       const { data: wallet, error: walletError } = await supabase
         .from("user_wallets")
         .select("balance")
-        .or(`user_id.eq.${decoded.user_id},user_email.eq.${userEmail}`)
+        .or(`user_id.eq.${userId},user_email.eq.${userEmail}`)
         .single();
 
       if (walletError || !wallet) {
@@ -91,7 +103,7 @@ export async function POST(req: NextRequest) {
       const { error: deductError } = await supabase
         .from("user_wallets")
         .update({ balance: wallet.balance - price })
-        .or(`user_id.eq.${decoded.user_id},user_email.eq.${userEmail}`);
+        .or(`user_id.eq.${userId},user_email.eq.${userEmail}`);
 
       if (deductError) {
         return NextResponse.json({ 
@@ -129,7 +141,7 @@ export async function POST(req: NextRequest) {
             is_available: false,
             assigned_to_user: userEmail,
             assigned_at: new Date().toISOString(),
-            user_id: decoded.user_id, // استخدام UUID بدلاً من email
+            user_id: userId, // استخدام UUID بدلاً من email
             updated_at: new Date().toISOString()
           })
           .eq("id", availableAccount.id)
@@ -176,7 +188,7 @@ export async function POST(req: NextRequest) {
       .from("tool_requests")
       .insert({
         user_email: userEmail,
-        user_id: decoded.user_id,
+        user_id: userId,
         tool_name: toolName,
         start_time: startTime.toISOString(),
         end_time: endTime.toISOString(),

@@ -1500,19 +1500,30 @@ namespace toolygsm1
                             {
                                 // إذا كان هناك حساب مخصص، بدء الأوميشن
                                 var account = purchaseObj["account"];
-                                if (account != null)
+                                LogError("AccountDebug", new Exception($"Account object: {account?.ToString()}, Type: {account?.Type}"));
+                                
+                                if (account != null && account.Type != JTokenType.Null)
                                 {
                                     var username = account["username"]?.ToString();
                                     var password = account["password"]?.ToString();
                                     var accountId = account["account_id"]?.ToString();
                                     
-                                    LogError("AccountInfo", new Exception($"Account: {username}, ID: {accountId}"));
+                                    LogError("AccountInfo", new Exception($"Account: {username}, Password: {password?.Substring(0, Math.Min(3, password?.Length ?? 0))}***, ID: {accountId}"));
                                     
                                     if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
                                     {
+                                        LogError("AutomationStart", new Exception($"Starting automation with username: {username}"));
                                         // بدء الأوميشن مع الحساب المخصص
                                         StartUnlockToolAutomation(username, password);
                                     }
+                                    else
+                                    {
+                                        LogError("AccountValidation", new Exception($"Username or password is empty. Username: '{username}', Password: '{password?.Substring(0, Math.Min(3, password?.Length ?? 0))}***'"));
+                                    }
+                                }
+                                else
+                                {
+                                    LogError("AccountInfo", new Exception("No account assigned for this tool"));
                                 }
                                 
                                 return new PurchaseResult { Success = true };
@@ -1644,23 +1655,31 @@ namespace toolygsm1
         {
             try
             {
+                LogError("StartUnlockToolAutomation", new Exception($"Starting automation for username: {username}"));
+                
                 // بدء الأوميشن في thread منفصل
                 System.Threading.Tasks.Task.Run(() =>
                 {
                     try
                     {
+                        LogError("UnlockToolAutomation", new Exception($"Task started for username: {username}"));
+                        
                         // استدعاء دالة الأوميشن مع الحساب المخصص
                         UnlockToolAutomation.StartUnlockToolAutomation(username, password);
+                        
+                        LogError("UnlockToolAutomation", new Exception($"Automation completed for username: {username}"));
                     }
                     catch (Exception ex)
                     {
-                        LogError("UnlockToolAutomation", ex);
+                        LogError("UnlockToolAutomation", new Exception($"Error in automation task for username: {username}. Error: {ex.Message}"));
                     }
                 });
+                
+                LogError("StartUnlockToolAutomation", new Exception($"Task created successfully for username: {username}"));
             }
             catch (Exception ex)
             {
-                LogError("StartUnlockToolAutomation", ex);
+                LogError("StartUnlockToolAutomation", new Exception($"Error starting automation for username: {username}. Error: {ex.Message}"));
             }
         }
 
