@@ -19,7 +19,6 @@ import {
 import { useState, useEffect } from "react"
 import {
   loadRegisteredUsers as loadUsersAction,
-  fetchAdminStats,
   assignPackageToUser,
   addUserCredit,
   addTool,
@@ -155,18 +154,23 @@ export default function AdminPage() {
     setIsLoadingStats(true)
 
     try {
-      const result = await fetchAdminStats()
+      const response = await fetch("/api/admin/stats", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({})
+      })
+      const result = await response.json()
 
-
-
-      if (result.error) {
-
+      if (!result.success) {
+        console.error("Error loading stats:", result.error)
         return
       }
 
       setStats(result.stats)
     } catch (error) {
-
+      console.error("Error loading stats:", error)
     } finally {
       setIsLoadingStats(false)
     }

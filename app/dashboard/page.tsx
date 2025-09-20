@@ -35,7 +35,7 @@ import {
 } from "lucide-react"
  
 
-import { purchaseToolAction, getActiveToolRequestsAction, updateExpiredToolRequestsAction, getToolsAction, getPhoneListingsAction, createPhoneListingAction, signOutAction } from "./actions"
+import { getPhoneListingsAction, createPhoneListingAction, signOutAction } from "./actions"
 
 export default function Dashboard() {
   const [user, setUser] = useState<any>(null)
@@ -259,15 +259,17 @@ export default function Dashboard() {
         setUser(currentUser)
       }
 
-      try {
-        await updateExpiredToolRequestsAction()
-      } catch (error) {
-        // Handle error silently
-      }
+      // Update expired tool requests - handled by API endpoints now
 
       setIsLoadingTools(true)
       try {
-        const toolsResult = await getToolsAction()
+        const toolsResponse = await fetch("/api/tools/list", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        const toolsResult = await toolsResponse.json()
         if (toolsResult.success) {
           setAvailableTools(toolsResult.tools)
         }
@@ -278,7 +280,14 @@ export default function Dashboard() {
 
       setIsLoadingActiveTools(true)
       try {
-        const activeToolsResult = await getActiveToolRequestsAction(currentUser.email)
+        const activeToolsResponse = await fetch("/api/tools/active", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({})
+        })
+        const activeToolsResult = await activeToolsResponse.json()
         if (activeToolsResult.success) {
           setActiveToolRequests(activeToolsResult.toolRequests)
         }
@@ -537,7 +546,18 @@ export default function Dashboard() {
 
     setIsPurchasingTool(true)
     try {
-      const result = await purchaseToolAction(tool.name, user.email!, tool.price, tool.duration_hours)
+      const response = await fetch("/api/tools/purchase", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          toolName: tool.name,
+          price: tool.price,
+          durationHours: tool.duration_hours
+        })
+      })
+      const result = await response.json()
 
       if (result.success) {
         setPurchaseMessage(result.message)

@@ -36,6 +36,21 @@ namespace ToolyGsm
             return Environment.GetEnvironmentVariable("SUPABASE_BASE_URL") ?? "https://ewkzduhofisinbhjrzzu.supabase.co";
         }
 
+        // الحصول على Secret Key من Environment Variables
+        public static string GetSecretKey()
+        {
+            var secretKey = Environment.GetEnvironmentVariable("TOOLY_SECRET_KEY");
+            if (string.IsNullOrEmpty(secretKey))
+            {
+                throw new InvalidOperationException(
+                    "[SECURITY ERROR] TOOLY_SECRET_KEY environment variable is not set! " +
+                    "Please set the TOOLY_SECRET_KEY environment variable before running the application. " +
+                    "This is required for security reasons."
+                );
+            }
+            return secretKey;
+        }
+
         // تشفير البيانات الحساسة (مبسط)
         public static string EncryptSensitiveData(string data)
         {
@@ -85,11 +100,49 @@ namespace ToolyGsm
         // التحقق من صحة التوكن
         public static bool IsValidToken(string token)
         {
-            if (string.IsNullOrEmpty(token)) return false;
+            if (string.IsNullOrEmpty(token)) 
+            {
+                System.Diagnostics.Debug.WriteLine("[JWT] Token is null or empty");
+                return false;
+            }
             
-            // التحقق من أن التوكن يحتوي على 3 أجزاء (JWT)
-            var parts = token.Split('.');
-            return parts.Length == 3;
+            try
+            {
+                // التحقق من أن التوكن يحتوي على 3 أجزاء (JWT)
+                var parts = token.Split('.');
+                if (parts.Length != 3) 
+                {
+                    System.Diagnostics.Debug.WriteLine($"[JWT] Token has {parts.Length} parts, expected 3");
+                    return false;
+                }
+                
+                // فحص بسيط للشكل فقط (مؤقت لحل مشكلة 401)
+                System.Diagnostics.Debug.WriteLine("[JWT] Token format is valid, accepting token");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[JWT] Token validation failed with exception: {ex.Message}");
+                return false;
+            }
+        }
+
+        // إضافة padding للـ Base64
+        private static string AddBase64Padding(string base64)
+        {
+            if (string.IsNullOrEmpty(base64)) return base64;
+            
+            // إزالة المسافات
+            base64 = base64.Trim();
+            
+            // إضافة padding إذا لزم الأمر
+            switch (base64.Length % 4)
+            {
+                case 2: base64 += "=="; break;
+                case 3: base64 += "="; break;
+            }
+            
+            return base64;
         }
 
         // إخفاء التوكن في الـ logs
@@ -231,7 +284,39 @@ namespace ToolyGsm
             }
         }
 
-        // 8. فحص شامل للأمان
+        // 8. Rate Limiting لمنع الهجمات
+        private static readonly Dictionary<string, List<DateTime>> _requestHistory = new Dictionary<string, List<DateTime>>();
+        private static readonly object _rateLimitLock = new object();
+
+        public static bool IsRateLimited(string userId)
+        {
+            if (string.IsNullOrEmpty(userId)) return true;
+
+            lock (_rateLimitLock)
+            {
+                var now = DateTime.UtcNow;
+                var window = TimeSpan.FromMinutes(1); // نافذة زمنية: دقيقة واحدة
+                var maxRequests = 10; // الحد الأقصى: 10 طلبات في الدقيقة
+
+                if (!_requestHistory.ContainsKey(userId))
+                    _requestHistory[userId] = new List<DateTime>();
+
+                var userRequests = _requestHistory[userId];
+                
+                // إزالة الطلبات القديمة خارج النافذة الزمنية
+                userRequests.RemoveAll(t => now - t > window);
+
+                // فحص إذا تجاوز الحد المسموح
+                if (userRequests.Count >= maxRequests)
+                    return true;
+
+                // إضافة الطلب الحالي
+                userRequests.Add(now);
+                return false;
+            }
+        }
+
+        // 9. فحص شامل للأمان
         public static SecurityCheckResult PerformSecurityCheck()
         {
             var result = new SecurityCheckResult();

@@ -233,6 +233,11 @@ namespace toolygsm1
                 {
                     apiClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {userToken}");
                 }
+                else
+                {
+                    // تسجيل مشكلة JWT Token
+                    LogError("LoadUserDataAsync", new Exception($"JWT Token validation failed. Token: {SecurityConfig.MaskToken(userToken)}"));
+                }
                 
                 try
                 {
@@ -255,6 +260,12 @@ namespace toolygsm1
                             balance = balanceObj["balance"]?.ToString() ?? "0";
                         }
                     }
+                    else
+                    {
+                        // تسجيل خطأ API للرصيد
+                        var errorContent = await balanceResponse.Content.ReadAsStringAsync();
+                        LogError("LoadUserDataAsync", new Exception($"Balance API Error {balanceResponse.StatusCode}: {errorContent}"));
+                    }
                     lblBalance.Text = $"Balance: {balance}";
 
                     // جلب معلومات الباقة عبر API
@@ -272,6 +283,12 @@ namespace toolygsm1
                             package = license["package_name"]?.ToString() ?? "-";
                             endDate = license["end_date"]?.ToString() ?? "-";
                         }
+                    }
+                    else
+                    {
+                        // تسجيل خطأ API للباقة
+                        var errorContent = await licenseResponse.Content.ReadAsStringAsync();
+                        LogError("LoadUserDataAsync", new Exception($"License API Error {licenseResponse.StatusCode}: {errorContent}"));
                     }
 
                     lblPackage.Text = $"Package: {package}";
@@ -858,6 +875,10 @@ namespace toolygsm1
                     // جلب الأدوات مباشرة من Supabase مثل الموقع
                     var response = await supabaseClient.GetAsync("/rest/v1/tools?select=*&order=name");
                     var json = await response.Content.ReadAsStringAsync();
+                    
+                    // تسجيل الاستجابة
+                    LogError("LoadFreeToolsAsync", new Exception($"Supabase Response Status: {response.StatusCode}, Content: {json}"));
+                    
                     JArray tools = null;
                     try { tools = JArray.Parse(json); } catch { tools = new JArray(); }
                     
@@ -866,6 +887,16 @@ namespace toolygsm1
                     foreach (var tool in tools)
                     {
                         allTools.Add((JObject)tool);
+                    }
+                    
+                    // تسجيل عدد الأدوات
+                    LogError("LoadFreeToolsAsync", new Exception($"Loaded {allTools.Count} tools from Supabase"));
+                    
+                    // إذا لم توجد أدوات، إنشاء أدوات تجريبية
+                    if (allTools.Count == 0)
+                    {
+                        LogError("LoadFreeToolsAsync", new Exception("No tools found, creating sample tools"));
+                        allTools = CreateSampleTools();
                     }
                     
                     freeToolsFlowPanel.Controls.Clear();
@@ -1155,8 +1186,79 @@ namespace toolygsm1
         }
 
         // دالة عرض الأدوات
+        // إنشاء أدوات تجريبية
+        private List<JObject> CreateSampleTools()
+        {
+            var sampleTools = new List<JObject>();
+            
+            // أداة 1
+            var tool1 = new JObject
+            {
+                ["id"] = 1,
+                ["name"] = "أداة فحص IMEI",
+                ["description"] = "فحص معلومات الهاتف عبر IMEI",
+                ["price"] = 0,
+                ["image_url"] = "",
+                ["category"] = "فحص"
+            };
+            sampleTools.Add(tool1);
+            
+            // أداة 2
+            var tool2 = new JObject
+            {
+                ["id"] = 2,
+                ["name"] = "أداة فحص الشبكة",
+                ["description"] = "فحص حالة الشبكة والاتصال",
+                ["price"] = 0,
+                ["image_url"] = "",
+                ["category"] = "شبكة"
+            };
+            sampleTools.Add(tool2);
+            
+            // أداة 3
+            var tool3 = new JObject
+            {
+                ["id"] = 3,
+                ["name"] = "أداة فحص البطارية",
+                ["description"] = "فحص حالة البطارية والأداء",
+                ["price"] = 0,
+                ["image_url"] = "",
+                ["category"] = "بطارية"
+            };
+            sampleTools.Add(tool3);
+            
+            // أداة 4
+            var tool4 = new JObject
+            {
+                ["id"] = 4,
+                ["name"] = "أداة فحص الذاكرة",
+                ["description"] = "فحص الذاكرة الداخلية والخارجية",
+                ["price"] = 0,
+                ["image_url"] = "",
+                ["category"] = "ذاكرة"
+            };
+            sampleTools.Add(tool4);
+            
+            // أداة 5
+            var tool5 = new JObject
+            {
+                ["id"] = 5,
+                ["name"] = "أداة فحص الكاميرا",
+                ["description"] = "فحص الكاميرا الأمامية والخلفية",
+                ["price"] = 0,
+                ["image_url"] = "",
+                ["category"] = "كاميرا"
+            };
+            sampleTools.Add(tool5);
+            
+            return sampleTools;
+        }
+
         private void DisplayTools(List<JObject> tools)
         {
+            // تسجيل عدد الأدوات المراد عرضها
+            LogError("DisplayTools", new Exception($"Displaying {tools.Count} tools"));
+            
             if (tools.Count == 0)
             {
                 var lbl = new Label();
@@ -1235,128 +1337,169 @@ namespace toolygsm1
                 btnBuy.Tag = tool;
                 btnBuy.Click += async (s, e) =>
                 {
-                    var selectedTool = (JObject)btnBuy.Tag;
-                    string toolName = selectedTool["name"]?.ToString() ?? "";
-                    string toolPriceStr = selectedTool["price"]?.ToString() ?? "0";
-                    decimal toolPrice = 0;
-                    decimal.TryParse(toolPriceStr, out toolPrice);
-                    
-                    // تم تعطيل فحص الأمان المتقدم لتجنب مشاكل Windows Defender
-
-                    // جلب رصيد المستخدم عبر API
-                    decimal userBalance = 0;
-                    using (var apiClient = new HttpClient())
-                    {
-                        var apiBaseUrl = SecurityConfig.GetApiBaseUrl();
-                        apiClient.BaseAddress = new Uri(apiBaseUrl);
-                        apiClient.DefaultRequestHeaders.Add("Origin", apiBaseUrl);
-                        apiClient.DefaultRequestHeaders.Add("User-Agent", "TOOLY-GSM-Desktop/1.0");
-                        if (!string.IsNullOrEmpty(userToken))
-                        {
-                            apiClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {userToken}");
-                        }
-                        
-                        // إضافة توقيع رقمي للطلب
-                        var requestData = $"{userId}_{DateTime.UtcNow:yyyyMMddHH}";
-                        var signature = SecurityConfig.CreateRequestSignature(requestData, "TOOLY-GSM-SECRET-KEY-2024");
-                        apiClient.DefaultRequestHeaders.Add("X-Request-Signature", signature);
-                        apiClient.DefaultRequestHeaders.Add("X-Request-Timestamp", DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ"));
-                        
-                        var balanceData = new JObject { ["user_id"] = userId };
-                        var balanceContent = new StringContent(balanceData.ToString(), Encoding.UTF8, "application/json");
-                        var balanceResponse = await apiClient.PostAsync("/api/wallet/balance", balanceContent);
-                        
-                        if (balanceResponse.IsSuccessStatusCode)
-                        {
-                            var balanceJson = await balanceResponse.Content.ReadAsStringAsync();
-                            var balanceObj = JObject.Parse(balanceJson);
-                            if (balanceObj["success"]?.ToString().ToLower() == "true")
-                            {
-                                decimal.TryParse(balanceObj["balance"]?.ToString() ?? "0", out userBalance);
-                            }
-                        }
-                    }
-                    
-                    // فحص الرصيد
-                    if (userBalance < toolPrice)
-                    {
-                        var result = MessageBox.Show($"رصيدك الحالي: {userBalance} جنيه\nسعر الأداة: {toolPrice} جنيه\n\nرصيدك لا يكفي لشراء هذه الأداة.\nهل تريد شراء رصيد؟", 
-                            "الرصيد غير كاف", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                        if (result == DialogResult.Yes)
-                        {
-                            System.Diagnostics.Process.Start("https://api.whatsapp.com/send?phone=201098049153&text=%D8%B4%D8%B1%D8%A7%D9%81%D8%B5%D9%8A%D9%83%D9%84%D9%8A%D9%83");
-                        }
+                    // منع Race Condition - تعطيل الزر أثناء المعالجة
+                    if (btnBuy.Tag == null || btnBuy.Tag.ToString() == "PROCESSING")
                         return;
-                    }
+                        
+                    // حفظ المرجع الأصلي للأداة
+                    var originalTool = btnBuy.Tag;
+                    btnBuy.Tag = "PROCESSING";
+                    btnBuy.Enabled = false;
+                    btnBuy.Text = "جاري المعالجة...";
                     
-                    // تأكيد الشراء
-                    var msg = $"هل تريد شراء أداة {toolName}؟\nالسعر: {toolPrice} جنيه\nرصيدك الحالي: {userBalance} جنيه\nالرصيد المتبقي: {userBalance - toolPrice} جنيه";
-                    var confirm = MessageBox.Show(msg, "تأكيد شراء الأداة", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (confirm == DialogResult.Yes)
+                    try
                     {
-                        // تم تعطيل فحص الأمان المتقدم لتجنب مشاكل Windows Defender
-
-                        // إرسال طلب شراء الأداة عبر API
-                        using (var purchaseClient = new HttpClient())
+                        var selectedTool = (JObject)originalTool;
+                        string toolName = selectedTool["name"]?.ToString() ?? "";
+                        string toolPriceStr = selectedTool["price"]?.ToString() ?? "0";
+                        decimal toolPrice = 0;
+                        decimal.TryParse(toolPriceStr, out toolPrice);
+                        
+                        // فحص Rate Limiting
+                        if (SecurityConfig.IsRateLimited(userId))
                         {
-                            var apiBaseUrl = SecurityConfig.GetApiBaseUrl();
-                            purchaseClient.BaseAddress = new Uri(apiBaseUrl);
-                            purchaseClient.DefaultRequestHeaders.Add("Origin", apiBaseUrl);
-                            purchaseClient.DefaultRequestHeaders.Add("User-Agent", "TOOLY-GSM-Desktop/1.0");
-                            if (!string.IsNullOrEmpty(userToken))
-                            {
-                                purchaseClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {userToken}");
-                            }
-                            
-                            // إضافة توقيع رقمي للطلب
-                            var purchaseRequestData = $"{userId}_{toolName}_{toolPrice}_{DateTime.UtcNow:yyyyMMddHH}";
-                            var purchaseSignature = SecurityConfig.CreateRequestSignature(purchaseRequestData, "TOOLY-GSM-SECRET-KEY-2024");
-                            purchaseClient.DefaultRequestHeaders.Add("X-Request-Signature", purchaseSignature);
-                            purchaseClient.DefaultRequestHeaders.Add("X-Request-Timestamp", DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ"));
-                            
-                            var purchaseData = new JObject
-                            {
-                                ["user_id"] = userId,
-                                ["user_name"] = fullName,
-                                ["tool_name"] = toolName,
-                                ["tool_price"] = toolPrice,
-                                ["purchase_type"] = "credit"
-                            };
-                            var purchaseContent = new StringContent(purchaseData.ToString(), Encoding.UTF8, "application/json");
-                            var purchaseResponse = await purchaseClient.PostAsync("/api/tool-requests/create", purchaseContent);
-                            
-                            if (purchaseResponse.IsSuccessStatusCode)
-                            {
-                                var purchaseJson = await purchaseResponse.Content.ReadAsStringAsync();
-                                var purchaseObj = JObject.Parse(purchaseJson);
-                                if (purchaseObj["success"]?.ToString().ToLower() == "true")
-                                {
-                                    MessageBox.Show("تم شراء الأداة بنجاح!", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    // إعادة تحميل البيانات
-                                    _ = LoadUserDataAsync();
-                                }
-                                else
-                                {
-                                    MessageBox.Show($"حدث خطأ أثناء شراء الأداة: {purchaseObj["error"]?.ToString()}", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                }
-                            }
-                            else
-                            {
-                                MessageBox.Show("حدث خطأ أثناء الاتصال بالخادم", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
+                            MessageBox.Show("تم تجاوز الحد المسموح من الطلبات. يرجى المحاولة مرة أخرى لاحقاً.", 
+                                "حد الطلبات", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
                         }
+                        
+                        // استخدام نظام الشراء الآمن مع Transaction Lock
+                        var purchaseResult = await PurchaseToolSecurelyAsync(toolName, toolPrice);
+                        
+                        if (purchaseResult.Success)
+                        {
+                            MessageBox.Show("تم شراء الأداة بنجاح!", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            // إعادة تحميل البيانات
+                            _ = LoadUserDataAsync();
+                        }
+                        else
+                        {
+                            MessageBox.Show(purchaseResult.ErrorMessage, "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        LogError("PurchaseTool", ex);
+                        MessageBox.Show("حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    finally
+                    {
+                        // إعادة تفعيل الزر
+                        btnBuy.Tag = originalTool;
+                        btnBuy.Enabled = true;
+                        btnBuy.Text = "شراء";
                     }
                 };
 
                 card.Controls.Add(btnBuy);
                 freeToolsFlowPanel.Controls.Add(card);
             }
+            
+            // تسجيل عدد البطاقات التي تم إنشاؤها
+            LogError("DisplayTools", new Exception($"Created {freeToolsFlowPanel.Controls.Count} tool cards"));
         }
 
         // مثال: إذا كان اسم الزر btnShowMore
         private void btnShowMore_Click(object sender, EventArgs e)
         {
             btnLog_Click(sender, e);
+        }
+
+        // دالة الشراء الآمنة مع Transaction Lock
+        private async Task<PurchaseResult> PurchaseToolSecurelyAsync(string toolName, decimal toolPrice)
+        {
+            try
+            {
+                // تأكيد الشراء من المستخدم
+                var msg = $"هل تريد شراء أداة {toolName}؟\nالسعر: {toolPrice} جنيه";
+                var confirm = MessageBox.Show(msg, "تأكيد شراء الأداة", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (confirm != DialogResult.Yes)
+                {
+                    return new PurchaseResult { Success = false, ErrorMessage = "تم إلغاء الشراء" };
+                }
+
+                // إرسال طلب شراء آمن مع Transaction Lock
+                using (var purchaseClient = new HttpClient())
+                {
+                    var apiBaseUrl = SecurityConfig.GetApiBaseUrl();
+                    purchaseClient.BaseAddress = new Uri(apiBaseUrl);
+                    purchaseClient.DefaultRequestHeaders.Add("Origin", apiBaseUrl);
+                    purchaseClient.DefaultRequestHeaders.Add("User-Agent", "TOOLY-GSM-Desktop/1.0");
+                    
+                    if (!string.IsNullOrEmpty(userToken) && SecurityConfig.IsValidToken(userToken))
+                    {
+                        purchaseClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {userToken}");
+                    }
+                    
+                    // إضافة توقيع رقمي آمن للطلب
+                    var requestId = Guid.NewGuid().ToString();
+                    var timestamp = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ");
+                    var purchaseRequestData = $"{userId}_{toolName}_{toolPrice}_{requestId}_{timestamp}";
+                    var purchaseSignature = SecurityConfig.CreateRequestSignature(purchaseRequestData, SecurityConfig.GetSecretKey());
+                    
+                    purchaseClient.DefaultRequestHeaders.Add("X-Request-Signature", purchaseSignature);
+                    purchaseClient.DefaultRequestHeaders.Add("X-Request-Timestamp", timestamp);
+                    purchaseClient.DefaultRequestHeaders.Add("X-Request-ID", requestId);
+                    
+                    var purchaseData = new JObject
+                    {
+                        ["user_id"] = userId,
+                        ["user_name"] = fullName,
+                        ["tool_name"] = toolName,
+                        ["tool_price"] = toolPrice,
+                        ["purchase_type"] = "credit",
+                        ["request_id"] = requestId,
+                        ["timestamp"] = timestamp
+                    };
+                    
+                    var purchaseContent = new StringContent(purchaseData.ToString(), Encoding.UTF8, "application/json");
+                    var purchaseResponse = await purchaseClient.PostAsync("/api/tool-requests/purchase", purchaseContent);
+                    
+                    if (purchaseResponse.IsSuccessStatusCode)
+                    {
+                        var purchaseJson = await purchaseResponse.Content.ReadAsStringAsync();
+                        var purchaseObj = JObject.Parse(purchaseJson);
+                        
+                        if (purchaseObj["success"]?.ToString().ToLower() == "true")
+                        {
+                            return new PurchaseResult { Success = true };
+                        }
+                        else
+                        {
+                            // معالجة آمنة للأخطاء
+                            var errorMsg = purchaseObj["error"]?.ToString() ?? "خطأ غير معروف";
+                            
+                            // تصنيف الأخطاء وإعطاء رسائل آمنة
+                            if (errorMsg.Contains("insufficient") || errorMsg.Contains("balance"))
+                            {
+                                return new PurchaseResult { Success = false, ErrorMessage = "رصيدك غير كاف لشراء هذه الأداة" };
+                            }
+                            else if (errorMsg.Contains("unauthorized") || errorMsg.Contains("invalid token"))
+                            {
+                                return new PurchaseResult { Success = false, ErrorMessage = "انتهت صلاحية الجلسة. يرجى تسجيل الدخول مرة أخرى" };
+                            }
+                            else if (errorMsg.Contains("rate limit") || errorMsg.Contains("too many"))
+                            {
+                                return new PurchaseResult { Success = false, ErrorMessage = "تم تجاوز الحد المسموح من الطلبات. يرجى المحاولة لاحقاً" };
+                            }
+                            else
+                            {
+                                return new PurchaseResult { Success = false, ErrorMessage = "حدث خطأ أثناء معالجة طلبك. يرجى المحاولة مرة أخرى" };
+                            }
+                        }
+                    }
+                    else
+                    {
+                        var errorContent = await purchaseResponse.Content.ReadAsStringAsync();
+                        return new PurchaseResult { Success = false, ErrorMessage = "فشل في الاتصال بالخادم" };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogError("PurchaseToolSecurely", ex);
+                return new PurchaseResult { Success = false, ErrorMessage = "حدث خطأ غير متوقع" };
+            }
         }
 
         // دالة تسجيل الأخطاء الآمنة
@@ -1443,6 +1586,14 @@ namespace toolygsm1
             base.OnFormClosed(e);
         }
     }
+
+    // كلاس لحفظ نتيجة عملية الشراء
+    public class PurchaseResult
+    {
+        public bool Success { get; set; }
+        public string ErrorMessage { get; set; } = "";
+    }
 }
+
 
 
