@@ -150,7 +150,7 @@ export async function POST(req: NextRequest) {
           .from("tool_accounts")
           .update({
             is_available: false,
-            assigned_to_user: userEmail,
+            assigned_to_user: finalUserId, // استخدام UUID بدلاً من email
             assigned_at: new Date().toISOString(),
             user_id: finalUserId, // استخدام UUID بدلاً من email
             updated_at: new Date().toISOString()
