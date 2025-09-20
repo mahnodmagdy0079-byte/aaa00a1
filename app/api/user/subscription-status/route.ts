@@ -25,40 +25,30 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // Sign out user
-    const { error } = await supabase.auth.signOut()
+    // Get active license
+    const { data: activeLicense, error } = await supabase
+      .from("licenses")
+      .select("*")
+      .eq("user_email", user.email)
+      .gte("end_date", new Date().toISOString())
+      .single()
 
-    if (error) {
-      console.error("Error signing out user:", error)
+    if (error && error.code !== "PGRST116") { // PGRST116 = no rows returned
+      console.error("Error fetching subscription status:", error)
       return NextResponse.json(
-        { success: false, error: "Failed to sign out" },
+        { success: false, error: "Failed to fetch subscription status" },
         { status: 500 }
       )
     }
 
-    // Create response with cleared cookies
-    const response = NextResponse.json({
+    return NextResponse.json({
       success: true,
-      message: "تم تسجيل الخروج بنجاح"
+      hasActiveSubscription: !!activeLicense,
+      license: activeLicense || null
     })
-
-    // Clear Supabase cookies
-    response.cookies.delete("sb-access-token")
-    response.cookies.delete("sb-refresh-token")
-    response.cookies.delete("sb-provider-token")
-    
-    // Clear any other potential Supabase cookies
-    const cookies = req.cookies.getAll()
-    cookies.forEach(cookie => {
-      if (cookie.name.startsWith("sb-")) {
-        response.cookies.delete(cookie.name)
-      }
-    })
-
-    return response
 
   } catch (error) {
-    console.error("Sign out API error:", error)
+    console.error("Subscription status API error:", error)
     return NextResponse.json(
       { success: false, error: "Internal server error" },
       { status: 500 }

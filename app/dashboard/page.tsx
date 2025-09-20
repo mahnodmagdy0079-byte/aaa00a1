@@ -35,7 +35,7 @@ import {
 } from "lucide-react"
  
 
-import { getPhoneListingsAction, createPhoneListingAction, signOutAction } from "./actions"
+// Server Actions removed - using API endpoints instead
 
 export default function Dashboard() {
   const [user, setUser] = useState<any>(null)
@@ -358,7 +358,13 @@ export default function Dashboard() {
 
   const fetchPhoneListings = async () => {
     try {
-      const result = await getPhoneListingsAction()
+      const response = await fetch("/api/phone-listings", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      const result = await response.json()
       if (result.success) {
         setPhoneListings(result.listings)
       }
@@ -376,21 +382,26 @@ export default function Dashboard() {
 
     setIsSubmitting(true)
     try {
-      const result = await createPhoneListingAction({
-        user_id: user.id,
-        user_name: user.user_metadata?.full_name || user.email,
-        phone_model: newPhoneRequest.phoneModel,
-        problem_type: newPhoneRequest.problemType,
-        description: newPhoneRequest.description,
-        budget: newPhoneRequest.budget,
-        location: newPhoneRequest.location,
+      const response = await fetch("/api/phone-listings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          phone_model: newPhoneRequest.phoneModel,
+          problem_type: newPhoneRequest.problemType,
+          description: newPhoneRequest.description,
+          budget: newPhoneRequest.budget,
+          location: newPhoneRequest.location,
+        })
       })
+      const result = await response.json()
 
       if (!result.success) {
-        setSubmitMessage("حدث خطأ أثناء نشر الطلب")
+        setSubmitMessage(result.error || "حدث خطأ أثناء نشر الطلب")
         setSubmitSuccess(false)
       } else {
-        setSubmitMessage("تم نشر طلبك بنجاح!")
+        setSubmitMessage(result.message || "تم نشر طلبك بنجاح!")
         setSubmitSuccess(true)
         setNewPhoneRequest({
           phoneModel: "",
@@ -414,10 +425,31 @@ export default function Dashboard() {
   }
 
   const handleLogout = async () => {
-    await signOutAction()
-    // تنظيف أي توكن قديم من التخزين المحلي
-    try { if (typeof window !== "undefined") localStorage.removeItem("token") } catch {}
-    router.push("/")
+    try {
+      const response = await fetch("/api/auth/signout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      const result = await response.json()
+      
+      if (result.success) {
+        // تنظيف أي توكن قديم من التخزين المحلي
+        try { if (typeof window !== "undefined") localStorage.removeItem("token") } catch {}
+        router.push("/")
+      } else {
+        console.error("Logout failed:", result.error)
+        // تنظيف محلي حتى لو فشل API
+        try { if (typeof window !== "undefined") localStorage.removeItem("token") } catch {}
+        router.push("/")
+      }
+    } catch (error) {
+      console.error("Logout error:", error)
+      // تنظيف محلي حتى لو فشل API
+      try { if (typeof window !== "undefined") localStorage.removeItem("token") } catch {}
+      router.push("/")
+    }
   }
 
   const getSubscriptionStatus = () => {
