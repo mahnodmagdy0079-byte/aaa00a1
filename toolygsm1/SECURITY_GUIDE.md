@@ -69,7 +69,7 @@ setx SUPABASE_BASE_URL "https://ewkzduhofisinbhjrzzu.supabase.co"
 dotnet run
 
 # التحقق من أن API keys لا تظهر في الكود
-grep -r "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9" .
+grep -r "YOUR_SUPABASE_API_KEY" .
 ```
 
 ### **3. إنتاج Build آمن:**
@@ -78,7 +78,7 @@ grep -r "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9" .
 dotnet build -c Release
 
 # التحقق من عدم وجود API keys في الـ executable
-strings toolygsm1.exe | grep "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+strings toolygsm1.exe | grep "YOUR_SUPABASE_API_KEY"
 ```
 
 ## 🔍 **فحص الأمان:**
@@ -155,6 +155,9 @@ strings toolygsm1.exe | grep "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
 - 📝 **Secure Logging**
 
 **البرنامج الآن آمن للنشر!** 🚀
+
+
+
 
 
 

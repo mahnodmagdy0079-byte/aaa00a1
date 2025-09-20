@@ -66,8 +66,8 @@ var licenseResponse = await client.PostAsync("/api/license/check",
 // جلب الأدوات مباشرة من Supabase مثل الموقع
 client.BaseAddress = new Uri("https://ewkzduhofisinbhjrzzu.supabase.co");
 client.DefaultRequestHeaders.Clear();
-client.DefaultRequestHeaders.Add("apikey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...");
-client.DefaultRequestHeaders.Add("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...");
+client.DefaultRequestHeaders.Add("apikey", "YOUR_SUPABASE_API_KEY");
+client.DefaultRequestHeaders.Add("Authorization", "YOUR_SUPABASE_API_KEY");
 
 var response = await client.GetAsync("/rest/v1/tools?select=*&order=name");
 ```
@@ -99,8 +99,8 @@ client.DefaultRequestHeaders.Add("Authorization", $"Bearer {userToken}");
 
 ### **لـ Supabase Calls:**
 ```csharp
-client.DefaultRequestHeaders.Add("apikey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...");
-client.DefaultRequestHeaders.Add("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...");
+client.DefaultRequestHeaders.Add("apikey", "YOUR_SUPABASE_API_KEY");
+client.DefaultRequestHeaders.Add("Authorization", "YOUR_SUPABASE_API_KEY");
 ```
 
 ## 🎯 النتيجة المتوقعة

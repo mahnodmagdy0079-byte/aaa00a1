@@ -34,7 +34,7 @@ class ToolRequestsViewer:
         }
         
         self.supabase_url = 'https://ewkzduhofisinbhjrzzu.supabase.co'
-        self.supabase_key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV3a3pkdWhvZmlzaW5iaGpyenp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU3MzE3OTYsImV4cCI6MjA3MTMwNzc5Nn0.k_xa-C5jYCiCQ3KK6Xj4hyyfLIR1uWXeOZ0RQB8KUwI'
+        self.supabase_key = os.getenv('SUPABASE_API_KEY', 'your_supabase_api_key_here')
             
         self.setup_ui()
         self.load_requests()

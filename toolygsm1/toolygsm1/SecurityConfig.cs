@@ -16,8 +16,12 @@ namespace ToolyGsm
             var apiKey = Environment.GetEnvironmentVariable("SUPABASE_API_KEY");
             if (string.IsNullOrEmpty(apiKey))
             {
-                // Fallback للـ development (يجب إزالته في الإنتاج)
-                return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV3a3pkdWhvZmlzaW5iaGpyenp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU3MzE3OTYsImV4cCI6MjA3MTMwNzc5Nn0.k_xa-C5jYCiCQ3KK6Xj4hyyfLIR1uWXeOZ0RQB8KUwI";
+                // في الإنتاج، يجب إيقاف البرنامج إذا لم يتم تعيين API Key
+                throw new InvalidOperationException(
+                    "[SECURITY ERROR] SUPABASE_API_KEY environment variable is not set! " +
+                    "Please set the SUPABASE_API_KEY environment variable before running the application. " +
+                    "This is required for security reasons."
+                );
             }
             return apiKey;
         }

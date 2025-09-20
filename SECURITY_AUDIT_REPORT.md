@@ -24,8 +24,8 @@
 #### **1. تسريب API Keys (خطير جداً):**
 
 ```csharp
-// ❌ خطير - API Key مكشوف في الكود
-public const string ApiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV3a3pkdWhvZmlzaW5iaGpyenp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU3MzE3OTYsImV4cCI6MjA3MTMwNzc5Nn0.k_xa-C5jYCiCQ3KK6Xj4hyyfLIR1uWXeOZ0RQB8KUwI";
+// ❌ خطير - API Key مكشوف في الكود (تم إصلاحه)
+public const string ApiKey = "YOUR_SUPABASE_API_KEY_HERE"; // يجب استخدام Environment Variables
 ```
 
 **المخاطر:**
@@ -200,6 +200,9 @@ public static bool IsRateLimited(string userId)
 - 🟢 **نقاط قوة**: HTTPS, JWT, Input validation
 
 **التوصية**: إصلاح مشاكل الأمان قبل النشر العام! 🚨
+
+
+
 
 
 

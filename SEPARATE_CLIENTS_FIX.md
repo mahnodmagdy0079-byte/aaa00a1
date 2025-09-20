@@ -60,8 +60,8 @@ private async Task LoadFreeToolsAsync()
     using (var supabaseClient = new HttpClient())
     {
         supabaseClient.BaseAddress = new Uri("https://ewkzduhofisinbhjrzzu.supabase.co");
-        supabaseClient.DefaultRequestHeaders.Add("apikey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...");
-        supabaseClient.DefaultRequestHeaders.Add("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...");
+        supabaseClient.DefaultRequestHeaders.Add("apikey", "YOUR_SUPABASE_API_KEY");
+        supabaseClient.DefaultRequestHeaders.Add("Authorization", "YOUR_SUPABASE_API_KEY");
         
         // جلب الأدوات
         var response = await supabaseClient.GetAsync("/rest/v1/tools?select=*&order=name");

@@ -18,7 +18,7 @@
       "full_name": "User Name"
     }
   },
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."  // ← التوكن هنا!
+  "token": "YOUR_JWT_TOKEN_HERE"  // ← التوكن هنا!
 }
 ```
 
@@ -44,7 +44,7 @@ string token = loginResult["access_token"]?.ToString() ?? "";
 #### **بعد الإصلاح:**
 ```csharp
 string token = loginResult["token"]?.ToString() ?? "";
-// النتيجة: token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." (صحيح)
+// النتيجة: token = "YOUR_JWT_TOKEN_HERE" (صحيح)
 ```
 
 ### **إضافة Debugging شامل:**
