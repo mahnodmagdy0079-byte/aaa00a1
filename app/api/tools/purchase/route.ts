@@ -129,7 +129,7 @@ export async function POST(req: NextRequest) {
             is_available: false,
             assigned_to_user: userEmail,
             assigned_at: new Date().toISOString(),
-            user_id: decoded.user_id,
+            user_id: decoded.user_id, // استخدام UUID بدلاً من email
             updated_at: new Date().toISOString()
           })
           .eq("id", availableAccount.id)
@@ -190,7 +190,8 @@ export async function POST(req: NextRequest) {
         requested_at: new Date().toISOString(),
         is_subscription_based: isSubscriptionBased,
         shared_email: null, // Will be filled by Windows program
-        wallet_transaction_id: null // Will be filled if needed
+        wallet_transaction_id: null, // Will be filled if needed
+        password: assignedAccount ? assignedAccount.account_password : "" // إضافة حقل password
       })
       .select()
       .single();
