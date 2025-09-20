@@ -10,8 +10,8 @@ namespace toolygsm1.Automation
 {
     public class UnlockToolAutomation
     {
-        // ??? ???? UnlockTool ??? ?? ????? ?????? ???
-        public static void StartUnlockToolAutomation()
+        // بدء الأوميشن مع الحساب المخصص
+        public static void StartUnlockToolAutomation(string username = null, string password = null)
         {
             try
             {
@@ -25,7 +25,7 @@ namespace toolygsm1.Automation
                 int maxAttempts = 2;
                 for (int attempt = 1; attempt <= maxAttempts; attempt++)
                 {
-                    bool loginSuccess = PerformLoginSequence(targetWindow, firstAttempt);
+                    bool loginSuccess = PerformLoginSequence(targetWindow, firstAttempt, username, password);
                     if (loginSuccess)
                     {
                         Thread.Sleep(15000);
@@ -54,12 +54,13 @@ namespace toolygsm1.Automation
             }
         }
 
-        private static bool PerformLoginSequence(AutomationElement window, bool handleDisclaimer)
+        private static bool PerformLoginSequence(AutomationElement window, bool handleDisclaimer, string username = null, string password = null)
         {
             try
             {
-                string enteredUsername = "101023";
-                string enteredPassword = "0000";
+                // استخدام الحساب المخصص أو الحساب الافتراضي
+                string enteredUsername = !string.IsNullOrEmpty(username) ? username : "101023";
+                string enteredPassword = !string.IsNullOrEmpty(password) ? password : "0000";
                 AutomationElement firstEditField = FindFirstEditField(window);
                 if (firstEditField == null)
                     return false;

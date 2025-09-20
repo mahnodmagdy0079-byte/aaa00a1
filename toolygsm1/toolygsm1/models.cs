@@ -104,10 +104,5 @@ namespace ToolyGsm
         public const string PurchaseRequests = "purchase_requests";
     }
 
-    public static class SupabaseConfig
-    {
-        // استخدام SecurityConfig للحصول على القيم الآمنة
-        public static string BaseUrl => SecurityConfig.GetSupabaseBaseUrl();
-        public static string ApiKey => SecurityConfig.GetSupabaseApiKey();
-    }
+    // تم إزالة SupabaseConfig - البرنامج يستخدم API endpoints فقط
 }

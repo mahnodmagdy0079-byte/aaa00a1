@@ -11,29 +11,9 @@ namespace ToolyGsm
     public static class SecurityConfig
     {
         // Environment Variables - يجب تعيينها في النظام
-        public static string GetSupabaseApiKey()
-        {
-            var apiKey = Environment.GetEnvironmentVariable("SUPABASE_API_KEY");
-            if (string.IsNullOrEmpty(apiKey))
-            {
-                // في الإنتاج، يجب إيقاف البرنامج إذا لم يتم تعيين API Key
-                throw new InvalidOperationException(
-                    "[SECURITY ERROR] SUPABASE_API_KEY environment variable is not set! " +
-                    "Please set the SUPABASE_API_KEY environment variable before running the application. " +
-                    "This is required for security reasons."
-                );
-            }
-            return apiKey;
-        }
-
         public static string GetApiBaseUrl()
         {
             return Environment.GetEnvironmentVariable("API_BASE_URL") ?? "https://eskuly.org";
-        }
-
-        public static string GetSupabaseBaseUrl()
-        {
-            return Environment.GetEnvironmentVariable("SUPABASE_BASE_URL") ?? "https://ewkzduhofisinbhjrzzu.supabase.co";
         }
 
         // الحصول على Secret Key من Environment Variables

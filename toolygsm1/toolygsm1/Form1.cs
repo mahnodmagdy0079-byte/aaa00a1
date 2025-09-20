@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using Guna.UI2.WinForms;
 using Newtonsoft.Json.Linq;
 using ToolyGsm;
+using toolygsm1.Automation;
 
 namespace toolygsm1
 {
@@ -861,36 +862,59 @@ namespace toolygsm1
 
         private async Task LoadFreeToolsAsync()
         {
-            // جلب الأدوات مباشرة من Supabase
-            using (var supabaseClient = new HttpClient())
+            // جلب الأدوات من API endpoint
+            using (var apiClient = new HttpClient())
             {
-                var supabaseBaseUrl = SecurityConfig.GetSupabaseBaseUrl();
-                var supabaseApiKey = SecurityConfig.GetSupabaseApiKey();
-                supabaseClient.BaseAddress = new Uri(supabaseBaseUrl);
-                supabaseClient.DefaultRequestHeaders.Add("apikey", supabaseApiKey);
-                supabaseClient.DefaultRequestHeaders.Add("Authorization", supabaseApiKey);
+                var apiBaseUrl = SecurityConfig.GetApiBaseUrl();
+                apiClient.BaseAddress = new Uri(apiBaseUrl);
+                apiClient.DefaultRequestHeaders.Add("Origin", apiBaseUrl);
+                apiClient.DefaultRequestHeaders.Add("User-Agent", "TOOLY-GSM-Desktop/1.0");
+                
+                if (!string.IsNullOrEmpty(userToken) && SecurityConfig.IsValidToken(userToken))
+                {
+                    apiClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {userToken}");
+                }
                 
                 try
                 {
-                    // جلب الأدوات مباشرة من Supabase مثل الموقع
-                    var response = await supabaseClient.GetAsync("/rest/v1/tools?select=*&order=name");
+                    // جلب الأدوات من API endpoint
+                    var response = await apiClient.GetAsync("/api/tools/list");
                     var json = await response.Content.ReadAsStringAsync();
                     
                     // تسجيل الاستجابة
-                    LogError("LoadFreeToolsAsync", new Exception($"Supabase Response Status: {response.StatusCode}, Content: {json}"));
+                    LogError("LoadFreeToolsAsync", new Exception($"API Response Status: {response.StatusCode}, Content: {json}"));
                     
-                    JArray tools = null;
-                    try { tools = JArray.Parse(json); } catch { tools = new JArray(); }
-                    
-                    // حفظ جميع الأدوات في allTools للبحث
-                    allTools.Clear();
-                    foreach (var tool in tools)
+                    if (response.IsSuccessStatusCode)
                     {
-                        allTools.Add((JObject)tool);
+                        var result = JObject.Parse(json);
+                        if (result["success"]?.ToString().ToLower() == "true")
+                        {
+                            var toolsArray = result["tools"] as JArray;
+                            
+                            // حفظ جميع الأدوات في allTools للبحث
+                            allTools.Clear();
+                            if (toolsArray != null)
+                            {
+                                foreach (var tool in toolsArray)
+                                {
+                                    allTools.Add((JObject)tool);
+                                }
+                            }
+                            
+                            // تسجيل عدد الأدوات
+                            LogError("LoadFreeToolsAsync", new Exception($"Loaded {allTools.Count} tools from API"));
+                        }
+                        else
+                        {
+                            LogError("LoadFreeToolsAsync", new Exception($"API Error: {result["error"]}"));
+                            allTools = CreateSampleTools();
+                        }
                     }
-                    
-                    // تسجيل عدد الأدوات
-                    LogError("LoadFreeToolsAsync", new Exception($"Loaded {allTools.Count} tools from Supabase"));
+                    else
+                    {
+                        LogError("LoadFreeToolsAsync", new Exception($"API Request Failed: {response.StatusCode}"));
+                        allTools = CreateSampleTools();
+                    }
                     
                     // إذا لم توجد أدوات، إنشاء أدوات تجريبية
                     if (allTools.Count == 0)
@@ -1462,6 +1486,21 @@ namespace toolygsm1
                         
                         if (purchaseObj["success"]?.ToString().ToLower() == "true")
                         {
+                            // إذا كان هناك حساب مخصص، بدء الأوميشن
+                            var account = purchaseObj["account"];
+                            if (account != null)
+                            {
+                                var username = account["username"]?.ToString();
+                                var password = account["password"]?.ToString();
+                                var accountId = account["account_id"]?.ToString();
+                                
+                                if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
+                                {
+                                    // بدء الأوميشن مع الحساب المخصص
+                                    StartUnlockToolAutomation(username, password);
+                                }
+                            }
+                            
                             return new PurchaseResult { Success = true };
                         }
                         else
@@ -1572,6 +1611,31 @@ namespace toolygsm1
             
             // منع السياق (كليك يمين)
             control.ContextMenuStrip = new ContextMenuStrip();
+        }
+
+        // دالة بدء الأوميشن مع الحساب المخصص
+        private void StartUnlockToolAutomation(string username, string password)
+        {
+            try
+            {
+                // بدء الأوميشن في thread منفصل
+                System.Threading.Tasks.Task.Run(() =>
+                {
+                    try
+                    {
+                        // استدعاء دالة الأوميشن مع الحساب المخصص
+                        UnlockToolAutomation.StartUnlockToolAutomation(username, password);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogError("UnlockToolAutomation", ex);
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                LogError("StartUnlockToolAutomation", ex);
+            }
         }
 
         // تنظيف البيانات الحساسة عند إغلاق البرنامج
