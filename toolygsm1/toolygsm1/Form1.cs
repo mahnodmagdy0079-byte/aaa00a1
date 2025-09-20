@@ -1434,6 +1434,8 @@ namespace toolygsm1
         {
             try
             {
+                LogError("PurchaseToolSecurelyAsync", new Exception($"Starting purchase for tool: {toolName}, price: {toolPrice}"));
+                
                 // تأكيد الشراء من المستخدم
                 var msg = $"هل تريد شراء أداة {toolName}؟\nالسعر: {toolPrice} جنيه";
                 var confirm = MessageBox.Show(msg, "تأكيد شراء الأداة", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -1446,13 +1448,20 @@ namespace toolygsm1
                 using (var purchaseClient = new HttpClient())
                 {
                     var apiBaseUrl = SecurityConfig.GetApiBaseUrl();
+                    LogError("PurchaseToolSecurelyAsync", new Exception($"API Base URL: {apiBaseUrl}"));
+                    
                     purchaseClient.BaseAddress = new Uri(apiBaseUrl);
                     purchaseClient.DefaultRequestHeaders.Add("Origin", apiBaseUrl);
                     purchaseClient.DefaultRequestHeaders.Add("User-Agent", "TOOLY-GSM-Desktop/1.0");
-                    
+
                     if (!string.IsNullOrEmpty(userToken) && SecurityConfig.IsValidToken(userToken))
                     {
                         purchaseClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {userToken}");
+                        LogError("PurchaseToolSecurelyAsync", new Exception("Authorization header added"));
+                    }
+                    else
+                    {
+                        LogError("PurchaseToolSecurelyAsync", new Exception("No valid token found"));
                     }
                     
                     // إضافة توقيع رقمي آمن للطلب
@@ -1473,77 +1482,88 @@ namespace toolygsm1
                     };
                     
                     var purchaseContent = new StringContent(purchaseData.ToString(), Encoding.UTF8, "application/json");
+                    LogError("PurchaseToolSecurelyAsync", new Exception($"Request data: {purchaseData}"));
+                    
                     var purchaseResponse = await purchaseClient.PostAsync("/api/tools/purchase", purchaseContent);
+                    LogError("PurchaseToolSecurelyAsync", new Exception($"Response status: {purchaseResponse.StatusCode}"));
                     
                     if (purchaseResponse.IsSuccessStatusCode)
                     {
                         var purchaseJson = await purchaseResponse.Content.ReadAsStringAsync();
                         LogError("PurchaseResponse", new Exception($"API Response: {purchaseJson}"));
                         
-                        var purchaseObj = JObject.Parse(purchaseJson);
-                        
-                        if (purchaseObj["success"]?.ToString().ToLower() == "true")
+                        try
                         {
-                            // إذا كان هناك حساب مخصص، بدء الأوميشن
-                            var account = purchaseObj["account"];
-                            if (account != null)
+                            var purchaseObj = JObject.Parse(purchaseJson);
+                            
+                            if (purchaseObj["success"]?.ToString().ToLower() == "true")
                             {
-                                var username = account["username"]?.ToString();
-                                var password = account["password"]?.ToString();
-                                var accountId = account["account_id"]?.ToString();
-                                
-                                LogError("AccountInfo", new Exception($"Account: {username}, ID: {accountId}"));
-                                
-                                if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
+                                // إذا كان هناك حساب مخصص، بدء الأوميشن
+                                var account = purchaseObj["account"];
+                                if (account != null)
                                 {
-                                    // بدء الأوميشن مع الحساب المخصص
-                                    StartUnlockToolAutomation(username, password);
+                                    var username = account["username"]?.ToString();
+                                    var password = account["password"]?.ToString();
+                                    var accountId = account["account_id"]?.ToString();
+                                    
+                                    LogError("AccountInfo", new Exception($"Account: {username}, ID: {accountId}"));
+                                    
+                                    if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
+                                    {
+                                        // بدء الأوميشن مع الحساب المخصص
+                                        StartUnlockToolAutomation(username, password);
+                                    }
                                 }
-                            }
-                            
-                            return new PurchaseResult { Success = true };
-                        }
-                        else
-                        {
-                            // معالجة آمنة للأخطاء
-                            var errorMsg = purchaseObj["error"]?.ToString() ?? "خطأ غير معروف";
-                            LogError("PurchaseError", new Exception($"API Error: {errorMsg}"));
-                            
-                            // تصنيف الأخطاء وإعطاء رسائل آمنة
-                            if (errorMsg.Contains("insufficient") || errorMsg.Contains("balance"))
-                            {
-                                return new PurchaseResult { Success = false, ErrorMessage = "رصيدك غير كاف لشراء هذه الأداة" };
-                            }
-                            else if (errorMsg.Contains("unauthorized") || errorMsg.Contains("invalid token"))
-                            {
-                                return new PurchaseResult { Success = false, ErrorMessage = "انتهت صلاحية الجلسة. يرجى تسجيل الدخول مرة أخرى" };
-                            }
-                            else if (errorMsg.Contains("rate limit") || errorMsg.Contains("too many"))
-                            {
-                                return new PurchaseResult { Success = false, ErrorMessage = "تم تجاوز الحد المسموح من الطلبات. يرجى المحاولة لاحقاً" };
-                            }
-                            else if (errorMsg.Contains("No available accounts"))
-                            {
-                                return new PurchaseResult { Success = false, ErrorMessage = "لا توجد حسابات متاحة لهذه الأداة حالياً. يرجى المحاولة لاحقاً" };
+                                
+                                return new PurchaseResult { Success = true };
                             }
                             else
                             {
-                                return new PurchaseResult { Success = false, ErrorMessage = $"حدث خطأ أثناء معالجة طلبك: {errorMsg}" };
+                                // معالجة آمنة للأخطاء
+                                var errorMsg = purchaseObj["error"]?.ToString() ?? "خطأ غير معروف";
+                                LogError("PurchaseError", new Exception($"API Error: {errorMsg}"));
+                                
+                                // تصنيف الأخطاء وإعطاء رسائل آمنة
+                                if (errorMsg.Contains("insufficient") || errorMsg.Contains("balance"))
+                                {
+                                    return new PurchaseResult { Success = false, ErrorMessage = "رصيدك غير كاف لشراء هذه الأداة" };
+                                }
+                                else if (errorMsg.Contains("unauthorized") || errorMsg.Contains("invalid token"))
+                                {
+                                    return new PurchaseResult { Success = false, ErrorMessage = "انتهت صلاحية الجلسة. يرجى تسجيل الدخول مرة أخرى" };
+                                }
+                                else if (errorMsg.Contains("rate limit") || errorMsg.Contains("too many"))
+                                {
+                                    return new PurchaseResult { Success = false, ErrorMessage = "تم تجاوز الحد المسموح من الطلبات. يرجى المحاولة لاحقاً" };
+                                }
+                                else if (errorMsg.Contains("No available accounts"))
+                                {
+                                    return new PurchaseResult { Success = false, ErrorMessage = "لا توجد حسابات متاحة لهذه الأداة حالياً. يرجى المحاولة لاحقاً" };
+                                }
+                                else
+                                {
+                                    return new PurchaseResult { Success = false, ErrorMessage = $"حدث خطأ أثناء معالجة طلبك: {errorMsg}" };
+                                }
                             }
+                        }
+                        catch (Exception jsonEx)
+                        {
+                            LogError("JSONParseError", new Exception($"Failed to parse API response: {purchaseJson}. Error: {jsonEx.Message}"));
+                            return new PurchaseResult { Success = false, ErrorMessage = $"خطأ في معالجة استجابة الخادم: {jsonEx.Message}" };
                         }
                     }
                     else
                     {
                         var errorContent = await purchaseResponse.Content.ReadAsStringAsync();
                         LogError("PurchaseHTTPError", new Exception($"HTTP {purchaseResponse.StatusCode}: {errorContent}"));
-                        return new PurchaseResult { Success = false, ErrorMessage = $"فشل في الاتصال بالخادم (HTTP {purchaseResponse.StatusCode})" };
+                        return new PurchaseResult { Success = false, ErrorMessage = $"فشل في الاتصال بالخادم (HTTP {purchaseResponse.StatusCode}): {errorContent}" };
                     }
                 }
             }
             catch (Exception ex)
             {
                 LogError("PurchaseToolSecurely", ex);
-                return new PurchaseResult { Success = false, ErrorMessage = "حدث خطأ غير متوقع" };
+                return new PurchaseResult { Success = false, ErrorMessage = $"حدث خطأ غير متوقع: {ex.Message}" };
             }
         }
 
