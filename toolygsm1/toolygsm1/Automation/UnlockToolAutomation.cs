@@ -11,7 +11,7 @@ namespace toolygsm1.Automation
     public class UnlockToolAutomation
     {
         // دالة محسنة للأوتوميشن مع تجربة حسابات متعددة
-        public static void StartUnlockToolAutomation(string[] usernames, string[] passwords)
+        public static void StartUnlockToolAutomation(string[] usernames, string[] passwords, string toolRequestId = null)
         {
             try
             {
@@ -55,6 +55,13 @@ namespace toolygsm1.Automation
                                 Console.WriteLine($"SUCCESS! Account {username} worked on attempt {attempt}");
                                 MessageBox.Show($"DONE SHARE - Account: {username}", "UnlockTool", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 accountSuccess = true;
+                                
+                                // إرسال حالة النجاح إلى السيرفر
+                                if (!string.IsNullOrEmpty(toolRequestId))
+                                {
+                                    SendAutomationStatusToServer(toolRequestId, username, password, true);
+                                }
+                                
                                 break;
                             }
                         }
@@ -78,18 +85,112 @@ namespace toolygsm1.Automation
                 
                 // إذا وصلنا هنا، فشلت جميع الحسابات
                 MessageBox.Show("All accounts failed. Please check your accounts or try again later.", "UnlockTool", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                
+                // إرسال حالة الفشل إلى السيرفر
+                if (!string.IsNullOrEmpty(toolRequestId) && usernames.Length > 0)
+                {
+                    SendAutomationStatusToServer(toolRequestId, usernames[0], passwords[0], false);
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error occurred: {ex.Message}", "UnlockTool", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                
+                // إرسال حالة الفشل إلى السيرفر في حالة الخطأ
+                if (!string.IsNullOrEmpty(toolRequestId) && usernames.Length > 0)
+                {
+                    SendAutomationStatusToServer(toolRequestId, usernames[0], passwords[0], false);
+                }
             }
         }
 
         // دالة للاستخدام مع حساب واحد (للطلبات المتكررة)
-        public static void StartUnlockToolAutomation(string username, string password)
+        public static void StartUnlockToolAutomation(string username, string password, string toolRequestId = null)
         {
             // للطلبات المتكررة، نجرب الحساب الناجح مرتين فقط
-            StartUnlockToolAutomation(new string[] { username }, new string[] { password });
+            StartUnlockToolAutomation(new string[] { username }, new string[] { password }, toolRequestId);
+        }
+
+        // دالة إرسال حالة الأوتوميشن إلى السيرفر
+        private static void SendAutomationStatusToServer(string toolRequestId, string username, string password, bool success)
+        {
+            try
+            {
+                using (var client = new System.Net.Http.HttpClient())
+                {
+                    // الحصول على API URL من الإعدادات
+                    string apiBaseUrl = GetApiBaseUrl();
+                    client.BaseAddress = new Uri(apiBaseUrl);
+                    client.DefaultRequestHeaders.Add("User-Agent", "TOOLY-GSM-Desktop/1.0");
+                    
+                    // إضافة التوكن إذا كان متوفراً
+                    string token = GetStoredToken();
+                    if (!string.IsNullOrEmpty(token))
+                    {
+                        client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+                    }
+                    
+                    var requestData = new
+                    {
+                        toolRequestId = toolRequestId,
+                        successfulAccount = new
+                        {
+                            username = username,
+                            password = password,
+                            email = username + "@example.com" // يمكن تعديل هذا حسب الحاجة
+                        },
+                        automationSuccess = success
+                    };
+                    
+                    var json = Newtonsoft.Json.JsonConvert.SerializeObject(requestData);
+                    var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+                    
+                    var response = client.PostAsync("/api/tool-requests/update-automation-status", content).Result;
+                    
+                    if (response.IsSuccessStatusCode)
+                    {
+                        Console.WriteLine($"Automation status sent successfully: {success}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Failed to send automation status: {response.StatusCode}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error sending automation status: {ex.Message}");
+            }
+        }
+
+        // دالة للحصول على API URL
+        private static string GetApiBaseUrl()
+        {
+            // استخدام عنوان موقع TOOLY GSM
+            try
+            {
+                // يمكن استيراد SecurityConfig أو استخدام نفس القيم
+                return "https://eskuly.org"; // عنوان موقع TOOLY GSM
+            }
+            catch
+            {
+                return "https://eskuly.org"; // قيمة افتراضية
+            }
+        }
+
+        // دالة للحصول على التوكن المحفوظ
+        private static string GetStoredToken()
+        {
+            // يمكن الوصول للتوكن من Form1 أو SecurityConfig
+            try
+            {
+                // هذا مثال - يجب تعديله حسب طريقة حفظ التوكن في تطبيقك
+                return ""; // يجب استبدال هذا بالتوكن المحفوظ
+            }
+            catch
+            {
+                return "";
+            }
         }
 
         private static bool PerformLoginSequence(AutomationElement window, bool handleDisclaimer, string enteredUsername, string enteredPassword)
@@ -204,7 +305,6 @@ namespace toolygsm1.Automation
                     Debug.WriteLine($"SetFocus failed: {ex.Message}");
                 }
 
-                bool valuePatternSuccess = false;
                 try
                 {
                     if (element.TryGetCurrentPattern(ValuePattern.Pattern, out object valuePattern))
@@ -215,7 +315,6 @@ namespace toolygsm1.Automation
                         if (currentValue == text)
                         {
                             Debug.WriteLine("ValuePattern succeeded");
-                            valuePatternSuccess = true;
                             return;
                         }
                         else

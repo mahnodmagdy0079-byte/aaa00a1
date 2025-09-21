@@ -1549,13 +1549,16 @@ namespace toolygsm1
                                         
                                         for (int i = 0; i < accountsArray.Count; i++)
                                         {
-                                            var account = accountsArray[i] as Newtonsoft.Json.Linq.JObject;
-                                            usernames[i] = account["username"]?.ToString() ?? "";
-                                            passwords[i] = account["password"]?.ToString() ?? "";
+                                            var accountObj = accountsArray[i] as Newtonsoft.Json.Linq.JObject;
+                                            usernames[i] = accountObj["username"]?.ToString() ?? "";
+                                            passwords[i] = accountObj["password"]?.ToString() ?? "";
                                         }
                                         
-                                        LogError("MultiAccountAutomation", new Exception($"Starting multi-account automation with {accountsArray.Count} accounts"));
-                                        StartMultiAccountUnlockToolAutomation(usernames, passwords);
+                                        // الحصول على toolRequestId من الاستجابة
+                                        var toolRequestId = purchaseObj["toolRequest"]?["id"]?.ToString();
+                                        
+                                        LogError("MultiAccountAutomation", new Exception($"Starting multi-account automation with {accountsArray.Count} accounts, Request ID: {toolRequestId}"));
+                                        StartMultiAccountUnlockToolAutomation(usernames, passwords, toolRequestId);
                                     }
                                     else
                                     {
@@ -1573,8 +1576,11 @@ namespace toolygsm1
                                         
                                         if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
                                         {
-                                            LogError("ReuseAutomation", new Exception($"Starting reuse automation with username: {username}"));
-                                            StartUnlockToolAutomation(username, password);
+                                            // الحصول على toolRequestId من الاستجابة
+                                            var toolRequestId = purchaseObj["toolRequest"]?["id"]?.ToString();
+                                            
+                                            LogError("ReuseAutomation", new Exception($"Starting reuse automation with username: {username}, Request ID: {toolRequestId}"));
+                                            StartUnlockToolAutomation(username, password, toolRequestId);
                                         }
                                         else
                                         {
@@ -1715,68 +1721,68 @@ namespace toolygsm1
         }
 
         // دالة بدء الأوميشن مع حسابات متعددة (للطلبات الأولى)
-        private void StartMultiAccountUnlockToolAutomation(string[] usernames, string[] passwords)
+        private void StartMultiAccountUnlockToolAutomation(string[] usernames, string[] passwords, string toolRequestId = null)
         {
             try
             {
-                LogError("StartMultiAccountUnlockToolAutomation", new Exception($"Starting multi-account automation with {usernames.Length} accounts"));
+                LogError("StartMultiAccountUnlockToolAutomation", new Exception($"Starting multi-account automation with {usernames.Length} accounts, Request ID: {toolRequestId}"));
                 
                 // بدء الأوميشن في thread منفصل
                 System.Threading.Tasks.Task.Run(() =>
                 {
                     try
                     {
-                        LogError("MultiAccountUnlockToolAutomation", new Exception($"Task started with {usernames.Length} accounts"));
+                        LogError("MultiAccountUnlockToolAutomation", new Exception($"Task started with {usernames.Length} accounts, Request ID: {toolRequestId}"));
                         
                         // استدعاء دالة الأوميشن مع الحسابات المتعددة
-                        UnlockToolAutomation.StartUnlockToolAutomation(usernames, passwords);
+                        UnlockToolAutomation.StartUnlockToolAutomation(usernames, passwords, toolRequestId);
                         
-                        LogError("MultiAccountUnlockToolAutomation", new Exception($"Multi-account automation completed"));
+                        LogError("MultiAccountUnlockToolAutomation", new Exception($"Multi-account automation completed for Request ID: {toolRequestId}"));
                     }
                     catch (Exception ex)
                     {
-                        LogError("MultiAccountUnlockToolAutomation", new Exception($"Error in multi-account automation task. Error: {ex.Message}"));
+                        LogError("MultiAccountUnlockToolAutomation", new Exception($"Error in multi-account automation task for Request ID: {toolRequestId}. Error: {ex.Message}"));
                     }
                 });
                 
-                LogError("StartMultiAccountUnlockToolAutomation", new Exception($"Multi-account task created successfully"));
+                LogError("StartMultiAccountUnlockToolAutomation", new Exception($"Multi-account task created successfully for Request ID: {toolRequestId}"));
             }
             catch (Exception ex)
             {
-                LogError("StartMultiAccountUnlockToolAutomation", new Exception($"Error starting multi-account automation. Error: {ex.Message}"));
+                LogError("StartMultiAccountUnlockToolAutomation", new Exception($"Error starting multi-account automation for Request ID: {toolRequestId}. Error: {ex.Message}"));
             }
         }
 
         // دالة بدء الأوميشن مع الحساب المخصص (للطلبات المتكررة)
-        private void StartUnlockToolAutomation(string username, string password)
+        private void StartUnlockToolAutomation(string username, string password, string toolRequestId = null)
         {
             try
             {
-                LogError("StartUnlockToolAutomation", new Exception($"Starting automation for username: {username}"));
+                LogError("StartUnlockToolAutomation", new Exception($"Starting automation for username: {username}, Request ID: {toolRequestId}"));
                 
                 // بدء الأوميشن في thread منفصل
                 System.Threading.Tasks.Task.Run(() =>
                 {
                     try
                     {
-                        LogError("UnlockToolAutomation", new Exception($"Task started for username: {username}"));
+                        LogError("UnlockToolAutomation", new Exception($"Task started for username: {username}, Request ID: {toolRequestId}"));
                         
                         // استدعاء دالة الأوميشن مع الحساب المخصص
-                        UnlockToolAutomation.StartUnlockToolAutomation(username, password);
+                        UnlockToolAutomation.StartUnlockToolAutomation(username, password, toolRequestId);
                         
-                        LogError("UnlockToolAutomation", new Exception($"Automation completed for username: {username}"));
+                        LogError("UnlockToolAutomation", new Exception($"Automation completed for username: {username}, Request ID: {toolRequestId}"));
                     }
                     catch (Exception ex)
                     {
-                        LogError("UnlockToolAutomation", new Exception($"Error in automation task for username: {username}. Error: {ex.Message}"));
+                        LogError("UnlockToolAutomation", new Exception($"Error in automation task for username: {username}, Request ID: {toolRequestId}. Error: {ex.Message}"));
                     }
                 });
                 
-                LogError("StartUnlockToolAutomation", new Exception($"Task created successfully for username: {username}"));
+                LogError("StartUnlockToolAutomation", new Exception($"Task created successfully for username: {username}, Request ID: {toolRequestId}"));
             }
             catch (Exception ex)
             {
-                LogError("StartUnlockToolAutomation", new Exception($"Error starting automation for username: {username}. Error: {ex.Message}"));
+                LogError("StartUnlockToolAutomation", new Exception($"Error starting automation for username: {username}, Request ID: {toolRequestId}. Error: {ex.Message}"));
             }
         }
 
