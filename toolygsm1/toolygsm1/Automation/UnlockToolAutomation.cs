@@ -10,8 +10,8 @@ namespace toolygsm1.Automation
 {
     public class UnlockToolAutomation
     {
-        // بدء الأوميشن مع الحساب المخصص
-        public static void StartUnlockToolAutomation(string username = null, string password = null)
+        // دالة محسنة للأوتوميشن مع تجربة حسابات متعددة
+        public static void StartUnlockToolAutomation(string[] usernames, string[] passwords)
         {
             try
             {
@@ -21,32 +21,63 @@ namespace toolygsm1.Automation
                     MessageBox.Show("UnlockTool program not found. Make sure it's open.", "UnlockTool", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                bool firstAttempt = true;
-                int maxAttempts = 2;
-                for (int attempt = 1; attempt <= maxAttempts; attempt++)
+
+                // تجربة كل حساب مع محاولتين
+                for (int accountIndex = 0; accountIndex < usernames.Length; accountIndex++)
                 {
-                    bool loginSuccess = PerformLoginSequence(targetWindow, firstAttempt, username, password);
-                    if (loginSuccess)
+                    string username = usernames[accountIndex];
+                    string password = passwords[accountIndex];
+                    
+                    Console.WriteLine($"Trying account {accountIndex + 1}: {username}");
+                    
+                    bool accountSuccess = false;
+                    int maxAttempts = 2; // محاولتان لكل حساب
+                    
+                    for (int attempt = 1; attempt <= maxAttempts; attempt++)
                     {
-                        Thread.Sleep(15000);
-                        if (IsStillOnLoginPage(targetWindow))
+                        Console.WriteLine($"Attempt {attempt} for account: {username}");
+                        
+                        bool loginSuccess = PerformLoginSequence(targetWindow, attempt == 1, username, password);
+                        if (loginSuccess)
                         {
-                            if (attempt < maxAttempts)
-                                firstAttempt = false;
+                            Thread.Sleep(15000); // انتظار تحميل الصفحة
+                            
+                            if (IsStillOnLoginPage(targetWindow))
+                            {
+                                Console.WriteLine($"Login failed for {username}, attempt {attempt}");
+                                if (attempt < maxAttempts)
+                                {
+                                    Thread.Sleep(3000); // انتظار قبل المحاولة التالية
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine($"SUCCESS! Account {username} worked on attempt {attempt}");
+                                MessageBox.Show($"DONE SHARE - Account: {username}", "UnlockTool", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                accountSuccess = true;
+                                break;
+                            }
                         }
                         else
                         {
-                            MessageBox.Show("DONE SHARE", "UnlockTool", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            return;
+                            Console.WriteLine($"Login sequence failed for {username}, attempt {attempt}");
                         }
+                    }
+                    
+                    if (accountSuccess)
+                    {
+                        // نجح الحساب، توقف عن التجربة
+                        return;
                     }
                     else
                     {
-                        MessageBox.Show("Login sequence failed.", "UnlockTool", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        break;
+                        Console.WriteLine($"Account {username} failed after {maxAttempts} attempts, trying next account...");
+                        Thread.Sleep(2000); // انتظار قبل تجربة الحساب التالي
                     }
                 }
-                MessageBox.Show("All attempts completed. Still on login page.", "UnlockTool", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                
+                // إذا وصلنا هنا، فشلت جميع الحسابات
+                MessageBox.Show("All accounts failed. Please check your accounts or try again later.", "UnlockTool", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception ex)
             {
@@ -54,13 +85,17 @@ namespace toolygsm1.Automation
             }
         }
 
-        private static bool PerformLoginSequence(AutomationElement window, bool handleDisclaimer, string username = null, string password = null)
+        // دالة للاستخدام مع حساب واحد (للطلبات المتكررة)
+        public static void StartUnlockToolAutomation(string username, string password)
+        {
+            // للطلبات المتكررة، نجرب الحساب الناجح مرتين فقط
+            StartUnlockToolAutomation(new string[] { username }, new string[] { password });
+        }
+
+        private static bool PerformLoginSequence(AutomationElement window, bool handleDisclaimer, string enteredUsername, string enteredPassword)
         {
             try
             {
-                // استخدام الحساب المخصص أو الحساب الافتراضي
-                string enteredUsername = !string.IsNullOrEmpty(username) ? username : "101023";
-                string enteredPassword = !string.IsNullOrEmpty(password) ? password : "0000";
                 AutomationElement firstEditField = FindFirstEditField(window);
                 if (firstEditField == null)
                     return false;
@@ -155,29 +190,77 @@ namespace toolygsm1.Automation
         private static void SetTextValue(AutomationElement element, string text)
         {
             if (element == null) return;
+            bool focusFailed = false;
             try
             {
-                element.SetFocus();
-                Thread.Sleep(200);
-                SendKeys.SendWait("^a");
-                Thread.Sleep(100);
-                SendKeys.SendWait("{DELETE}");
-                Thread.Sleep(100);
-                if (element.TryGetCurrentPattern(ValuePattern.Pattern, out object valuePattern))
+                try
                 {
-                    ((ValuePattern)valuePattern).SetValue(text);
-                    Thread.Sleep(200);
-                    string currentValue = ((ValuePattern)valuePattern).Current.Value;
-                    if (currentValue == text) return;
+                    element.SetFocus();
+                    Debug.WriteLine("SetFocus succeeded");
                 }
-                element.SetFocus();
-                Thread.Sleep(200);
-                SendKeys.SendWait("^a");
-                Thread.Sleep(100);
-                SendKeys.SendWait(text);
-                Thread.Sleep(200);
+                catch (Exception ex)
+                {
+                    focusFailed = true;
+                    Debug.WriteLine($"SetFocus failed: {ex.Message}");
+                }
+
+                bool valuePatternSuccess = false;
+                try
+                {
+                    if (element.TryGetCurrentPattern(ValuePattern.Pattern, out object valuePattern))
+                    {
+                        ((ValuePattern)valuePattern).SetValue(text);
+                        Thread.Sleep(200);
+                        string currentValue = ((ValuePattern)valuePattern).Current.Value;
+                        if (currentValue == text)
+                        {
+                            Debug.WriteLine("ValuePattern succeeded");
+                            valuePatternSuccess = true;
+                            return;
+                        }
+                        else
+                        {
+                            Debug.WriteLine($"ValuePattern failed: Value is '{currentValue}'");
+                        }
+                    }
+                    else
+                    {
+                        Debug.WriteLine("ValuePattern not supported");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"ValuePattern exception: {ex.Message}");
+                }
+
+                if (!focusFailed)
+                {
+                    try
+                    {
+                        element.SetFocus();
+                        Thread.Sleep(200);
+                        SendKeys.SendWait("^a");
+                        Thread.Sleep(100);
+                        SendKeys.SendWait("{DELETE}");
+                        Thread.Sleep(100);
+                        SendKeys.SendWait(text);
+                        Thread.Sleep(200);
+                        Debug.WriteLine("SendKeys succeeded");
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"SendKeys failed: {ex.Message}");
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine("SendKeys skipped due to SetFocus failure");
+                }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"SetTextValue general error: {ex.Message}");
+            }
         }
 
         private static AutomationElement FindRememberCheckbox(AutomationElement parentWindow)
@@ -219,32 +302,83 @@ namespace toolygsm1.Automation
         private static void ClickElement(AutomationElement element)
         {
             if (element == null) return;
+            bool focusFailed = false;
             try
             {
-                element.SetFocus();
-                Thread.Sleep(200);
-                SendKeys.SendWait("{ENTER}");
-                Thread.Sleep(500);
-                element.SetFocus();
-                Thread.Sleep(200);
-                SendKeys.SendWait(" ");
-                Thread.Sleep(500);
-                if (element.TryGetCurrentPattern(InvokePattern.Pattern, out object invokePattern))
+                try
                 {
-                    ((InvokePattern)invokePattern).Invoke();
-                    Thread.Sleep(500);
+                    element.SetFocus();
+                    Thread.Sleep(200);
+                    Debug.WriteLine("SetFocus succeeded (ClickElement)");
                 }
-                System.Windows.Rect boundingRect = element.Current.BoundingRectangle;
-                int centerX = (int)(boundingRect.Left + (boundingRect.Width / 2));
-                int centerY = (int)(boundingRect.Top + (boundingRect.Height / 2));
-                SetCursorPos(centerX, centerY);
-                Thread.Sleep(100);
-                mouse_event(MOUSEEVENTF_LEFTDOWN, (uint)centerX, (uint)centerY, 0, 0);
-                Thread.Sleep(50);
-                mouse_event(MOUSEEVENTF_LEFTUP, (uint)centerX, (uint)centerY, 0, 0);
-                Thread.Sleep(500);
+                catch (Exception ex)
+                {
+                    focusFailed = true;
+                    Debug.WriteLine($"SetFocus failed (ClickElement): {ex.Message}");
+                }
+
+                if (!focusFailed)
+                {
+                    try
+                    {
+                        SendKeys.SendWait("{ENTER}");
+                        Thread.Sleep(500);
+                        element.SetFocus();
+                        Thread.Sleep(200);
+                        SendKeys.SendWait(" ");
+                        Thread.Sleep(500);
+                        Debug.WriteLine("SendKeys ENTER/SPACE succeeded");
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"SendKeys ENTER/SPACE failed: {ex.Message}");
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine("SendKeys ENTER/SPACE skipped due to SetFocus failure");
+                }
+
+                try
+                {
+                    if (element.TryGetCurrentPattern(InvokePattern.Pattern, out object invokePattern))
+                    {
+                        ((InvokePattern)invokePattern).Invoke();
+                        Thread.Sleep(500);
+                        Debug.WriteLine("InvokePattern succeeded");
+                    }
+                    else
+                    {
+                        Debug.WriteLine("InvokePattern not supported");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"InvokePattern failed: {ex.Message}");
+                }
+
+                try
+                {
+                    System.Windows.Rect boundingRect = element.Current.BoundingRectangle;
+                    int centerX = (int)(boundingRect.Left + (boundingRect.Width / 2));
+                    int centerY = (int)(boundingRect.Top + (boundingRect.Height / 2));
+                    SetCursorPos(centerX, centerY);
+                    Thread.Sleep(100);
+                    mouse_event(MOUSEEVENTF_LEFTDOWN, (uint)centerX, (uint)centerY, 0, 0);
+                    Thread.Sleep(50);
+                    mouse_event(MOUSEEVENTF_LEFTUP, (uint)centerX, (uint)centerY, 0, 0);
+                    Thread.Sleep(500);
+                    Debug.WriteLine("Mouse click succeeded");
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Mouse click failed: {ex.Message}");
+                }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"ClickElement general error: {ex.Message}");
+            }
         }
 
         [DllImport("user32.dll")]
