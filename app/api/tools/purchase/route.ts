@@ -214,47 +214,46 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // البحث عن حسابات متاحة للأداة (للمحاولة الأولى)
-    let assignedAccounts = [];
+    // البحث عن حساب متاح للأداة
+    let assignedAccount = null;
     console.log(`Searching for tool: "${toolName}"`);
     
     try {
-      console.log(`Looking for available accounts with tool_name: "${toolName}"`);
+      console.log(`Looking for available account with tool_name: "${toolName}"`);
       
-      // جلب حتى 3 حسابات متاحة للمحاولة
-      const { data: availableAccounts, error: accountError } = await supabase
+      // جلب حساب واحد متاح للمحاولة
+      const { data: availableAccount, error: accountError } = await supabase
         .from("tool_accounts")
         .select("*")
         .eq("tool_name", toolName)
         .eq("is_available", true)
-        .limit(3);
+        .limit(1)
+        .single();
 
-      console.log(`Query result:`, { availableAccounts, accountError });
+      console.log(`Query result:`, { availableAccount, accountError });
 
-      if (!accountError && availableAccounts && availableAccounts.length > 0) {
-        // تخصيص الحسابات للمستخدم
-        console.log(`Attempting to assign ${availableAccounts.length} accounts with finalUserId: ${finalUserId}, userEmail: ${userEmail}`);
+      if (!accountError && availableAccount) {
+        // تخصيص الحساب للمستخدم
+        console.log(`Attempting to assign account with finalUserId: ${finalUserId}, userEmail: ${userEmail}`);
         
-        for (const account of availableAccounts) {
-          const { data: assignedAccountData, error: assignError } = await supabase
-            .from("tool_accounts")
-            .update({
-              is_available: false,
-              assigned_to_user: finalUserId,
-              assigned_at: new Date().toISOString(),
-              user_id: finalUserId,
-              updated_at: new Date().toISOString()
-            })
-            .eq("id", account.id)
-            .select()
-            .single();
+        const { data: assignedAccountData, error: assignError } = await supabase
+          .from("tool_accounts")
+          .update({
+            is_available: false,
+            assigned_to_user: finalUserId,
+            assigned_at: new Date().toISOString(),
+            user_id: finalUserId,
+            updated_at: new Date().toISOString()
+          })
+          .eq("id", availableAccount.id)
+          .select()
+          .single();
 
-          if (!assignError && assignedAccountData) {
-            assignedAccounts.push(assignedAccountData);
-            console.log(`Account assigned: ${assignedAccountData.account_username}`);
-          } else {
-            console.log("Failed to assign account:", assignError);
-          }
+        if (!assignError && assignedAccountData) {
+          assignedAccount = assignedAccountData;
+          console.log(`Account assigned: ${assignedAccount.account_username}`);
+        } else {
+          console.log("Failed to assign account:", assignError);
         }
       } else {
         console.log("No available accounts found for tool:", toolName);
@@ -279,9 +278,9 @@ export async function POST(req: NextRequest) {
       duration_hours: durationHours,
       status_ar: "قيد التشغيل",
       purchase_type: isSubscriptionBased ? "subscription" : "credit",
-      assigned_accounts_count: assignedAccounts.length,
+      assigned_account: assignedAccount ? assignedAccount.account_username : "No account",
       user_name: userEmail.split("@")[0],
-      notes: `Tool purchased ${isSubscriptionBased ? "with subscription" : "with credits"} - ${assignedAccounts.length} accounts assigned for trial`,
+      notes: `Tool purchased ${isSubscriptionBased ? "with subscription" : "with credits"}${assignedAccount ? ` - Account: ${assignedAccount.account_username}` : ""}`,
       requested_at: new Date().toISOString(),
     });
 
@@ -297,14 +296,14 @@ export async function POST(req: NextRequest) {
         duration_hours: durationHours,
         status_ar: "قيد التشغيل",
         purchase_type: isSubscriptionBased ? "subscription" : "credit",
-        ultra_id: assignedAccounts.length > 0 ? assignedAccounts[0].account_username : "", // الحساب الأول للمحاولة
+        ultra_id: assignedAccount ? assignedAccount.account_username : "", // اسم المستخدم للحساب المخصص
         user_name: userEmail.split("@")[0],
-        notes: `Tool purchased ${isSubscriptionBased ? "with subscription" : "with credits"} - ${assignedAccounts.length} accounts assigned for trial`,
+        notes: `Tool purchased ${isSubscriptionBased ? "with subscription" : "with credits"}${assignedAccount ? ` - Account: ${assignedAccount.account_username}` : ""}`,
         requested_at: new Date().toISOString(),
         is_subscription_based: isSubscriptionBased,
-        shared_email: null,
+        shared_email: null, // سيتم ملؤه عند نجاح الأوتوميشن
         wallet_transaction_id: null,
-        password: assignedAccounts.length > 0 ? assignedAccounts[0].account_password : ""
+        password: assignedAccount ? assignedAccount.account_password : "" // كلمة المرور للحساب المخصص
       })
       .select()
       .single();
@@ -320,7 +319,7 @@ export async function POST(req: NextRequest) {
     const purchaseType = isSubscriptionBased ? "ضمن الاشتراك" : "شراء بالرصيد";
 
     console.log(`Purchase successful for tool: ${toolName}`);
-    console.log(`Accounts assigned:`, assignedAccounts.length);
+    console.log(`Account assigned:`, assignedAccount ? "Yes" : "No");
 
     return NextResponse.json({
       success: true,
@@ -332,20 +331,13 @@ export async function POST(req: NextRequest) {
         tool_name: toolName,
         status_ar: "قيد التشغيل",
       },
-      accounts: assignedAccounts.map(account => ({
-        username: account.account_username,
-        password: account.account_password,
-        email: account.account_email,
-        account_id: account.id
-      })),
-      primaryAccount: assignedAccounts.length > 0 ? {
-        username: assignedAccounts[0].account_username,
-        password: assignedAccounts[0].account_password,
-        email: assignedAccounts[0].account_email,
-        account_id: assignedAccounts[0].id
+      account: assignedAccount ? {
+        username: assignedAccount.account_username,
+        password: assignedAccount.account_password,
+        email: assignedAccount.account_email,
+        account_id: assignedAccount.id
       } : null,
-      accountsCount: assignedAccounts.length,
-      isFirstTime: true // إشارة أن هذا طلب أول مرة مع حسابات متعددة
+      isFirstTime: true // إشارة أن هذا طلب أول مرة
     });
 
   } catch (err) {

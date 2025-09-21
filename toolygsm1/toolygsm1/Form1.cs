@@ -1399,7 +1399,7 @@ namespace toolygsm1
                             }
                             else
                             {
-                                MessageBox.Show("تم شراء الأداة بنجاح! سيتم تجربة عدة حسابات للعثور على الحساب المناسب.", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                MessageBox.Show("تم شراء الأداة بنجاح! سيتم تجربة الحساب المخصص للعثور على الحساب المناسب.", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }
                             // إعادة تحميل البيانات
                             _ = LoadUserDataAsync();
@@ -1536,33 +1536,32 @@ namespace toolygsm1
                                 
                                 // فحص إذا كان هذا طلب إعادة استخدام
                                 var isReuse = purchaseObj["isReuse"]?.ToString().ToLower() == "true";
-                                var isFirstTime = purchaseObj["isFirstTime"]?.ToString().ToLower() == "true";
                                 
-                                if (isFirstTime && !isReuse)
+                                if (!isReuse)
                                 {
-                                    // طلب أول مرة مع حسابات متعددة
-                                    var accountsArray = purchaseObj["accounts"] as Newtonsoft.Json.Linq.JArray;
-                                    if (accountsArray != null && accountsArray.Count > 0)
+                                    // طلب أول مرة مع حساب واحد
+                                    var accountObj = purchaseObj["account"] as Newtonsoft.Json.Linq.JObject;
+                                    if (accountObj != null)
                                     {
-                                        var usernames = new string[accountsArray.Count];
-                                        var passwords = new string[accountsArray.Count];
+                                        var username = accountObj["username"]?.ToString() ?? "";
+                                        var password = accountObj["password"]?.ToString() ?? "";
                                         
-                                        for (int i = 0; i < accountsArray.Count; i++)
+                                        if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
                                         {
-                                            var accountObj = accountsArray[i] as Newtonsoft.Json.Linq.JObject;
-                                            usernames[i] = accountObj["username"]?.ToString() ?? "";
-                                            passwords[i] = accountObj["password"]?.ToString() ?? "";
+                                            // الحصول على toolRequestId من الاستجابة
+                                            var toolRequestId = purchaseObj["toolRequest"]?["id"]?.ToString();
+                                            
+                                            LogError("FirstTimeAutomation", new Exception($"Starting first-time automation with username: {username}, Request ID: {toolRequestId}"));
+                                            StartUnlockToolAutomation(username, password, toolRequestId);
                                         }
-                                        
-                                        // الحصول على toolRequestId من الاستجابة
-                                        var toolRequestId = purchaseObj["toolRequest"]?["id"]?.ToString();
-                                        
-                                        LogError("MultiAccountAutomation", new Exception($"Starting multi-account automation with {accountsArray.Count} accounts, Request ID: {toolRequestId}"));
-                                        StartMultiAccountUnlockToolAutomation(usernames, passwords, toolRequestId);
+                                        else
+                                        {
+                                            LogError("AccountValidation", new Exception($"Username or password is empty. Username: '{username}', Password: '{password?.Substring(0, Math.Min(3, password?.Length ?? 0))}***'"));
+                                        }
                                     }
                                     else
                                     {
-                                        LogError("AccountInfo", new Exception("No accounts provided for first-time purchase"));
+                                        LogError("AccountInfo", new Exception("No account provided for first-time purchase"));
                                     }
                                 }
                                 else
@@ -1720,40 +1719,7 @@ namespace toolygsm1
             control.ContextMenuStrip = new ContextMenuStrip();
         }
 
-        // دالة بدء الأوميشن مع حسابات متعددة (للطلبات الأولى)
-        private void StartMultiAccountUnlockToolAutomation(string[] usernames, string[] passwords, string toolRequestId = null)
-        {
-            try
-            {
-                LogError("StartMultiAccountUnlockToolAutomation", new Exception($"Starting multi-account automation with {usernames.Length} accounts, Request ID: {toolRequestId}"));
-                
-                // بدء الأوميشن في thread منفصل
-                System.Threading.Tasks.Task.Run(() =>
-                {
-                    try
-                    {
-                        LogError("MultiAccountUnlockToolAutomation", new Exception($"Task started with {usernames.Length} accounts, Request ID: {toolRequestId}"));
-                        
-                        // استدعاء دالة الأوميشن مع الحسابات المتعددة
-                        UnlockToolAutomation.StartUnlockToolAutomation(usernames, passwords, toolRequestId);
-                        
-                        LogError("MultiAccountUnlockToolAutomation", new Exception($"Multi-account automation completed for Request ID: {toolRequestId}"));
-                    }
-                    catch (Exception ex)
-                    {
-                        LogError("MultiAccountUnlockToolAutomation", new Exception($"Error in multi-account automation task for Request ID: {toolRequestId}. Error: {ex.Message}"));
-                    }
-                });
-                
-                LogError("StartMultiAccountUnlockToolAutomation", new Exception($"Multi-account task created successfully for Request ID: {toolRequestId}"));
-            }
-            catch (Exception ex)
-            {
-                LogError("StartMultiAccountUnlockToolAutomation", new Exception($"Error starting multi-account automation for Request ID: {toolRequestId}. Error: {ex.Message}"));
-            }
-        }
-
-        // دالة بدء الأوميشن مع الحساب المخصص (للطلبات المتكررة)
+        // دالة بدء الأوميشن مع الحساب المخصص
         private void StartUnlockToolAutomation(string username, string password, string toolRequestId = null)
         {
             try

@@ -10,8 +10,8 @@ namespace toolygsm1.Automation
 {
     public class UnlockToolAutomation
     {
-        // دالة محسنة للأوتوميشن مع تجربة حسابات متعددة
-        public static void StartUnlockToolAutomation(string[] usernames, string[] passwords, string toolRequestId = null)
+        // دالة محسنة للأوتوميشن مع حساب واحد
+        public static void StartUnlockToolAutomation(string username, string password, string toolRequestId = null)
         {
             try
             {
@@ -22,74 +22,60 @@ namespace toolygsm1.Automation
                     return;
                 }
 
-                // تجربة كل حساب مع محاولتين
-                for (int accountIndex = 0; accountIndex < usernames.Length; accountIndex++)
+                Console.WriteLine($"Trying account: {username}");
+                
+                bool accountSuccess = false;
+                int maxAttempts = 2; // محاولتان للحساب
+                
+                for (int attempt = 1; attempt <= maxAttempts; attempt++)
                 {
-                    string username = usernames[accountIndex];
-                    string password = passwords[accountIndex];
+                    Console.WriteLine($"Attempt {attempt} for account: {username}");
                     
-                    Console.WriteLine($"Trying account {accountIndex + 1}: {username}");
-                    
-                    bool accountSuccess = false;
-                    int maxAttempts = 2; // محاولتان لكل حساب
-                    
-                    for (int attempt = 1; attempt <= maxAttempts; attempt++)
+                    bool loginSuccess = PerformLoginSequence(targetWindow, attempt == 1, username, password);
+                    if (loginSuccess)
                     {
-                        Console.WriteLine($"Attempt {attempt} for account: {username}");
+                        Thread.Sleep(15000); // انتظار تحميل الصفحة
                         
-                        bool loginSuccess = PerformLoginSequence(targetWindow, attempt == 1, username, password);
-                        if (loginSuccess)
+                        if (IsStillOnLoginPage(targetWindow))
                         {
-                            Thread.Sleep(15000); // انتظار تحميل الصفحة
-                            
-                            if (IsStillOnLoginPage(targetWindow))
+                            Console.WriteLine($"Login failed for {username}, attempt {attempt}");
+                            if (attempt < maxAttempts)
                             {
-                                Console.WriteLine($"Login failed for {username}, attempt {attempt}");
-                                if (attempt < maxAttempts)
-                                {
-                                    Thread.Sleep(3000); // انتظار قبل المحاولة التالية
-                                }
-                            }
-                            else
-                            {
-                                Console.WriteLine($"SUCCESS! Account {username} worked on attempt {attempt}");
-                                MessageBox.Show($"DONE SHARE - Account: {username}", "UnlockTool", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                accountSuccess = true;
-                                
-                                // إرسال حالة النجاح إلى السيرفر
-                                if (!string.IsNullOrEmpty(toolRequestId))
-                                {
-                                    SendAutomationStatusToServer(toolRequestId, username, password, true);
-                                }
-                                
-                                break;
+                                Thread.Sleep(3000); // انتظار قبل المحاولة التالية
                             }
                         }
                         else
                         {
-                            Console.WriteLine($"Login sequence failed for {username}, attempt {attempt}");
+                            Console.WriteLine($"SUCCESS! Account {username} worked on attempt {attempt}");
+                            MessageBox.Show($"DONE SHARE - Account: {username}", "UnlockTool", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            accountSuccess = true;
+                            
+                            // إرسال حالة النجاح إلى السيرفر
+                            if (!string.IsNullOrEmpty(toolRequestId))
+                            {
+                                SendAutomationStatusToServer(toolRequestId, username, password, true);
+                            }
+                            
+                            break;
                         }
-                    }
-                    
-                    if (accountSuccess)
-                    {
-                        // نجح الحساب، توقف عن التجربة
-                        return;
                     }
                     else
                     {
-                        Console.WriteLine($"Account {username} failed after {maxAttempts} attempts, trying next account...");
-                        Thread.Sleep(2000); // انتظار قبل تجربة الحساب التالي
+                        Console.WriteLine($"Login sequence failed for {username}, attempt {attempt}");
                     }
                 }
                 
-                // إذا وصلنا هنا، فشلت جميع الحسابات
-                MessageBox.Show("All accounts failed. Please check your accounts or try again later.", "UnlockTool", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                
-                // إرسال حالة الفشل إلى السيرفر
-                if (!string.IsNullOrEmpty(toolRequestId) && usernames.Length > 0)
+                if (!accountSuccess)
                 {
-                    SendAutomationStatusToServer(toolRequestId, usernames[0], passwords[0], false);
+                    // فشل الحساب
+                    Console.WriteLine($"Account {username} failed after {maxAttempts} attempts");
+                    MessageBox.Show($"Account {username} failed. Please try again later.", "UnlockTool", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    
+                    // إرسال حالة الفشل إلى السيرفر
+                    if (!string.IsNullOrEmpty(toolRequestId))
+                    {
+                        SendAutomationStatusToServer(toolRequestId, username, password, false);
+                    }
                 }
             }
             catch (Exception ex)
@@ -97,18 +83,11 @@ namespace toolygsm1.Automation
                 MessageBox.Show($"Error occurred: {ex.Message}", "UnlockTool", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 
                 // إرسال حالة الفشل إلى السيرفر في حالة الخطأ
-                if (!string.IsNullOrEmpty(toolRequestId) && usernames.Length > 0)
+                if (!string.IsNullOrEmpty(toolRequestId))
                 {
-                    SendAutomationStatusToServer(toolRequestId, usernames[0], passwords[0], false);
+                    SendAutomationStatusToServer(toolRequestId, username, password, false);
                 }
             }
-        }
-
-        // دالة للاستخدام مع حساب واحد (للطلبات المتكررة)
-        public static void StartUnlockToolAutomation(string username, string password, string toolRequestId = null)
-        {
-            // للطلبات المتكررة، نجرب الحساب الناجح مرتين فقط
-            StartUnlockToolAutomation(new string[] { username }, new string[] { password }, toolRequestId);
         }
 
         // دالة إرسال حالة الأوتوميشن إلى السيرفر
