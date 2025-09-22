@@ -57,7 +57,21 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: "Tool request not found" }, { status: 404 });
     }
 
-    if (existing.user_email !== userEmail && existing.user_id !== userId) {
+    // Ownership checks (lenient):
+    const existingUserEmail = (existing.user_email || "").toString().toLowerCase();
+    const existingUserId = (existing.user_id || "").toString().toLowerCase();
+    const callerEmail = (userEmail || "").toString().toLowerCase();
+    const callerUserId = (userId || "").toString().toLowerCase();
+
+    const belongsToCaller =
+      (existingUserEmail && existingUserEmail === callerEmail) ||
+      (existingUserId && existingUserId === callerUserId) ||
+      // Handle fallback cases where user_id was stored as email or vice versa
+      (existingUserId && existingUserId === callerEmail) ||
+      (existingUserEmail && existingUserEmail === callerUserId);
+
+    if (!belongsToCaller) {
+      console.log("update-status unauthorized", { toolRequestId, existingUserEmail, existingUserId, callerEmail, callerUserId });
       return NextResponse.json({ success: false, error: "Unauthorized to update this request" }, { status: 403 });
     }
 
