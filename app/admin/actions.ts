@@ -882,21 +882,37 @@ export async function loadTools() {
 export async function expireToolRequests() {
   "use server"
   try {
-    const base =
-      process.env.NEXT_PUBLIC_BASE_URL && process.env.NEXT_PUBLIC_BASE_URL.trim() !== ""
-        ? process.env.NEXT_PUBLIC_BASE_URL
-        : process.env.VERCEL_URL
-        ? `https://${process.env.VERCEL_URL}`
-        : "http://localhost:3000";
+    const { createAdminClient } = await import("@/lib/supabase/server")
+    const supabase = createAdminClient()
+    const nowIso = new Date().toISOString()
 
-    const res = await fetch(`${base}/api/tool-requests/expire`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({}),
-      cache: "no-store",
-    })
-    const json = await res.json()
-    return { success: res.ok && json.success, ...json }
+    const { data: expired, error: findErr } = await supabase
+      .from("tool_requests")
+      .select("id, ultra_id")
+      .lt("end_time", nowIso)
+      .neq("status", "expired")
+
+    if (findErr) {
+      return { success: false, error: findErr.message }
+    }
+
+    if (expired && expired.length > 0) {
+      const ids = expired.map(r => r.id)
+      await supabase
+        .from("tool_requests")
+        .update({ status: "expired", status_ar: "منتهي" })
+        .in("id", ids)
+
+      const usernames = expired.map(r => r.ultra_id).filter(Boolean) as string[]
+      if (usernames.length > 0) {
+        await supabase
+          .from("tool_accounts")
+          .update({ is_available: true, assigned_to_user: null, user_id: null })
+          .in("account_username", usernames)
+      }
+    }
+
+    return { success: true, expired: (expired || []).length }
   } catch (e: any) {
     return { success: false, error: e?.message || "Failed to expire" }
   }
