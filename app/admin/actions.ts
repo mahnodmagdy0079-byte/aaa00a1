@@ -882,7 +882,14 @@ export async function loadTools() {
 export async function expireToolRequests() {
   "use server"
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ""}/api/tool-requests/expire`, {
+    const base =
+      process.env.NEXT_PUBLIC_BASE_URL && process.env.NEXT_PUBLIC_BASE_URL.trim() !== ""
+        ? process.env.NEXT_PUBLIC_BASE_URL
+        : process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : "http://localhost:3000";
+
+    const res = await fetch(`${base}/api/tool-requests/expire`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({}),
