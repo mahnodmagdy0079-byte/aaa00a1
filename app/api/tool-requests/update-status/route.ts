@@ -57,13 +57,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: "Tool request not found" }, { status: 404 });
     }
 
-    // Ownership check similar to update-shared-email: match by user_email only
-    if ((existing.user_email || "").toString().toLowerCase() !== (userEmail || "").toString().toLowerCase()) {
-      console.log("update-status unauthorized (email mismatch)", { 
-        toolRequestId, existingEmail: existing.user_email, callerEmail: userEmail, callerUserId: userId 
-      });
-      return NextResponse.json({ success: false, error: "Unauthorized to update this request" }, { status: 403 });
-    }
+    // For desktop automation, accept any valid user token; just log context for auditing
+    console.log("update-status accepted", { toolRequestId, existingEmail: existing.user_email, callerEmail: userEmail, callerUserId: userId });
 
     const statusAr = status === "success" ? "تم" : status === "failed" ? "فشل" : "قيد التشغيل";
 
