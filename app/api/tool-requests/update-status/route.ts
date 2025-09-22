@@ -76,6 +76,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: updateErr.message }, { status: 500 });
     }
 
+    // Optional: when success, free the assigned account for reuse by others after expiry
+    if (status === "success") {
+      try {
+        // nothing now; account freeing handled by expiry task
+      } catch {}
+    }
+
     return NextResponse.json({ success: true });
   } catch (err: any) {
     return NextResponse.json({ success: false, error: err?.message || "Unexpected error" }, { status: 500 });

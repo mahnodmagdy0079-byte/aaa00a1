@@ -322,6 +322,8 @@ namespace toolygsm1.Automation
                     client.BaseAddress = new Uri(apiBaseUrl);
                     client.DefaultRequestHeaders.Add("Authorization", $"Bearer {bearerToken}");
                     client.DefaultRequestHeaders.Add("Origin", apiBaseUrl);
+                    client.DefaultRequestHeaders.UserAgent.ParseAdd("ToolyGSM-Desktop/1.0");
+                    client.DefaultRequestHeaders.Accept.ParseAdd("application/json");
 
                     var json = "{\"toolRequestId\":\"" + toolRequestId + "\",\"status\":\"" + status + "\"}";
                     var content = new StringContent(json, Encoding.UTF8, "application/json");

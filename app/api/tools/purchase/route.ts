@@ -76,6 +76,70 @@ export async function POST(req: NextRequest) {
 
     const supabase = createAdminClient();
 
+    // Lazy expire: on-demand cleanup for expired requests and freeing accounts
+    try {
+      const nowIso = new Date().toISOString();
+      const { data: expired, error: findExpiredErr } = await supabase
+        .from("tool_requests")
+        .select("id, ultra_id")
+        .lt("end_time", nowIso)
+        .neq("status", "expired");
+
+      if (!findExpiredErr && expired && expired.length > 0) {
+        const ids = expired.map(r => r.id);
+        await supabase
+          .from("tool_requests")
+          .update({ status: "expired", status_ar: "منتهي" })
+          .in("id", ids);
+
+        const usernames = expired.map(r => r.ultra_id).filter(Boolean);
+        if (usernames.length > 0) {
+          await supabase
+            .from("tool_accounts")
+            .update({ is_available: true, assigned_to_user: null, user_id: null })
+            .in("account_username", usernames as string[]);
+        }
+      }
+    } catch (lazyExpireErr) {
+      console.log("Lazy expire error:", lazyExpireErr);
+    }
+
+    // Reuse existing active request for the same tool within duration
+    try {
+      const nowIso = new Date().toISOString();
+      const { data: existingActive, error: existingErr } = await supabase
+        .from("tool_requests")
+        .select("id, end_time, ultra_id, password, tool_name, status_ar")
+        .eq("user_email", userEmail)
+        .eq("tool_name", toolName)
+        .gte("end_time", nowIso)
+        .order("end_time", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (!existingErr && existingActive) {
+        return NextResponse.json({
+          success: true,
+          message: `تم استخدام الطلب النشط الحالي لأداة ${toolName} بدون خصم جديد`,
+          isReuse: true,
+          toolRequest: {
+            id: existingActive.id,
+            end_time: existingActive.end_time,
+            tool_name: existingActive.tool_name,
+            status_ar: existingActive.status_ar || "قيد التشغيل",
+          },
+          account: existingActive.ultra_id ? {
+            username: existingActive.ultra_id,
+            password: existingActive.password || "",
+            email: "",
+            account_id: null
+          } : null
+        });
+      }
+    } catch (reuseErr) {
+      console.log("Reuse check error:", reuseErr);
+    }
+
     // فحص الباقة النشطة
     const { data: activeLicense, error: licenseError } = await supabase
       .from("licenses")

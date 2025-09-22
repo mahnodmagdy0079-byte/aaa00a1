@@ -879,6 +879,22 @@ export async function loadTools() {
   return { tools: toolsWithCount, error: null }
 }
 
+export async function expireToolRequests() {
+  "use server"
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ""}/api/tool-requests/expire`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({}),
+      cache: "no-store",
+    })
+    const json = await res.json()
+    return { success: res.ok && json.success, ...json }
+  } catch (e: any) {
+    return { success: false, error: e?.message || "Failed to expire" }
+  }
+}
+
 export async function addTool(toolData: {
   name: string
   image_url: string

@@ -27,6 +27,7 @@ import {
   addToolAccount,
   deleteToolAccount,
   loadTools as loadToolsAction,
+  expireToolRequests,
 } from "./actions"
 
 interface UserWithLicense {
@@ -660,13 +661,28 @@ export default function AdminPage() {
                     <h1 className="text-3xl font-bold text-white mb-2">إدارة الأدوات</h1>
                     <p className="text-gray-400">إضافة وتعديل الأدوات وحساباتها</p>
                   </div>
-                  <Button
-                    onClick={() => setShowAddToolModal(true)}
-                    className="bg-green-500 hover:bg-green-600 text-white"
-                  >
-                    <Plus className="w-4 h-4 ml-2" />
-                    إضافة أداة جديدة
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button
+                      onClick={async () => {
+                        const res = await expireToolRequests()
+                        if (res.success) {
+                          alert(`تم إنهاء ${res.expired || 0} طلب وتحرير الحسابات المنتهية`)
+                        } else {
+                          alert(`فشل تشغيل مهمة الانتهاء: ${res.error || "خطأ غير معروف"}`)
+                        }
+                      }}
+                      className="bg-purple-600 hover:bg-purple-700 text-white"
+                    >
+                      إنهاء الطلبات المنتهية
+                    </Button>
+                    <Button
+                      onClick={() => setShowAddToolModal(true)}
+                      className="bg-green-500 hover:bg-green-600 text-white"
+                    >
+                      <Plus className="w-4 h-4 ml-2" />
+                      إضافة أداة جديدة
+                    </Button>
+                  </div>
                 </div>
 
                 {isLoadingTools ? (
