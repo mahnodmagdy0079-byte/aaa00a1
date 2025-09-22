@@ -27,7 +27,6 @@ import {
   addToolAccount,
   deleteToolAccount,
   loadTools as loadToolsAction,
-  expireToolRequests,
 } from "./actions"
 
 interface UserWithLicense {
@@ -664,11 +663,20 @@ export default function AdminPage() {
                   <div className="flex gap-2">
                     <Button
                       onClick={async () => {
-                        const res = await expireToolRequests()
-                        if (res.success) {
-                          alert(`تم إنهاء ${res.expired || 0} طلب وتحرير الحسابات المنتهية`)
-                        } else {
-                          alert(`فشل تشغيل مهمة الانتهاء: ${res.error || "خطأ غير معروف"}`)
+                        try {
+                          const response = await fetch('/api/tool-requests/expire', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({}),
+                          })
+                          const res = await response.json()
+                          if (response.ok && res.success) {
+                            alert(`تم إنهاء ${res.expired || 0} طلب وتحرير الحسابات المنتهية`)
+                          } else {
+                            alert(`فشل تشغيل مهمة الانتهاء: ${res.error || 'خطأ غير معروف'}`)
+                          }
+                        } catch (e: any) {
+                          alert(`فشل تشغيل مهمة الانتهاء: ${e?.message || 'خطأ غير معروف'}`)
                         }
                       }}
                       className="bg-purple-600 hover:bg-purple-700 text-white"
