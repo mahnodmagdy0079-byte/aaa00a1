@@ -44,7 +44,7 @@ namespace toolygsm1
             this.userId = userId;
             this.fullName = fullName;
             this.email = email;
-            this.userToken = token; // حفظ التوكن
+            this.userToken = token; // 保存 التوكن
             
             // تم إزالة رسالة التحديث كما طلب المستخدم
             // أحداث أزرار الشريط المخصص
@@ -1392,15 +1392,9 @@ namespace toolygsm1
                         
                         if (purchaseResult.Success)
                         {
-                            // فحص إذا كان هذا طلب إعادة استخدام
-                            if (purchaseResult.IsReuse)
-                            {
-                                MessageBox.Show("تم إعادة تفعيل الأداة بنجاح! (إعادة استخدام الحساب الناجح)", "إعادة تفعيل", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                            else
-                            {
-                                MessageBox.Show("تم شراء الأداة بنجاح! سيتم تجربة الحساب المخصص للعثور على الحساب المناسب.", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
+                            // تم تعطيل رسالة إعادة التفعيل بنجاح
+                            // MessageBox.Show("تم إعادة تفعيل الأداة بنجاح! (إعادة استخدام الحساب الناجح)", "إعادة تفعيل", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("تم شراء الأداة بنجاح! سيتم تجربة الحساب المخصص للعثور على الحساب المناسب.", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             // إعادة تحميل البيانات
                             _ = LoadUserDataAsync();
                         }
@@ -1416,7 +1410,7 @@ namespace toolygsm1
                     }
                     finally
                     {
-                        // إعادة تفعيل الزر
+                        // إعادة ت فعال الزر
                         btnBuy.Tag = originalTool;
                         btnBuy.Enabled = true;
                         btnBuy.Text = "شراء";
@@ -1521,8 +1515,7 @@ namespace toolygsm1
                                     if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
                                     {
                                         LogError("AutomationStart", new Exception($"Starting automation with username: {username}"));
-                                        // بدء الأوميشن مع الحساب المخصص
-                                        StartUnlockToolAutomation(username, password);
+                                        // سيتم بدء الأوميشن لمرة واحدة أدناه حسب حالة isReuse
                                     }
                                     else
                                     {
@@ -1725,6 +1718,8 @@ namespace toolygsm1
             try
             {
                 LogError("StartUnlockToolAutomation", new Exception($"Starting automation for username: {username}, Request ID: {toolRequestId}"));
+                var apiBaseUrl = SecurityConfig.GetApiBaseUrl();
+                var token = userToken;
                 
                 // بدء الأوميشن في thread منفصل
                 System.Threading.Tasks.Task.Run(() =>
@@ -1733,8 +1728,8 @@ namespace toolygsm1
                     {
                         LogError("UnlockToolAutomation", new Exception($"Task started for username: {username}, Request ID: {toolRequestId}"));
                         
-                        // استدعاء دالة الأوميشن مع الحساب المخصص
-                        UnlockToolAutomation.StartUnlockToolAutomation(username, password, toolRequestId);
+                        // استدعاء دالة الأوتوميشن وتمرير بيانات الحساب + معرف الطلب + معلومات الـ API
+                        UnlockToolAutomation.StartUnlockToolAutomation(username, password, toolRequestId, apiBaseUrl, token);
                         
                         LogError("UnlockToolAutomation", new Exception($"Automation completed for username: {username}, Request ID: {toolRequestId}"));
                     }

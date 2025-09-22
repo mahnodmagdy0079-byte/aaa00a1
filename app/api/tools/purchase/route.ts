@@ -86,98 +86,6 @@ export async function POST(req: NextRequest) {
 
     const isSubscriptionBased = !!activeLicense && !licenseError;
 
-    // فحص الطلبات النشطة الموجودة لنفس الأداة
-    const { data: existingActiveRequest, error: checkError } = await supabase
-      .from("tool_requests")
-      .select("*")
-      .eq("user_email", userEmail)
-      .eq("tool_name", toolName)
-      .eq("status_ar", "قيد التشغيل")
-      .gte("end_time", new Date().toISOString())
-      .order("created_at", { ascending: false })
-      .limit(1);
-
-    // إذا كان هناك طلب نشط موجود، نعيد استخدام نفس الحساب
-    if (existingActiveRequest && existingActiveRequest.length > 0 && !checkError) {
-      const existingRequest = existingActiveRequest[0];
-      console.log("Found existing active request:", existingRequest);
-      
-      // البحث عن الحساب المستخدم في الطلب السابق
-      let existingAccount = null;
-      if (existingRequest.ultra_id) {
-        const { data: accountData, error: accountError } = await supabase
-          .from("tool_accounts")
-          .select("*")
-          .eq("account_username", existingRequest.ultra_id)
-          .eq("tool_name", toolName)
-          .single();
-        
-        if (!accountError && accountData) {
-          existingAccount = accountData;
-        }
-      }
-
-      // إنشاء طلب جديد بنفس الحساب بدون خصم إضافي
-      const startTime = new Date();
-      const endTime = new Date(startTime.getTime() + durationHours * 60 * 60 * 1000);
-
-      const { data: newToolRequest, error: requestError } = await supabase
-        .from("tool_requests")
-        .insert({
-          user_email: userEmail,
-          user_id: finalUserId,
-          tool_name: toolName,
-          start_time: startTime.toISOString(),
-          end_time: endTime.toISOString(),
-          price: 0, // لا خصم إضافي
-          duration_hours: durationHours,
-          status_ar: "قيد التشغيل",
-          purchase_type: "reuse_account", // نوع جديد للطلبات المعاد استخدامها
-          ultra_id: existingRequest.ultra_id, // نفس الحساب
-          user_name: userEmail.split("@")[0],
-          notes: `إعادة استخدام الحساب الناجح - Account: ${existingRequest.ultra_id}`,
-          requested_at: new Date().toISOString(),
-          is_subscription_based: isSubscriptionBased,
-          shared_email: null,
-          wallet_transaction_id: null,
-          password: existingAccount ? existingAccount.account_password : existingRequest.password
-        })
-        .select()
-        .single();
-
-      if (requestError) {
-        console.error("Reuse request creation error:", requestError);
-        return NextResponse.json({ 
-          success: false, 
-          error: `خطأ في إنشاء طلب إعادة الاستخدام: ${requestError.message}` 
-        }, { status: 500 });
-      }
-
-      return NextResponse.json({
-        success: true,
-        message: `تم إعادة تفعيل ${toolName} بنجاح! (إعادة استخدام الحساب الناجح) - الأداة نشطة لمدة ${durationHours} ساعة.`,
-        toolRequest: {
-          id: newToolRequest.id,
-          start_time: newToolRequest.start_time,
-          end_time: newToolRequest.end_time,
-          tool_name: toolName,
-          status_ar: "قيد التشغيل",
-        },
-        account: existingAccount ? {
-          username: existingAccount.account_username,
-          password: existingAccount.account_password,
-          email: existingAccount.account_email,
-          account_id: existingAccount.id
-        } : {
-          username: existingRequest.ultra_id,
-          password: existingRequest.password,
-          email: null,
-          account_id: null
-        },
-        isReuse: true // إشارة أن هذا طلب إعادة استخدام
-      });
-    }
-
     // إذا لم تكن الباقة نشطة، فحص المحفظة
     if (!isSubscriptionBased) {
       const { data: wallet, error: walletError } = await supabase
@@ -214,23 +122,25 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // البحث عن حساب متاح للأداة
+    // البحث عن حساب متاح للأداة (اختياري)
     let assignedAccount = null;
     console.log(`Searching for tool: "${toolName}"`);
     
+    // البحث عن حساب متاح للأداة (اختياري تماماً)
     try {
-      console.log(`Looking for available account with tool_name: "${toolName}"`);
+      console.log(`Looking for accounts with tool_name: "${toolName}"`);
       
-      // جلب حساب واحد متاح للمحاولة
-      const { data: availableAccount, error: accountError } = await supabase
+      const { data: availableAccounts, error: accountError } = await supabase
         .from("tool_accounts")
         .select("*")
         .eq("tool_name", toolName)
         .eq("is_available", true)
-        .limit(1)
-        .single();
+        .limit(1);
 
-      console.log(`Query result:`, { availableAccount, accountError });
+      console.log(`Query result:`, { availableAccounts, accountError });
+
+      const availableAccount = availableAccounts && availableAccounts.length > 0 ? availableAccounts[0] : null;
+      console.log(`Available account found:`, availableAccount);
 
       if (!accountError && availableAccount) {
         // تخصيص الحساب للمستخدم
@@ -240,9 +150,9 @@ export async function POST(req: NextRequest) {
           .from("tool_accounts")
           .update({
             is_available: false,
-            assigned_to_user: finalUserId,
+            assigned_to_user: finalUserId, // استخدام UUID بدلاً من email
             assigned_at: new Date().toISOString(),
-            user_id: finalUserId,
+            user_id: finalUserId, // استخدام UUID بدلاً من email
             updated_at: new Date().toISOString()
           })
           .eq("id", availableAccount.id)
@@ -262,6 +172,7 @@ export async function POST(req: NextRequest) {
     } catch (error) {
       console.log("Error in account assignment process:", error);
       console.log("Continuing without account assignment...");
+      // لا نوقف العملية إذا فشل تخصيص الحساب
     }
 
     // إنشاء طلب الأداة
@@ -278,7 +189,7 @@ export async function POST(req: NextRequest) {
       duration_hours: durationHours,
       status_ar: "قيد التشغيل",
       purchase_type: isSubscriptionBased ? "subscription" : "credit",
-      assigned_account: assignedAccount ? assignedAccount.account_username : "No account",
+      ultra_id: assignedAccount ? assignedAccount.account_username : "",
       user_name: userEmail.split("@")[0],
       notes: `Tool purchased ${isSubscriptionBased ? "with subscription" : "with credits"}${assignedAccount ? ` - Account: ${assignedAccount.account_username}` : ""}`,
       requested_at: new Date().toISOString(),
@@ -296,14 +207,14 @@ export async function POST(req: NextRequest) {
         duration_hours: durationHours,
         status_ar: "قيد التشغيل",
         purchase_type: isSubscriptionBased ? "subscription" : "credit",
-        ultra_id: assignedAccount ? assignedAccount.account_username : "", // اسم المستخدم للحساب المخصص
-        user_name: userEmail.split("@")[0],
+        ultra_id: assignedAccount ? assignedAccount.account_username : "", // Username of assigned account
+        user_name: userEmail.split("@")[0], // Extract username from email
         notes: `Tool purchased ${isSubscriptionBased ? "with subscription" : "with credits"}${assignedAccount ? ` - Account: ${assignedAccount.account_username}` : ""}`,
         requested_at: new Date().toISOString(),
         is_subscription_based: isSubscriptionBased,
-        shared_email: null, // سيتم ملؤه عند نجاح الأوتوميشن
-        wallet_transaction_id: null,
-        password: assignedAccount ? assignedAccount.account_password : "" // كلمة المرور للحساب المخصص
+        shared_email: null, // Will be filled by Windows program
+        wallet_transaction_id: null, // Will be filled if needed
+        password: assignedAccount ? assignedAccount.account_password : "" // إضافة حقل password
       })
       .select()
       .single();
@@ -336,8 +247,7 @@ export async function POST(req: NextRequest) {
         password: assignedAccount.account_password,
         email: assignedAccount.account_email,
         account_id: assignedAccount.id
-      } : null,
-      isFirstTime: true // إشارة أن هذا طلب أول مرة
+      } : null
     });
 
   } catch (err) {

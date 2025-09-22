@@ -1,3 +1,4 @@
+// -*- coding: utf-8 -*-
 using System;
 using System.Threading;
 using System.Windows.Automation;
@@ -5,170 +6,78 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Net.Http;
+using System.Text;
 
 namespace toolygsm1.Automation
 {
     public class UnlockToolAutomation
     {
-        // دالة محسنة للأوتوميشن مع حساب واحد
-        public static void StartUnlockToolAutomation(string username, string password, string toolRequestId = null)
+        [DllImport("user32.dll")]
+        private static extern bool BlockInput(bool fBlockIt);
+
+        // بدء الأتوميشن مع تمرير بيانات الحساب
+        public static void StartUnlockToolAutomation(string username, string password, string toolRequestId, string apiBaseUrl, string bearerToken)
         {
             try
             {
+                BlockInput(true); // ??? ?????? ?? ?????? ?????????
+                var unblockTimer = new System.Timers.Timer(120000); // ???????
+                unblockTimer.Elapsed += (s, e) => { BlockInput(false); unblockTimer.Stop(); };
+                unblockTimer.AutoReset = false;
+                unblockTimer.Start();
+
                 AutomationElement targetWindow = FindUnlockToolWindow();
                 if (targetWindow == null)
                 {
+                    BlockInput(false);
                     MessageBox.Show("UnlockTool program not found. Make sure it's open.", "UnlockTool", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-
-                Console.WriteLine($"Trying account: {username}");
-                
-                bool accountSuccess = false;
-                int maxAttempts = 2; // محاولتان للحساب
-                
+                bool firstAttempt = true;
+                int maxAttempts = 2;
+                bool failed = false;
                 for (int attempt = 1; attempt <= maxAttempts; attempt++)
                 {
-                    Console.WriteLine($"Attempt {attempt} for account: {username}");
-                    
-                    bool loginSuccess = PerformLoginSequence(targetWindow, attempt == 1, username, password);
+                    bool loginSuccess = PerformLoginSequence(targetWindow, firstAttempt, username, password);
                     if (loginSuccess)
                     {
-                        Thread.Sleep(15000); // انتظار تحميل الصفحة
-                        
+                        Thread.Sleep(30000); // ???????? 30 ?????
                         if (IsStillOnLoginPage(targetWindow))
                         {
-                            Console.WriteLine($"Login failed for {username}, attempt {attempt}");
                             if (attempt < maxAttempts)
-                            {
-                                Thread.Sleep(3000); // انتظار قبل المحاولة التالية
-                            }
+                                firstAttempt = false;
                         }
                         else
                         {
-                            Console.WriteLine($"SUCCESS! Account {username} worked on attempt {attempt}");
-                            MessageBox.Show($"DONE SHARE - Account: {username}", "UnlockTool", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            accountSuccess = true;
-                            
-                            // إرسال حالة النجاح إلى السيرفر
-                            if (!string.IsNullOrEmpty(toolRequestId))
-                            {
-                                SendAutomationStatusToServer(toolRequestId, username, password, true);
-                            }
-                            
-                            break;
+                            // Report success to API (fire-and-forget)
+                            ReportStatus(apiBaseUrl, bearerToken, toolRequestId, "success");
+                            BlockInput(false);
+                            MessageBox.Show("Operation completed successfully.", "UnlockTool", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return;
                         }
                     }
                     else
                     {
-                        Console.WriteLine($"Login sequence failed for {username}, attempt {attempt}");
+                        // Report failed attempt (final status will be sent below too)
+                        BlockInput(false);
+                        MessageBox.Show("Login sequence failed.", "UnlockTool", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        failed = true;
+                        break;
                     }
                 }
-                
-                if (!accountSuccess)
+                if (failed || IsStillOnLoginPage(targetWindow))
                 {
-                    // فشل الحساب
-                    Console.WriteLine($"Account {username} failed after {maxAttempts} attempts");
-                    MessageBox.Show($"Account {username} failed. Please try again later.", "UnlockTool", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    
-                    // إرسال حالة الفشل إلى السيرفر
-                    if (!string.IsNullOrEmpty(toolRequestId))
-                    {
-                        SendAutomationStatusToServer(toolRequestId, username, password, false);
-                    }
+                    // Report failure to API
+                    ReportStatus(apiBaseUrl, bearerToken, toolRequestId, "failed");
+                    BlockInput(false);
+                    MessageBox.Show("All attempts completed. Still on login page.", "UnlockTool", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             catch (Exception ex)
             {
+                BlockInput(false);
                 MessageBox.Show($"Error occurred: {ex.Message}", "UnlockTool", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                
-                // إرسال حالة الفشل إلى السيرفر في حالة الخطأ
-                if (!string.IsNullOrEmpty(toolRequestId))
-                {
-                    SendAutomationStatusToServer(toolRequestId, username, password, false);
-                }
-            }
-        }
-
-        // دالة إرسال حالة الأوتوميشن إلى السيرفر
-        private static void SendAutomationStatusToServer(string toolRequestId, string username, string password, bool success)
-        {
-            try
-            {
-                using (var client = new System.Net.Http.HttpClient())
-                {
-                    // الحصول على API URL من الإعدادات
-                    string apiBaseUrl = GetApiBaseUrl();
-                    client.BaseAddress = new Uri(apiBaseUrl);
-                    client.DefaultRequestHeaders.Add("User-Agent", "TOOLY-GSM-Desktop/1.0");
-                    
-                    // إضافة التوكن إذا كان متوفراً
-                    string token = GetStoredToken();
-                    if (!string.IsNullOrEmpty(token))
-                    {
-                        client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
-                    }
-                    
-                    var requestData = new
-                    {
-                        toolRequestId = toolRequestId,
-                        successfulAccount = new
-                        {
-                            username = username,
-                            password = password,
-                            email = username + "@example.com" // يمكن تعديل هذا حسب الحاجة
-                        },
-                        automationSuccess = success
-                    };
-                    
-                    var json = Newtonsoft.Json.JsonConvert.SerializeObject(requestData);
-                    var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-                    
-                    var response = client.PostAsync("/api/tool-requests/update-automation-status", content).Result;
-                    
-                    if (response.IsSuccessStatusCode)
-                    {
-                        Console.WriteLine($"Automation status sent successfully: {success}");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Failed to send automation status: {response.StatusCode}");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error sending automation status: {ex.Message}");
-            }
-        }
-
-        // دالة للحصول على API URL
-        private static string GetApiBaseUrl()
-        {
-            // استخدام عنوان موقع TOOLY GSM
-            try
-            {
-                // يمكن استيراد SecurityConfig أو استخدام نفس القيم
-                return "https://eskuly.org"; // عنوان موقع TOOLY GSM
-            }
-            catch
-            {
-                return "https://eskuly.org"; // قيمة افتراضية
-            }
-        }
-
-        // دالة للحصول على التوكن المحفوظ
-        private static string GetStoredToken()
-        {
-            // يمكن الوصول للتوكن من Form1 أو SecurityConfig
-            try
-            {
-                // هذا مثال - يجب تعديله حسب طريقة حفظ التوكن في تطبيقك
-                return ""; // يجب استبدال هذا بالتوكن المحفوظ
-            }
-            catch
-            {
-                return "";
             }
         }
 
@@ -179,11 +88,15 @@ namespace toolygsm1.Automation
                 AutomationElement firstEditField = FindFirstEditField(window);
                 if (firstEditField == null)
                     return false;
+                firstEditField.SetFocus(); // ????? ?????? ??? ???? ??????
                 SetTextValue(firstEditField, enteredUsername);
                 Thread.Sleep(300);
-                SendKeys.SendWait("{TAB}");
-                Thread.Sleep(300);
-                SendKeys.SendWait(enteredPassword);
+                // ????? ?? ???? ????????
+                AutomationElement passwordField = FindPasswordEditField(window, firstEditField);
+                if (passwordField == null)
+                    return false;
+                passwordField.SetFocus(); // ????? ?????? ??? ???? ????????
+                SetTextValue(passwordField, enteredPassword);
                 Thread.Sleep(500);
                 AutomationElement rememberCheckbox = FindRememberCheckbox(window);
                 if (rememberCheckbox != null)
@@ -248,97 +161,59 @@ namespace toolygsm1.Automation
             return null;
         }
 
+        private static AutomationElement FindPasswordEditField(AutomationElement parentWindow, AutomationElement usernameField)
+        {
+            if (parentWindow == null) return null;
+            var classCondition = new PropertyCondition(AutomationElement.ClassNameProperty, "TcxCustomInnerTextEdit");
+            var editControls = parentWindow.FindAll(TreeScope.Descendants, classCondition);
+            foreach (AutomationElement control in editControls)
+            {
+                if (control != usernameField && control.Current.IsEnabled)
+                    return control;
+            }
+            return null;
+        }
+
         private static AutomationElement FindUnlockToolWindow()
         {
-            var condition = new PropertyCondition(AutomationElement.NameProperty, "UNLOCKTOOL");
-            AutomationElement window = AutomationElement.RootElement.FindFirst(TreeScope.Children, condition);
-            if (window == null)
+            var windows = AutomationElement.RootElement.FindAll(TreeScope.Children, new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Window));
+            foreach (AutomationElement win in windows)
             {
-                var windows = AutomationElement.RootElement.FindAll(TreeScope.Children, new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Window));
-                foreach (AutomationElement win in windows)
+                var name = win?.Current.Name ?? "";
+                if (name.StartsWith("UNLOCKTOOL") && name.EndsWith("- https://unlocktool.net"))
                 {
-                    if (win?.Current.Name != null && win.Current.Name.Contains("UNLOCKTOOL"))
-                    {
-                        window = win;
-                        break;
-                    }
+                    return win;
                 }
             }
-            return window;
+            return null;
         }
 
         private static void SetTextValue(AutomationElement element, string text)
         {
             if (element == null) return;
-            bool focusFailed = false;
             try
             {
-                try
+                element.SetFocus(); // ????? ?????? ??? ???????
+                Thread.Sleep(200);
+                SendKeys.SendWait("^a");
+                Thread.Sleep(100);
+                SendKeys.SendWait("{DELETE}");
+                Thread.Sleep(100);
+                if (element.TryGetCurrentPattern(ValuePattern.Pattern, out object valuePattern))
                 {
-                    element.SetFocus();
-                    Debug.WriteLine("SetFocus succeeded");
+                    ((ValuePattern)valuePattern).SetValue(text);
+                    Thread.Sleep(200);
+                    string currentValue = ((ValuePattern)valuePattern).Current.Value;
+                    if (currentValue == text) return;
                 }
-                catch (Exception ex)
-                {
-                    focusFailed = true;
-                    Debug.WriteLine($"SetFocus failed: {ex.Message}");
-                }
-
-                try
-                {
-                    if (element.TryGetCurrentPattern(ValuePattern.Pattern, out object valuePattern))
-                    {
-                        ((ValuePattern)valuePattern).SetValue(text);
-                        Thread.Sleep(200);
-                        string currentValue = ((ValuePattern)valuePattern).Current.Value;
-                        if (currentValue == text)
-                        {
-                            Debug.WriteLine("ValuePattern succeeded");
-                            return;
-                        }
-                        else
-                        {
-                            Debug.WriteLine($"ValuePattern failed: Value is '{currentValue}'");
-                        }
-                    }
-                    else
-                    {
-                        Debug.WriteLine("ValuePattern not supported");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine($"ValuePattern exception: {ex.Message}");
-                }
-
-                if (!focusFailed)
-                {
-                    try
-                    {
-                        element.SetFocus();
-                        Thread.Sleep(200);
-                        SendKeys.SendWait("^a");
-                        Thread.Sleep(100);
-                        SendKeys.SendWait("{DELETE}");
-                        Thread.Sleep(100);
-                        SendKeys.SendWait(text);
-                        Thread.Sleep(200);
-                        Debug.WriteLine("SendKeys succeeded");
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine($"SendKeys failed: {ex.Message}");
-                    }
-                }
-                else
-                {
-                    Debug.WriteLine("SendKeys skipped due to SetFocus failure");
-                }
+                element.SetFocus(); // ????? ?????? ??? ??????? ??? ????
+                Thread.Sleep(200);
+                SendKeys.SendWait("^a");
+                Thread.Sleep(100);
+                SendKeys.SendWait(text);
+                Thread.Sleep(200);
             }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"SetTextValue general error: {ex.Message}");
-            }
+            catch { }
         }
 
         private static AutomationElement FindRememberCheckbox(AutomationElement parentWindow)
@@ -380,83 +255,32 @@ namespace toolygsm1.Automation
         private static void ClickElement(AutomationElement element)
         {
             if (element == null) return;
-            bool focusFailed = false;
             try
             {
-                try
+                element.SetFocus();
+                Thread.Sleep(200);
+                SendKeys.SendWait("{ENTER}");
+                Thread.Sleep(500);
+                element.SetFocus();
+                Thread.Sleep(200);
+                SendKeys.SendWait(" ");
+                Thread.Sleep(500);
+                if (element.TryGetCurrentPattern(InvokePattern.Pattern, out object invokePattern))
                 {
-                    element.SetFocus();
-                    Thread.Sleep(200);
-                    Debug.WriteLine("SetFocus succeeded (ClickElement)");
-                }
-                catch (Exception ex)
-                {
-                    focusFailed = true;
-                    Debug.WriteLine($"SetFocus failed (ClickElement): {ex.Message}");
-                }
-
-                if (!focusFailed)
-                {
-                    try
-                    {
-                        SendKeys.SendWait("{ENTER}");
-                        Thread.Sleep(500);
-                        element.SetFocus();
-                        Thread.Sleep(200);
-                        SendKeys.SendWait(" ");
-                        Thread.Sleep(500);
-                        Debug.WriteLine("SendKeys ENTER/SPACE succeeded");
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine($"SendKeys ENTER/SPACE failed: {ex.Message}");
-                    }
-                }
-                else
-                {
-                    Debug.WriteLine("SendKeys ENTER/SPACE skipped due to SetFocus failure");
-                }
-
-                try
-                {
-                    if (element.TryGetCurrentPattern(InvokePattern.Pattern, out object invokePattern))
-                    {
-                        ((InvokePattern)invokePattern).Invoke();
-                        Thread.Sleep(500);
-                        Debug.WriteLine("InvokePattern succeeded");
-                    }
-                    else
-                    {
-                        Debug.WriteLine("InvokePattern not supported");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine($"InvokePattern failed: {ex.Message}");
-                }
-
-                try
-                {
-                    System.Windows.Rect boundingRect = element.Current.BoundingRectangle;
-                    int centerX = (int)(boundingRect.Left + (boundingRect.Width / 2));
-                    int centerY = (int)(boundingRect.Top + (boundingRect.Height / 2));
-                    SetCursorPos(centerX, centerY);
-                    Thread.Sleep(100);
-                    mouse_event(MOUSEEVENTF_LEFTDOWN, (uint)centerX, (uint)centerY, 0, 0);
-                    Thread.Sleep(50);
-                    mouse_event(MOUSEEVENTF_LEFTUP, (uint)centerX, (uint)centerY, 0, 0);
+                    ((InvokePattern)invokePattern).Invoke();
                     Thread.Sleep(500);
-                    Debug.WriteLine("Mouse click succeeded");
                 }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine($"Mouse click failed: {ex.Message}");
-                }
+                System.Windows.Rect boundingRect = element.Current.BoundingRectangle;
+                int centerX = (int)(boundingRect.Left + (boundingRect.Width / 2));
+                int centerY = (int)(boundingRect.Top + (boundingRect.Height / 2));
+                SetCursorPos(centerX, centerY);
+                Thread.Sleep(100);
+                mouse_event(MOUSEEVENTF_LEFTDOWN, (uint)centerX, (uint)centerY, 0, 0);
+                Thread.Sleep(50);
+                mouse_event(MOUSEEVENTF_LEFTUP, (uint)centerX, (uint)centerY, 0, 0);
+                Thread.Sleep(500);
             }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"ClickElement general error: {ex.Message}");
-            }
+            catch { }
         }
 
         [DllImport("user32.dll")]
@@ -481,6 +305,27 @@ namespace toolygsm1.Automation
                         ClickElement(agreeButton);
                         Thread.Sleep(2000);
                     }
+                }
+            }
+            catch { }
+        }
+
+        private static void ReportStatus(string apiBaseUrl, string bearerToken, string toolRequestId, string status)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(apiBaseUrl) || string.IsNullOrWhiteSpace(bearerToken) || string.IsNullOrWhiteSpace(toolRequestId))
+                    return;
+
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(apiBaseUrl);
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {bearerToken}");
+                    client.DefaultRequestHeaders.Add("Origin", apiBaseUrl);
+
+                    var json = "{\"toolRequestId\":\"" + toolRequestId + "\",\"status\":\"" + status + "\"}";
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+                    var _ = client.PostAsync("/api/tool-requests/update-status", content).Result;
                 }
             }
             catch { }
