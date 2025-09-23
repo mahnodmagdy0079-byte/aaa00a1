@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image"
+import Link from "next/link"
 import { useLanguage } from "@/contexts/LanguageContext"
 
 export default function SiteNav() {
@@ -14,11 +15,11 @@ export default function SiteNav() {
         </div>
         <div className="hidden md:flex items-center">
           <div className="bg-black/60 backdrop-blur-md border border-white/30 rounded-full px-2 py-2 flex items-center gap-1">
-            <a href="/" className="text-white hover:text-orange-300 transition-all duration-300 font-medium text-base px-4 py-2 rounded-full hover:bg-orange-500/10">{language === "ar" ? "الرئيسية" : "Home"}</a>
-            <a href="/packages" className="text-white hover:text-orange-300 transition-all duration-300 font-medium text-base px-4 py-2 rounded-full hover:bg-orange-500/10">{language === "ar" ? "الباقات" : "Packages"}</a>
-            <a href="/tools" className="text-white hover:text-orange-300 transition-all duration-300 font-medium text-base px-4 py-2 rounded-full hover:bg-orange-500/10">{language === "ar" ? "خدمات" : "Services"}</a>
-            <a href="/downloads" className="text-white hover:text-orange-300 transition-all duration-300 font-medium text-base px-4 py-2 rounded-full hover:bg-orange-500/10">{language === "ar" ? "التحميل" : "Downloads"}</a>
-            <a href="/supported-models" className="text-white hover:text-orange-300 transition-all duration-300 font-medium text-base px-4 py-2 rounded-full hover:bg-orange-500/10">{language === "ar" ? "الموديلات المدعومة" : "Supported Models"}</a>
+            <Link href="/" className="text-white hover:text-orange-300 transition-all duration-300 font-medium text-base px-4 py-2 rounded-full hover:bg-orange-500/10">{language === "ar" ? "الرئيسية" : "Home"}</Link>
+            <Link href="/packages" className="text-white hover:text-orange-300 transition-all duration-300 font-medium text-base px-4 py-2 rounded-full hover:bg-orange-500/10">{language === "ar" ? "الباقات" : "Packages"}</Link>
+            <Link href="/tools" className="text-white hover:text-orange-300 transition-all duration-300 font-medium text-base px-4 py-2 rounded-full hover:bg-orange-500/10">{language === "ar" ? "خدمات" : "Services"}</Link>
+            <Link href="/downloads" className="text-white hover:text-orange-300 transition-all duration-300 font-medium text-base px-4 py-2 rounded-full hover:bg-orange-500/10">{language === "ar" ? "التحميل" : "Downloads"}</Link>
+            <Link href="/supported-models" className="text-white hover:text-orange-300 transition-all duration-300 font-medium text-base px-4 py-2 rounded-full hover:bg-orange-500/10">{language === "ar" ? "الموديلات المدعومة" : "Supported Models"}</Link>
           </div>
         </div>
         <div className="bg-black/40 backdrop-blur-sm rounded-lg p-1 border border-orange-500/20">
