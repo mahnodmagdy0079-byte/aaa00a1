@@ -3,6 +3,7 @@
 import type React from "react"
 
 import { Button } from "@/components/ui/button"
+import SiteNav from "@/components/site-nav"
 import { Shield, ArrowRight, Smartphone, Users, Clock, DollarSign, Menu, X } from "lucide-react"
 import Image from "next/image"
 import { useState, useEffect } from "react"
@@ -269,7 +270,7 @@ export default function PricingPage() {
 
   return (
     <div className="min-h-screen bg-black relative overflow-hidden" dir={language === "ar" ? "rtl" : "ltr"}>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/10 backdrop-blur-md border-b border-orange-500/5">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/10 backdrop-blur-md border-b border-orange-500/5 hidden">{/* replaced by SiteNav */}
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             {/* Left side - Auth buttons */}
@@ -507,6 +508,7 @@ export default function PricingPage() {
           )}
         </div>
       </nav>
+      <SiteNav />
 
       <div className="min-h-screen flex items-center justify-center relative">
         {/* Background Image with Overlay */}

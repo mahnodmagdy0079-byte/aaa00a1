@@ -4,6 +4,7 @@ import type React from "react"
 
 import { Check, Star, Phone, Settings, Crown, ArrowRight, Menu, X } from "lucide-react"
 import Image from "next/image"
+import SiteNav from "@/components/site-nav"
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useLanguage } from "@/contexts/LanguageContext"
@@ -235,7 +236,7 @@ export default function PackagesPage() {
 
   return (
     <div className="min-h-screen bg-black relative overflow-hidden" dir={language === "ar" ? "rtl" : "ltr"}>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/10 backdrop-blur-md border-b border-orange-500/5">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/10 backdrop-blur-md border-b border-orange-500/5 hidden">{/* replaced by SiteNav */}
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             {/* Left side - Auth buttons */}
@@ -440,6 +441,7 @@ export default function PackagesPage() {
           )}
         </div>
       </nav>
+      <SiteNav />
 
       {/* Header Section */}
       <div className="pt-24 pb-12 bg-black relative">

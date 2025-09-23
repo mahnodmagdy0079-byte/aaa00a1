@@ -66,6 +66,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
+      url: `${baseUrl}/downloads`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/supported-models`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.75,
+    },
+    {
       url: `${baseUrl}/auth/signin`,
       lastModified: new Date(),
       changeFrequency: 'monthly',

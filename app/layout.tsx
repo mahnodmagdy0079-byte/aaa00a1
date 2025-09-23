@@ -14,9 +14,9 @@ const cairo = Cairo({
 })
 
 export const metadata: Metadata = {
-  title: "TOOLY GSM - إصلاح الهواتف وإلغاء القفل بأفضل الأسعار | خدمات GSM متخصصة",
-  description: "خدمات إصلاح الهواتف وإلغاء القفل بأفضل الأسعار في مصر. Unlock Tool, Format, IMEI Check وأكثر. فريق محترف، أمان كامل، جودة مضمونة. اطلب خدمتك الآن!",
-  keywords: "إصلاح الهواتف, إلغاء القفل, Unlock Tool, Format, IMEI Check, خدمات GSM, إصلاح موبايل, فتح الهاتف, مصر",
+  title: "TOOLY GSM - إصلاح الهواتف وإلغاء القفل (Unlock Tool • FRP) | خدمات GSM",
+  description: "خدمات إصلاح الهواتف وإلغاء القفل بأفضل الأسعار في مصر. Unlock Tool, FRP Tool, Format, IMEI Check وأكثر. فريق محترف، أمان كامل، جودة مضمونة. احصل على شير Unlock Tool وFRP Tool فورًا وابدأ الآن!",
+  keywords: "إصلاح الهواتف, إلغاء القفل, Unlock Tool, FRP, FRP Tool, Format, IMEI Check, خدمات GSM, إصلاح موبايل, فتح الهاتف, مصر, شير Unlock Tool, شير FRP",
   authors: [{ name: "TOOLY GSM" }],
   creator: "TOOLY GSM",
   publisher: "TOOLY GSM",

@@ -1,0 +1,1144 @@
+SUPER ZX 5G	ARSP25MTA14A1	Factory Reset Reset FRP Flash Partition Manager
+PULSE 1	PULSE 1	Factory Reset Reset FRP Flash Partition Manager
+NOVA 1	NOVA 1	Factory Reset Reset FRP Flash Partition Manager
+ZENFONE 2 GO	X00BD	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE GO 4.5	X014D	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE LIVE	A007	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE GO	X009D	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE GO	X00AD	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE MAX	Z010D	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE LIVE L1	X00RD - 8917	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE LIVE L1	X00RD - 8937	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE 3 MAX	X00DD	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE 4 MAX	X00ID - 8937	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE 4 MAX	X00ID - 8917	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE 4 MAX PRO	ZC554KL	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE 5 LITE	X017D - 8937	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE LITE L1	X00RD	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE MAX	X00PD - 8917	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE MAX	X00PD - 8937	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE MAX 3	X00DD	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE 2 LASER	Z00TD	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE 3	Z012D	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE 3	Z017D	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE 4	Z01KD	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE 5 LITE	X017D - SDM660	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE MAX M2	X01A	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE 5 2018	X00QD	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE MAX PRO M1	X00TD	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE MAX PRO M1	X00TD	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE MAX PRO M2	X01B	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE 4 PRO	Z01GD	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ROG PHONE 9	AI2501	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ROG PHONE 9 PRO	AI2501	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ROG PHONE 7	AI2205	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ROG PHONE 8	AI2401	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ROG PHONE 8 PRO	AI2401	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ROG PHONE 6	AI2201	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE 3 DELUXE	Z016D	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE V [EMMC]	A006	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE V [UFS]	A006	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ROG PHONE	Z01QD	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE 5Z	Z01RD	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ROG PHONE 3	ZS661KS	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE 6	I01WD	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ROG PHONE 2	ZS660KL	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE 8	I006D	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ROG PHONE 5	ZS673KS / ZS673KS	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ROG PHONE 5S	ZS676KS	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+ZENFONE MAX SHOT	A001D	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+TAB E3 PLUS	TAB E3 PLUS	Factory Reset Reset FRP Flash Partition Manager
+BLADE GT PLAY	BLADE GT PLAY	Factory Reset Reset FRP Flash Partition Manager
+BLADE GT PRO	BLADE GT PRO	Factory Reset Reset FRP Flash Partition Manager
+TAB E3 PRO	TAB E3 PRO	Factory Reset Reset FRP Flash Partition Manager
+TAB E3 MAX	TAB E3 MAX	Factory Reset Reset FRP Flash Partition Manager
+NOVA 10 PRO	GLA-LX1	Factory Reset Reset FRP Flash Partition Manager
+HONOR 8C	BKK-AL10 / BKK-LX2	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+HONOR 200 LITE	LLY-NX1	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+HONOR 90 SMART	CLK-NX1 / CLK-N31 / CLK-NX3	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+HONOR 90 LITE 5G	CRT-NX1 / CRT-N31	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+HONOR X40I	DIO-AN00	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+HONOR X50I	CRT-AN00	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+HONOR X50I PLUS	LLY-AN00	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+HONOR PLAY 40 PLUS	RKY-AN00	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+HONOR PLAY 50 PLUS	CLK-AN00	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+HONOR PLAY 7T	RKY-AN10	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+HONOR PLAY 8T	CLK-AN00	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+HONOR X7A	RKY-L03	Factory Reset Reset FRP Flash Partition Manager
+HONOR X6B	JDY-LX2	Factory Reset Reset FRP Flash Partition Manager
+HONOR X6A	WDY-LX1	Factory Reset Reset FRP Flash Partition Manager
+HONOR X6	VNE-LX2	Factory Reset Reset FRP Flash Partition Manager
+HONOR X5 PLUS	WOD-LX3	Factory Reset Reset FRP Flash Partition Manager
+HONOR X5B	GFY-LX2	Factory Reset Reset FRP Flash Partition Manager
+HONOR 7A	AUM-AL20	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+HOT 10	X682B	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id
+NOTE 12 TURBO	X670	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id
+NOTE 12 PRO / NOTE 12 5G	X671 / X671B	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id
+HOT 12I	X665B / X665	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id
+HOT 11S	X6812	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id
+HOT 10 PLAY	X688C	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id
+ZERO 5G	X6815 / X6815B / X6815C	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id
+SMART 6 [MTK]	X6511E	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id
+HOT 12 PLAY	X6816	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id
+SMART 5	X657B / X657B	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id
+HOT 11	X689F	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id
+SMART 6 PLUS	X6823 / X6823C	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id
+HOT 20 PLAY	X6825	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id
+HOT 20	X6826B / X6826C	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id
+NOTE 12 (2023)	X676C	Factory Reset Reset FRP Flash Partition Manager
+SMART 7	X6515	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id
+HOT 20 5G	X666B / X666C	Factory Reset Reset FRP Flash Fix DL Image Error Fix DeadBoot EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id
+SMART 6 HD	X6512	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id
+HOT 30I [SPD]	X669D	Factory Reset Reset FRP Flash Partition Manager
+HOT 9 PRO	X655F	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id
+NOTE 30 / NOTE 30 PRO [OLD SECURITY]	X6833B / X678B	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+SMART 7 HD [SPD]	X6516	Factory Reset Reset FRP Flash Partition Manager
+SMART 7 [SPD]	X6517	Factory Reset Reset FRP Flash Partition Manager
+HOT 12 PLAY [SPD]	X6816C	Factory Reset Reset FRP Flash Partition Manager
+ZERO 20	X6821	Factory Reset Reset FRP Flash Partition Manager
+NOTE 12	X6817	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+HOT 11 (2022)	X675	Factory Reset Reset FRP Flash Partition Manager
+NOTE 10 PRO	X695	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+ZERO X PRO	X6810 / X6811 / X6811B	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+HOT 10S	X689 / X689B	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SMART 5A / SMART GO	X657C	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+NOTE 10	X693	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+NOTE 12I	X677	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+HOT 10	X682C	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+HOT 20S	X6827	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+HOT 10 PLAY [SPD]	X688	Factory Reset Reset FRP Flash Partition Manager
+NOTE 12 VIP	X672	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+HOT 12 PRO	X668	Factory Reset Reset FRP Flash Partition Manager
+NOTE 11 PRO	X697	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+NOTE 11S	X698	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SMART HD 2021	X612 / X612B	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+HOT 30I [MTK]	X669C	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+NOTE 11	X663 / X663B / X663C	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+NOTE 30 5G	X6711	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id
+HOT 11 PLAY	X688B	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+HOT 8	X650B / X650C / X650D	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+NOTE 30 / NOTE 30 PRO [NEW SECURITY]	X6833B / X678B	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+HOT 30	X6831	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+NOTE 12 PRO	X676B	Factory Reset Reset FRP Flash Fix DL Image Error Partition Manager
+GT 10 PRO	X6739	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id
+SMART 6 [SPD]	X6511B	Factory Reset Reset FRP Flash Partition Manager
+HOT 20I	X665E	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+HOTE 30 PLAY (NFC)	X6835B	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+NOTE 11	X662 / X662B / X662F	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+ZERO 30 5G	X6731 / X6731C	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+HOT 30 5G	X6832	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SMART 8 HD	X6525 / X6525D	Factory Reset Reset FRP Flash Partition Manager Fix Transsion Anti Crack
+ZERO 30 4G	X6731B	Factory Reset Reset FRP Flash Fix DL Image Error Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+NOTE 30 VIP	X6710	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SMART 8 PLUS / SMART 8 PRO	X6525B / X6526	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+HOT 40I	X6528B	Factory Reset Reset FRP Flash Partition Manager
+ZERO ULTRA 5G	X6820	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+HOT 40 - AUTH	X6836	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+HOT 40 PRO	X6837	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id
+NOTE 40 PRO / NOTE 40S	X6850 / X6850B	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+NOTE 40	X6853	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+NOTE 7	X690 / X690B / X690C	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+NOTE 7 LITE	X656	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+NOTE 8	X692	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+NOTE 8I	X683	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SMART 4	X653 / X653C	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SMART 3	X5516	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+NOTE 30I	X6716 / X6717	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+HOT 30 PLAY	X6835 / X6835B	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+NOTE 40 PRO 5G	X6851	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+GT 20 PRO	X6871	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+HOT 9	X655 / X655C	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+ZERO X NEO	X6810	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+HOT 9 PLAY	X680	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+HOT 10I	X659	Factory Reset Reset FRP Flash Partition Manager
+NOTE 40X 5G	X6838	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+NOTE 40 5G	X6852	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+S5	X652	Factory Reset Reset FRP Flash EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+HOT 50I - AUTH	X6531	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+HOT 50 5G	X6720	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+ZERO 40 4G	X6860	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+HOT 50	X6882	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+HOT 50 PRO	X6880 / X6881	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+SMART 8 PLUS / SMART 8 PRO - AUTH	X6525B / X6526	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SMART 9 HD	X6532	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+SMART 9 HD	X6532C	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+XPAD	X1101B	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id
+ZERO 40 5G	X6861	Factory Reset Reset FRP Flash Partition Manager Fix Transsion Anti Crack
+NOTE 50X	X6857B	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+NOTE 50 PRO 4G	X6855	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+GT 20 PRO - AUTH	X6871	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+NOTE 50 4G	X6858	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+NOTE 50S 5G	X6870	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+GT 30 PRO	X6873	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+NOTE 50 PRO PLUS	X6856	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+HOT 60 PRO PLUS	X6886	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+HOT 60I	X6728	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+SMART 10	X6725	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+HOT 60 PRO	X6885	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+A46	L5503	Factory Reset Reset FRP Flash Partition Manager
+A23 PRO (JIO)	L5006C	Factory Reset Reset FRP Flash Partition Manager
+A60	A662L	Factory Reset Reset FRP Flash Partition Manager
+S23 4G	S665LN	Factory Reset Reset FRP Flash Partition Manager
+VISION 3	S661L / S661LP	Factory Reset Reset FRP Flash Partition Manager
+A48	L6006	Factory Reset Reset FRP Flash Partition Manager
+VISION 5 PLUS	S662LC	Factory Reset Reset FRP Flash Partition Manager
+A49	A661L	Factory Reset Reset FRP Flash Partition Manager
+A60S	A662LM	Factory Reset Reset FRP Flash Partition Manager
+A23S	A511LQ	Factory Reset Reset FRP Flash Partition Manager
+VISION 1 PRO	L6502	Factory Reset Reset FRP Flash Partition Manager
+A47	L5005	Factory Reset Reset FRP Flash Partition Manager
+P40	P662L	Factory Reset Reset FRP Flash Partition Manager
+VISION 1	L6005	Factory Reset Reset FRP Flash Partition Manager
+VISION 2	L6503	Factory Reset Reset FRP Flash Partition Manager
+VISION 2S	P651L	Factory Reset Reset FRP Flash Partition Manager
+A27	A551L	Factory Reset Reset FRP Flash Partition Manager
+A26	A571L	Factory Reset Reset FRP Flash Partition Manager
+S18 / A05S	A663L	Factory Reset Reset FRP Flash Partition Manager
+VISION 3 PLUS	P683L	Factory Reset Reset FRP Flash Partition Manager
+PAD 1	P10001L	Factory Reset Reset FRP Flash Partition Manager
+A49 PLAY	A631L	Factory Reset Reset FRP Flash Partition Manager
+A25	L5002	Factory Reset Reset FRP Flash Partition Manager
+VISION 1 PLUS	L6501	Factory Reset Reset FRP Flash Partition Manager
+P55 5G - AUTH	P661N	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+S23 PLUS	S681LN	Factory Reset Reset FRP Flash Partition Manager
+P40 PLUS	P683L	Factory Reset Reset FRP Flash Partition Manager
+A70	A665L	Factory Reset Reset FRP Flash Partition Manager
+P55	A666L	Factory Reset Reset FRP Flash Partition Manager
+RS4	S666L / S666LN	Factory Reset Reset FRP Flash Partition Manager
+VISION 5	S663LC	Factory Reset Reset FRP Flash Partition Manager
+P55T	P665L	Factory Reset Reset FRP Flash Partition Manager
+S23 5G	S665L	Factory Reset Reset FRP Flash Partition Manager
+S24	S667LN	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+A50	A667L / A667LP	Factory Reset Reset FRP Flash Partition Manager Fix Transsion Anti Crack
+A50C	A669L	Factory Reset Reset FRP Flash Partition Manager Fix Transsion Anti Crack
+A80	A671L / A671LC	Factory Reset Reset FRP Flash Partition Manager
+CITY 100	C671L	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+S25	S685LN	Factory Reset Reset FRP Flash Partition Manager
+A95 5G	A671N	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+S25 ULTRA	S686L / S686LN	Factory Reset Reset FRP Flash Partition Manager
+PHONE NEXT	LS1542QWN	Factory Reset Reset FRP Flash Partition Manager
+PHONE PRIMA 4G	F491H	Factory Reset Reset FRP Flash Partition Manager
+X21	X21	Factory Reset Reset FRP Flash Partition Manager
+BENCO V80 / BENCO V82	AE9010	Factory Reset Reset FRP Flash Partition Manager
+BENCO V60	AE9950	Factory Reset Reset FRP Flash Partition Manager
+BENCO V8	LE9910	Factory Reset Reset FRP Flash Partition Manager
+BENCO S1	AE9240	Factory Reset Reset FRP Flash Partition Manager
+BENCO V70	AE9220	Factory Reset Reset FRP Flash Partition Manager
+BENCO IRIS 59	LE9930	Factory Reset Reset FRP Flash Partition Manager
+AGNI 2 5G	LXX504	Factory Reset Reset FRP Flash Partition Manager
+BLAZE 5G	LXX503	Factory Reset Reset FRP Flash Partition Manager
+Z21	LGZ402	Factory Reset Reset FRP Flash Partition Manager
+YUVA 2 PRO	LZX408	Factory Reset Reset FRP Flash Partition Manager
+Z2	LMG01	Factory Reset Reset FRP Flash Partition Manager
+BLAZE 2	LZX409	Factory Reset Reset FRP Flash Partition Manager
+V62	AE9150	Factory Reset Reset FRP Flash Partition Manager
+Z61 PRO	Z61P	Factory Reset Reset FRP Flash Partition Manager
+YUVA 2	LZX411	Factory Reset Reset FRP Flash Partition Manager
+BLAZE 2 5G	LXX507	Factory Reset Reset FRP Flash EMMC / UFS Health Check Partition Manager
+BLAZE	LZX403	Factory Reset Reset FRP Flash EMMC / UFS Health Check Partition Manager
+BLAZE NXT	LZX407	Factory Reset Reset FRP Flash EMMC / UFS Health Check Partition Manager
+YUVA 3 PRO	LZX414	Factory Reset Reset FRP Flash Partition Manager
+BLAZE PRO 5G	LXX506	Factory Reset Reset FRP Flash EMMC / UFS Health Check Partition Manager
+AGNI 5G	LXX501	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Partition Manager
+BLAZE 2 PRO	LZX406	Factory Reset Reset FRP Flash Partition Manager
+Z41	LN9910	Factory Reset Reset FRP Flash Partition Manager
+O1	LZX413	Factory Reset Reset FRP Flash Partition Manager
+S1 PRO	AE9260	Factory Reset Reset FRP Flash Partition Manager
+Z3	LZG403	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Partition Manager
+YUVA 3	LZX415	Factory Reset Reset FRP Flash Partition Manager
+BENCO V91	AE9310	Factory Reset Reset FRP Flash Partition Manager
+BLAZE CURVE	LXX505	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Partition Manager
+TAB T81N [SPD]	T81N	Factory Reset Reset FRP Flash Partition Manager
+BENCO V90	AE9120	Factory Reset Reset FRP Flash Partition Manager
+STORM 5G	LXX508	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Partition Manager
+BLAZE PRO	LZX404	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Partition Manager
+Z33	LEX402	Factory Reset Reset FRP Flash Partition Manager
+BLAZE X	LXX513	Factory Reset Reset FRP Flash Partition Manager
+YUVA STAR	LZG409	Factory Reset Reset FRP Flash Partition Manager
+BENCO Y50 PRO	AF9020	Factory Reset Reset FRP Flash
+YUVA 5G	LXX510	Factory Reset Reset FRP Flash Partition Manager
+BLAZE 3	LXX511	Factory Reset Reset FRP Flash Partition Manager
+AGNI 3	LXX518	Factory Reset Reset FRP Flash Partition Manager
+BLAZE DUO 5G	LXX515	Factory Reset Reset FRP Flash Partition Manager
+YUVA 5	LZX419	Factory Reset Reset FRP Flash Partition Manager
+BENCO V91C	AEOP520	Factory Reset Reset FRP Flash Partition Manager
+YUVA 2 5G	LXX514	Factory Reset Reset FRP Flash Partition Manager
+YUVA STAR 2	LZG410	Factory Reset Reset FRP Flash Partition Manager
+TAB M10 PLUS 3RD GEN	TB-128FU	Factory Reset Reset FRP Flash Partition Manager
+TAB 4 8 PLUS	TB-8704X	Factory Reset Reset FRP Flash Partition Manager
+TAB M10	TB-X505X	Factory Reset Reset FRP Flash Partition Manager
+LEGION Y700 (2023)	TB-320FC	Factory Reset Reset FRP Flash Partition Manager
+TAB P12 PRO (2023)	TB-371FC	Factory Reset Reset FRP Flash Partition Manager
+THINKBOOK PLUS GEN 5 HYBRID	TB-610FU	Factory Reset Reset FRP Flash Partition Manager
+TAB P12 PRO	TB-Q706F	Factory Reset Reset FRP Flash Partition Manager
+YOGA PAD PRO / YOGA TAB 13	YT-K606F	Factory Reset Reset FRP Flash Partition Manager
+TAB PLUS	TB-351F / TB-351FU	Factory Reset Reset FRP Flash Partition Manager
+TAB 12 PAPER	TB-372F / TB-372FC	Factory Reset Reset FRP Flash Partition Manager
+TAB M10 3RD GEN	TB-328FU / TB-328XU	Factory Reset Reset FRP Flash Partition Manager
+TAB E10	TBX104	Factory Reset Reset FRP Flash Partition Manager
+XIAOXIN PAD PRO 2023 (12.7)	TB371FC	Factory Reset Reset FRP Flash Partition Manager
+YOGA TAB 11	YT-J706F	Factory Reset Reset FRP Flash Partition Manager
+TAB PLUS 2024	TB351FU	Factory Reset Reset FRP Flash Partition Manager
+TAB P12	TB-372FC	Factory Reset Reset FRP Flash Partition Manager
+TAB P11 2ND GEN	TB350FU / TB350XU	Factory Reset Reset FRP Flash Partition Manager
+TAB 8 (8)	TB-8504X	Factory Reset Reset FRP Flash Partition Manager
+YOGA SMART TAB	YT-X705X	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+TAB K10	TB-X6C6F	Factory Reset Reset FRP Flash Partition Manager
+TAB K11 PLUS	TB-352FU	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+TAB K11 PLUS	TB-352XU	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+TAB M8	TB-8505X	Factory Reset Reset FRP Flash Partition Manager
+TAB 6	TB-A101LV	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+TAB M10 3RD GEN [SPD]	TB-328XU	Factory Reset Reset FRP Flash Partition Manager
+TAB P12	TB-370FU	Factory Reset Reset FRP Flash Partition Manager
+TAB M10	TB-X605F	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+TAB M10 FHD REL	TB-X605FC	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+TAB M10	TB-X605L	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+TAB M10 FHD REL	TB-X605LC	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+VELVET 5G	LM-G900	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+WING 5G	LM-F100	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+IN 2B	E7544	Factory Reset Reset FRP Flash Partition Manager
+IN 2C	E6533	Factory Reset Reset FRP Flash Partition Manager
+IN NOTE 2	E7446	Factory Reset Reset FRP Flash Partition Manager
+IN 1B	E7533	Factory Reset Reset FRP Flash Partition Manager
+G13	XT2331	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+G24 POWER	XT2425	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+E13	XT2345	Factory Reset Reset FRP Flash Partition Manager
+G14	XT2341	Factory Reset Reset FRP Flash Fix DeadBoot Partition Manager
+E32S	XT2229	Factory Reset Reset FRP Flash EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+E7 PLUS	XT2081	Factory Reset Reset FRP Flash Partition Manager
+E7 POWER	XT2097	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+G23	XT2333	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+G62 TAB 5G	XT2261-2	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+TAB G70	G70	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+TAB G20	G20	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+G04 / G04S	XT2421	Factory Reset Reset FRP Flash Fix DeadBoot Partition Manager
+G8 POWER	XT2055	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot
+E14	XT2421	Factory Reset Reset FRP Flash Partition Manager
+G22	XT2231-2	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Partition Manager
+G05	XT2523	Factory Reset Reset FRP Flash Partition Manager
+G15	XT2521	Factory Reset Reset FRP Flash Partition Manager
+E15	LAMU	Factory Reset Reset FRP Flash Partition Manager
+E40	XT2159	Factory Reset Reset FRP Flash Partition Manager
+G35 5G	XT2433	Factory Reset Reset FRP Flash Partition Manager
+C12	TA-1535 / TA-1519 / TA-1508 / TA-1513 / TA-1502	Factory Reset Reset FRP Flash Partition Manager
+#1 ALL HMD UNIVERSAL	ALL HMD UNIVERSAL	Factory Reset + FRP Auth Flash
+3.4	TA-1248	Factory Reset Reset FRP Flash Partition Manager
+C01 PLUS	TA-1396	Factory Reset Reset FRP Flash Partition Manager
+C31	TA-1497 / TA-1493 / TA-1499	Factory Reset Reset FRP Flash Partition Manager
+C12 PRO	TA-1583 / TA-1562	Factory Reset Reset FRP Flash Partition Manager
+6.1 PLUS	TA-1083	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+6.2	TA-1187	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+8 / 8 SIROCCO	NB1 / A1N	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+G21	TA-1404 / TA-1405 / TA-1412 / TA-1415 / TA-1418	Factory Reset Reset FRP Flash Partition Manager
+C20	TA-1352 / TA-1356 / TA-1339	Factory Reset Reset FRP Flash Partition Manager
+C20 PLUS	TA-1366	Factory Reset Reset FRP Flash Partition Manager
+C21	TA-1352 / TA-1356 / TA-1339 / TA-1466	Factory Reset Reset FRP Flash Partition Manager
+C21 PLUS	TA-1426 / TA-1431 / TA-1433 / TA-1424 / TA-1425 / TA-1444	Factory Reset Reset FRP Flash Partition Manager
+C22	TA-1533 / TA-1536 / TA-1541 / TA-1539 / TA-1580	Factory Reset Reset FRP Flash Partition Manager
+C30	TA-1359 / TA-1360 / TA-1357 / TA-1369	Factory Reset Reset FRP Flash Partition Manager
+C32	TA-1534 / TA-1558 / TA-1542 / TA-1548	Factory Reset Reset FRP Flash Partition Manager
+G11	TA-1401 / TA-1477	Factory Reset Reset FRP Flash Partition Manager
+G11 PLUS	TA-1421 / TA-1408 / TA-1413 / TA-1429	Factory Reset Reset FRP Flash Partition Manager
+G22	TA-1516 / TA-1528	Factory Reset Reset FRP Flash Partition Manager
+T10	TA-1457 / TA-1462 / TA-1472 / TA-1503 / TA-1512	Factory Reset Reset FRP Flash Partition Manager
+T20	TA-1394 / TA-1397 / TA-1392	Factory Reset Reset FRP Flash Partition Manager
+T21	TA-1495 / TA-1505 / TA-1487 / TA-1521	Factory Reset Reset FRP Flash Partition Manager
+T20	TA-1392	Factory Reset Reset FRP Flash Partition Manager
+AURA	TA-1631 / TA-1637 / TA-1635	Factory Reset Reset FRP Flash Partition Manager
+2.4	TA-1270	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+PHONE 1	SPACEWAR	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+CMF PHONE 1	TETRIS	Factory Reset Reset FRP Flash Partition Manager
+PHONE 2	PONG	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+CMF PHONE 2 PRO	GALAGA	Factory Reset Reset FRP Flash Partition Manager
+PHONE 2A	PACMAN	Factory Reset Reset FRP Flash Partition Manager
+NORD N20 SE	CPH2469	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+NORD CE 2	IVAN	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+NORD 2 5G	DN2101 / DN2103	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+NORD CE 2 5G	LV2201	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+NORD 2T	CPH2401	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+10R 5G	CPH2411 / CPH2423	Factory Reset Reset FRP Flash Partition Manager
+NORD 3 5G	CPH2491 / CPH2393	Factory Reset Reset FRP Flash Partition Manager
+9 5G	LE2111	Factory Reset Reset FRP Flash Partition Manager
+9 PRO 5G	LE2123	Factory Reset Reset FRP Flash Partition Manager
+PAD	OPD2203	Factory Reset Reset FRP Flash Partition Manager
+TABLET GO	OPD2304	Factory Reset Reset FRP Flash Partition Manager
+NORD CE 5G	EB2101	Factory Reset Reset FRP
+#1 UNIVERSAL	ALL_MODELS	Secrecy Decrypt Adb Demo Remove
+ACE 10R	PGKM10	Factory Reset Reset FRP Flash Partition Manager
+ACE 2V	PHP110	Factory Reset Reset FRP Flash Partition Manager
+#1 UNIVERSAL	CPHALL_MODEL	Secrecy Decrypt Adb Demo Remove
+A71	CPH1801	Factory Reset
+A17 / A17K	CPH2471 / CPH2477	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+A53S	CPH2139	Factory Reset Reset FRP
+A53	CPH2127	Factory Reset Reset FRP
+A33 (2020)	CPH2137	Factory Reset Reset FRP
+A76	CPH2375	Factory Reset Reset FRP
+K10	CPH2373	Factory Reset Reset FRP
+RENO 7 (2022)	CPH2363	Factory Reset Reset FRP
+RENO 9 5G	PHM110	Factory Reset Reset FRP
+RENO 10 PRO	CPH2525	Factory Reset Reset FRP
+F19 PRO PLUS	CPH2213	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+A16K	CPH2349	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+A55	CPH2325	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+A54	CPH2239	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Fix DeadBoot Partition Manager
+K10 5G	CPH2337	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+A31	CPH2015	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+A78	CPH2495	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+A57 4G	CPH2387	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+A15S	CPH2179	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+RENO 8 5G	COH2359	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+A72 5G	PDYM20	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+RENO 8	CPH2359	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+RENO 10 - AUTH	CPH2531	Factory Reset Reset FRP Flash Partition Manager
+A58	CPH2577	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+A5S	CPH1909	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+F17 PRO	CPH2119	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+A16E	CPH2421	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+A57S / A77	CPH2385	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+RENO 6 PRO 5G	CPH2249	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+F11	CPH1911	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+A78 5G	CPH2483	Factory Reset Reset FRP Flash Partition Manager
+A31 (2020)	CPH2073	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+A83	CPH1729	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+RENO 4Z 5G	CPH2065	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+A16	CPH2269	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+RENO 5 PRO 5G	CPH2201	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+A18	CPH2591	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+F15	CPH2001	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+F19 PRO	CPH2285	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+A38	CPH2579	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+F9	CPH1823 / CPH1825	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+F11 PRO	CPH1969	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+F7	CPH1821	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+A79 5G	CPH2553	Factory Reset Reset FRP Flash Partition Manager
+A53S	CPH2321	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+A15	CPH2185	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+A59 5G	CPH2617	Factory Reset Reset FRP Flash Partition Manager
+A1K	CPH1923	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+A57	CPH1701	Factory Reset Reset FRP Flash Partition Manager
+RENO 7 PRO	CPH2293	Factory Reset Reset FRP Flash Demo Remove Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+F5	CPH1725	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+A12	CPH2083	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+A91	CPH2021	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+F9 PRO	CPH1881	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+RENO 11 5G - AUTH	CPH2599	Factory Reset Reset FRP Flash Partition Manager
+FIND X6	PGFM10	Factory Reset Reset FRP Flash Partition Manager
+RENO 11 PRO	CPH2607	Factory Reset Reset FRP Flash Partition Manager
+F25 PRO 5G - AUTH	CPH2603	Factory Reset Reset FRP Flash Partition Manager
+RENO 7 5G	CPH2371	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+RENO 6 5G	CPH2251	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+RENO 2F	CPH1989	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+RENO 2Z	CPH1945	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+A78 4G	CPH2565	Factory Reset Reset FRP
+A60	CPH2631	Factory Reset Reset FRP
+RENO 10 (CHINA)	PHW110	Factory Reset Reset FRP
+K11 (CHINA)	PJC110	Factory Reset Reset FRP
+K9S 5G (CHINA) / K10 VITALITY EDITION (CHINA)	PERM10	Factory Reset Reset FRP
+K10 5G (CHINA)	PGJM10	Factory Reset Reset FRP Flash Partition Manager
+RENO 8 PRO	CPH2357	Factory Reset Reset FRP Flash Partition Manager
+A54S	CPH2273	Factory Reset Reset FRP Flash Demo Remove Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+F27 PRO PLUS - AUTH	CPH2643	Factory Reset Reset FRP Flash Partition Manager
+RENO 3 PRO	CPH2035	Factory Reset Reset FRP Flash Demo Remove Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+F17 (2020)	CPH2095	Factory Reset Reset FRP
+A73	CPH2099	Factory Reset Reset FRP
+RENO 4	CPH2113	Factory Reset Reset FRP
+RENO 4 PRO	CPH2109	Factory Reset Reset FRP
+RENO 5	CPH2159	Factory Reset Reset FRP
+A96	CPH2333	Factory Reset Reset FRP
+A77S	CPH2473	Factory Reset Reset FRP
+F1S	A1601	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+RENO 8T	CPH2481	Factory Reset Reset FRP Flash Partition Manager
+A3S	CPH1803	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+A7	PBFM00	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+A5	PBAM00	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+A5 (INDIA)	CPH1809	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+A3S	CPH1853	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+A7	CPH1901	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+RENO 12F 4G	CPH2687	Factory Reset Reset FRP
+RENO 6 PRO PLUS 5G	CPH2247 / PENM00	Factory Reset Reset FRP
+FIND N 5G	PEUM00	Factory Reset Reset FRP
+FIND X3 PRO	CPH2173	Factory Reset Reset FRP
+K10 PRO 5G	PGIM10	Factory Reset Reset FRP
+A77 5G	CPH2339	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+A3X [MEDIATEK]	CPH2681	Factory Reset Reset FRP Flash Partition Manager
+A3 PRO - AUTH	CPH2665	Factory Reset Reset FRP Flash Partition Manager
+F27 5G	CPH2637	Factory Reset Reset FRP Flash Partition Manager
+K12x 5G - AUTH	CPH2667	Factory Reset Reset FRP Flash Partition Manager
+RENO 5K	PEGM10	Factory Reset Reset FRP
+PAD AIR	OPD2102A	Factory Reset Reset FRP
+A93	CPH2121 / CPH2123	Factory Reset Reset FRP Flash Demo Remove Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+RENO 4 SE	PEAM00 / PEAT00	Factory Reset Reset FRP Flash Demo Remove Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+RENO 3	CPH2043	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+A3X [QUALCOMM]	CPH2641	Factory Reset Reset FRP
+F19S (2021)	CPH2223	Factory Reset Reset FRP
+RENO 12 5G	CPH2625	Factory Reset Reset FRP Flash Partition Manager
+A3 5G	CPH2693	Factory Reset Reset FRP Flash Partition Manager
+RENO 12 PRO	CPH2629	Factory Reset Reset FRP Flash Partition Manager
+A60 5G	CPH2683	Factory Reset Reset FRP Flash Partition Manager
+RENO 13 5G	CPH2689	Factory Reset Reset FRP Flash Partition Manager
+RENO 13 PRO 5G	CPH2697	Factory Reset Reset FRP Flash Partition Manager
+A80 5G	CPH2639	Factory Reset Reset FRP Flash Partition Manager
+FIND X7 5G	PHZ110	Factory Reset Reset FRP Flash Partition Manager
+F19	CPH2219	Factory Reset Reset FRP
+RENO 12F 5G	CPH2637	Factory Reset Reset FRP Flash Partition Manager
+RENO 11F 5G - AUTH	CPH2603	Factory Reset Reset FRP Flash Partition Manager
+FIND X8 PRO 5G	CPH2659	Factory Reset Reset FRP Flash Partition Manager
+FIND X8 5G	CPH2651	Factory Reset Reset FRP Flash Partition Manager
+FIND N3 FLIP 5G	CPH2519	Factory Reset Reset FRP Flash Partition Manager
+A5 2020 [ UFS ]	CPH1931 / CPH1933 / CPH1943	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+A5 2020 [ EMMC ]	CPH1931 / CPH1933 / CPH1943	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+R17	PBEM00 / PBET00 / CPH1879	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+R17 PRO	PBDM00 / PBDT00	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+RX17 PRO	CPH1877	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+RENO	PCAM00 / PCAT00 / CPH1917	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+RENO A	CPH1983	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+K3	PCGM00 / PCGT00 / CPH1955	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+A9 2020	CPH1937 / CPH1939 / CPH1941	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+A11	PCHM10 / PCHT10	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+A11N	PCHM00 / PCHT00	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+A11X	PCHM30 / PCHT30	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+A72	CPH2067	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+A92	CPH2059	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+K5	PCNM00 / PCNT00	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+RENO 10 - FREE	CPH2531	Factory Reset Reset FRP
+RENO 11 5G - FREE	CPH2599	Factory Reset Reset FRP
+F25 PRO 5G - FREE	CPH2603	Factory Reset Reset FRP
+F27 PRO PLUS - FREE	CPH2643	Factory Reset Reset FRP
+RENO 11F 5G - FREE	CPH2603	Factory Reset Reset FRP
+A5 PRO 4G	CPH2711	Factory Reset Reset FRP
+A5X 4G	CPH2725	Factory Reset Reset FRP
+A71	CPH1717	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+A5I	CPH2773	Factory Reset Reset FRP
+A3 4G	CPH2669	Factory Reset Reset FRP
+A5	CPH2727	Factory Reset Reset FRP
+WP19 PRO	WP19 PRO	Factory Reset Reset FRP Flash Partition Manager
+WP21	WP21	Factory Reset Reset FRP Flash Partition Manager
+WP21 ULTRA	WP21 ULTRA	Factory Reset Reset FRP Flash Partition Manager
+WP27	WP27	Factory Reset Reset FRP Flash Partition Manager
+WP33 PRO	WP33 PRO	Factory Reset Reset FRP Flash Partition Manager
+WP35 / WP35 PRO	WP35 / WP35 PRO	Factory Reset Reset FRP Flash Partition Manager
+WP35 PRO	WP35 PRO	Factory Reset Reset FRP Flash Partition Manager
+WP39	WP39	Factory Reset Reset FRP Flash Partition Manager
+WP39 PRO	WP39 PRO	Factory Reset Reset FRP Flash Partition Manager
+WP50	WP50	Factory Reset Reset FRP Flash Partition Manager
+WP52	WP52	Factory Reset Reset FRP Flash Partition Manager
+WP55 / WP55 PRO	WP55 / WP55 PRO	Factory Reset Reset FRP Flash Partition Manager
+WP100	WP100	Factory Reset Reset FRP Flash Partition Manager
+WP100 TITAN	WP100 TITAN	Factory Reset Reset FRP Flash Partition Manager
+WP200 / WP200 PRO	WP200 / WP200 PRO	Factory Reset Reset FRP Flash Partition Manager
+WP210	WP210	Factory Reset Reset FRP Flash Partition Manager
+#1 UNIVERSAL	RMXALL_MODEL	Secrecy Decrypt Adb Demo Remove
+C11	RMX2185	Factory Reset Reset FRP Flash Partition Manager
+C11 (2021)	RMX3231	Factory Reset Reset FRP Flash Partition Manager
+C20 / C20A	RMX3061 / RMX3063	Factory Reset Reset FRP Flash Partition Manager
+C25Y	RMX3268 / RMX3269	Factory Reset Reset FRP Flash Partition Manager
+PAD MINI	RMP2105 / RMP2106	Factory Reset Reset FRP Flash Partition Manager
+C33	RMX3624	Factory Reset Reset FRP Flash Partition Manager
+C35	RMX3511	Factory Reset Reset FRP Flash Partition Manager
+C30S	RMX3690	Factory Reset Reset FRP Flash Partition Manager
+C31	RMX3501	Factory Reset Reset FRP Flash Partition Manager
+C21Y	RMX3261 / RMX3263	Factory Reset Reset FRP Flash Partition Manager
+C30	RMX3581	Factory Reset Reset FRP Flash Partition Manager
+3 / 3i	RMX1823 / RMX1825 / RMX1827	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Partition Manager
+9	RMX3521	Factory Reset Reset FRP
+9 SE 5G	RMX3461	Factory Reset Reset FRP
+9I	RMX3491	Factory Reset Reset FRP
+C33 (2023)	RMX3627	Factory Reset Reset FRP Flash Partition Manager
+NARZO N53	RMX3761	Factory Reset Reset FRP Flash Partition Manager
+9I 5G	RMX3612	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+6	RMX2001	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+8	RMX3085	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+C55	RMX3710	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+7	RMX2151	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+NARZO 50I PRIME	RMX3506	Factory Reset Reset FRP Flash Partition Manager
+8I	RMX3151	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+11 PRO 5G - AUTH	RMX3771	Factory Reset Reset FRP Flash Partition Manager
+11 PRO PLUS 5G	RMX3740 / RMX3741	Factory Reset Reset FRP Flash Partition Manager
+NARZO 50 5G	RMX3571 / RMX3572	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+C25S	RMX3195 / RMX3197	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+C53	RMX3760 / RMX3762	Factory Reset Reset FRP Flash Partition Manager
+8 5G	RMX3241	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+NARZO 50	RMX3286	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+9 5G	RMX3388	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+NARZO 30A	RMX3171	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+U1	RMX1833	Factory Reset Reset FRP Flash Partition Manager
+C51	RMX3830	Factory Reset Reset FRP Flash Partition Manager
+NARZO 30 5G	RMX3242	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+NARZO 50A	RMX3430	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+C2	RMX1941	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+NARZO 50A PRIME	RMX3516	Factory Reset Reset FRP Flash Partition Manager
+NARZO 30 PRO	RMX2117	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+7I (2020)	RMX2103	Factory Reset Reset FRP
+NARZO 20	RMX2193	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+C15	RMX2180	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+C12	RMX2189	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+9 PRO PLUS	RMX3392 / RMX3393	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+X7 5G	RMX3092	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+1	CPH1861	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+C3	RMX2020 / RMX2027	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+8S 5G	RMX3381	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+X7 MAX	RMX3031	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+C25	RMX3193	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+C21	RMX3201	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+C65 5G	RMX3997	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+C67 5G / NARZO 60X 5G - FREE	RMX3782	Factory Reset Reset FRP Flash Partition Manager
+11 5G	RMX3780	Factory Reset Reset FRP Flash Partition Manager
+11X 5G	RMX3785	Factory Reset Reset FRP Flash Partition Manager
+12X [CHINA]	RMX3993	Factory Reset Reset FRP Flash Partition Manager
+12 5G	RMX3999	Factory Reset Reset FRP Flash Partition Manager
+V50 5G	RMX3781 / RMX3783	Factory Reset Reset FRP Flash Partition Manager
+X7 PRO	RMX2121	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+6I	RMX2040	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+PAD	RMP2102 / RMP2103	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+V30T	RMX3618 / RMX3619	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+V20	RMX3611	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+V11 5G	RMX2131	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+V11S	RMX3125	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+V3	RMX2200	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+X7 PRO ULTRA	RMX3115	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+NARZO 50I	RMX3235	Factory Reset Reset FRP Flash Partition Manager
+NARZO 60 5G	RMX3750	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+NOTE 50	RMX3834	Factory Reset Reset FRP Flash Partition Manager
+10 4G	RMX3630	Factory Reset Reset FRP Flash Partition Manager
+12X 5G	RMX3998	Factory Reset Reset FRP Flash Partition Manager
+NARZO 50 PRO 5G	RMX3395	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+11 4G	RMX3636	Factory Reset Reset FRP Flash Partition Manager
+GT NEO 3	RMX3561	Factory Reset Reset FRP Flash Partition Manager
+NARZO 30	RMX2156	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+10 PRO PLUS 5G - FREE AUTH	RMX3686	Factory Reset Reset FRP Flash Partition Manager
+C15 [QUALCOMM EDITION]	RMX2195	Factory Reset Reset FRP
+C17	RMX2101	Factory Reset Reset FRP
+7 5G	RMX2111	Factory Reset Reset FRP Flash Demo Remove Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+6I	RMX2002	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+PAD 2	RMP2204	Factory Reset Reset FRP Flash Partition Manager
+12 PLUS 5G - AUTH	RMX3867 / RMX3868	Factory Reset Reset FRP Flash Partition Manager
+C1	RMX1805 / RMX1809	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+P1 - AUTH	RMX3870	Factory Reset Reset FRP Flash Fix DeadBoot Partition Manager
+C63 / NOTE 60	RMX3939	Factory Reset Reset FRP Flash Partition Manager
+NARZO 20 PRO	RMX2161	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+C61	RMX3933	Factory Reset Reset FRP Flash Partition Manager
+13 5G	RMX3951	Factory Reset Reset FRP Flash Partition Manager
+C63 5G	RMX3950	Factory Reset Reset FRP Flash Partition Manager
+12 4G / 13 4G	RMX3871	Factory Reset Reset FRP
+C67 4G	RMX3890	Factory Reset Reset FRP
+13 PLUS 5G	RMX5000	Factory Reset Reset FRP Flash Partition Manager
+NARZO 70 5G / NARZO 70 PRO - AUTH	RMX3869 / RMX3868	Factory Reset Reset FRP Flash Partition Manager
+14X 5G	RMX3940	Factory Reset Reset FRP Flash Partition Manager
+14 PRO 5G	RMX5056	Factory Reset Reset FRP Flash Partition Manager
+NEO 7 5G	RMX5060	Factory Reset Reset FRP Flash Partition Manager
+NARZO 70 TURBO	RMX5003	Factory Reset Reset FRP Flash Partition Manager
+C65 4G	RMX3910	Factory Reset Reset FRP Flash Partition Manager
+X	RMX1901 / RMX1903	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+5	RMX1911	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+5I	RMX2030 / RMX2032	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+5S	RMX1925	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+NARZO 20A	RMX2050	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+3 PRO	RMX1851	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+5 PRO	RMX1971	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+X LITE	RMX1851	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+11 PRO 5G - FREE	RMX3771	Factory Reset Reset FRP
+12 PLUS 5G - FREE	RMX3867 / RMX3868	Factory Reset Reset FRP
+P1 - FREE	RMX3870	Factory Reset Reset FRP
+NARZO 70 5G / NARZO 70 PRO - FREE	RMX3869 / RMX3868	Factory Reset Reset FRP
+C75 4G	RMX3941	Factory Reset Reset FRP Flash Partition Manager
+14T 5G	RMX5078	Factory Reset Reset FRP Flash Partition Manager
+14X 4G	RMX5020	Factory Reset Reset FRP Flash Partition Manager
+PAD 2 LITE	RMP2402	Factory Reset Reset FRP Flash Partition Manager
+C67 5G / NARZO 60X 5G - AUTH	RMX3782	Factory Reset Reset FRP Flash Partition Manager
+C71 4G	RMX5303	Factory Reset Reset FRP Flash Partition Manager
+NOTE 60X	RMX3938	Factory Reset Reset FRP Flash Partition Manager
+XT	RMX1921	Factory Reset Reset FRP Flash Partition Manager
+C73 5G	RMX3945	Factory Reset Reset FRP Flash Partition Manager
+P3X 5G	RMX3944	Factory Reset Reset FRP Flash Partition Manager
+C55 - AUTH	RMX3710	Factory Reset Reset FRP Flash Partition Manager
+C75 4G - AUTH	RMX3941	Factory Reset Reset FRP Flash Partition Manager
+C65 4G - AUTH	RMX3910	Factory Reset Reset FRP Flash Partition Manager
+C75X	RMX5020	Factory Reset Reset FRP Flash Partition Manager
+V70 / V70S	RMX3946 / RMX3948	Factory Reset Reset FRP Flash Partition Manager
+NARZO 80 PRO 5G	RMX5033	Factory Reset Reset FRP Flash Partition Manager
+10 PRO PLUS 5G - AUTH	RMX3686	Factory Reset Reset FRP Flash Partition Manager
+C71 [ UNISOC ]	RMX5313	Factory Reset Reset FRP Flash Partition Manager
+C75 5G	RMX3943	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A03 CORE	SM-A032F / SM-A032M	Factory Reset Reset FRP Flash Fix DeadBoot Partition Manager
+GALAXY A03	SM-A035F	Factory Reset Reset FRP Flash Fix DeadBoot Partition Manager
+GALAXY A10S	SM-A107F	Factory Reset Reset FRP Flash Partition Manager
+GALAXY TAB A7 (2020)	T500	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A13 5G	SM-A136B / SM-A136U / SM-A136W / SM-S136DL	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A22 5G	SM-A226B	Factory Reset Reset FRP Flash Fix DeadBoot Partition Manager
+GALAXY F42 5G	SM-E426B	Factory Reset Reset FRP Flash Partition Manager
+GALAXY M13 5G	SM-M136B	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A03S	SM-A037F	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write Partition Manager
+GALAXY A04E	SM-A042F	Factory Reset Reset FRP Flash Partition Manager
+GALAXY M04	SM-M045F	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A04 / A04M	SM-A045F	Factory Reset Reset FRP Flash Fix DeadBoot Partition Manager
+GALAXY M11	SM-M115F	Factory Reset Reset FRP Flash Partition Manager
+GALAXY TAB A7 LITE	SM-T225	Factory Reset Reset FRP Flash Partition Manager
+GALAXY M01	SM-M015F	Factory Reset Reset FRP Flash Partition Manager
+GALAXY TAB A9	SM-X100	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A05	SM-A055F / A055M	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Partition Manager
+GALAXY NOTE 10 PLUS - BIT 7	SM-N975U	Factory Reset Reset FRP
+GALAXY S22 ULTRA 5G - BIT - 7	SM-S908N	Factory Reset Reset FRP Flash Partition Manager
+GALAXY S23 ULTRA 5G - BIT-4	SM-S918B	Factory Reset Reset FRP
+GALAXY Z FOLD 4 - BIT - 4	SM-F936U	Factory Reset Reset FRP
+GALAXY S23 ULTRA 5G - BIT - 2	SM-S918N	Factory Reset Reset FRP
+GALAXY S22 ULTRA 5G - BIT - C	SM-S908E	Factory Reset Reset FRP Flash Partition Manager
+GALAXY M02	SM-M022G	Factory Reset Reset FRP Flash Partition Manager
+GALAXY M02S	SM-M025F	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A20S - BIT 1 - BIT - 5	SM-A207F	Factory Reset Reset FRP
+GALAXY A20S BIT - 4	SM-A207M	Factory Reset Reset FRP
+GALAXY A23 5G - BIT - 5	SM-A236E	Factory Reset Reset FRP
+GALAXY A23 - BIT - 9	SM-A235F	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+GALAXY A52S 5G - BIT - 6	SM-A528B	Factory Reset Reset FRP Flash Partition Manager
+GALAXY TAB A (2019) BIT - 1 - BIT - 6	SM-T295	Factory Reset Reset FRP Flash Partition Manager
+GALAXY F22	SM-E225F	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A15 5G - BIT - 5	SM-A156U	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A15 - BIT - 6	SM-A155F	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A24 - BIT - 8	SM-A245F	Factory Reset Reset FRP Flash Partition Manager
+GALAXY TAB A9	SM-X115	Factory Reset Reset FRP Flash Partition Manager
+GALAXY M51 - BIT - 6	SM-M515F	Factory Reset Reset FRP Flash Partition Manager
+GALAXY S23 - BIT - 5	SM-S911U	Factory Reset Reset FRP
+GALAXY S23 - BIT - 6	SM-S916U	Factory Reset Reset FRP
+GALAXY S23 ULTRA 5G - BIT - 5	SM-S918U	Factory Reset Reset FRP
+GALAXY S24 - BIT - 4	SM-S921U	Factory Reset Reset FRP
+GALAXY S24 ULTRA 5G - BIT - 4	SM-S928U	Factory Reset Reset FRP
+GALAXY S24 PLUS - BIT - 4	SM-S926U	Factory Reset Reset FRP
+GALAXY A04E	SM-A042M	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A04	SM-A045F	Factory Reset Reset FRP Flash Partition Manager
+GALAXY TAB A7 LITE	SM-T220	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A06 4G	SM-A065M	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A06 4G	SM-A065F	Factory Reset Reset FRP Flash Partition Manager
+GALAXY Z FOLD 5 - BIT - 3	SM-F946B	Factory Reset Reset FRP
+GALAXY A16 - BIT - 4	SM-A166P	Factory Reset Reset FRP Flash Partition Manager
+GALAXY TAB A9 PLUS - BIT - 3	SM-X210	Factory Reset Reset FRP Flash Partition Manager
+GALAXY TAB A9 PLUS - BIT - 5	SM-X210	Factory Reset Reset FRP Flash Partition Manager
+GALAXY TAB A9 PLUS 5G - BIT - 8	SM-X216B	Factory Reset Reset FRP Flash Partition Manager
+GALAXY M55 5G - BIT - 3	SM-M556B	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A34 5G	SM-A346E	Factory Reset Reset FRP Flash Partition Manager
+GALAXY TAB A7 - U7	SM-T505N	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+GALAXY A15 5G - BIT - 5	SM-A156B	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A15 5G - BIT - 5	SM-A156M	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A15 5G - BIT - 5	SM-A156U1	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A15 5G - BIT - 5	SM-A156W	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A15 5G - BIT - 5	SM-S156V	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A15 - BIT - 6	SM-A155M	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A16 - BIT - 2	SM-A165F	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A16 - BIT - 2	SM-A165M	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A16 - BIT - 2	SM-A165N	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A24 - BIT - 9	SM-A245M	Factory Reset Reset FRP Flash Partition Manager
+GALAXY F06 - BIT - 1	SM-E066B	Factory Reset Reset FRP Flash Partition Manager
+GALAXY M15 5G - BIT - 5	SM-M156B	Factory Reset Reset FRP Flash Partition Manager
+GALAXY TAB X10 ULTRA WIFI - BIT - 2	SM-X920	Factory Reset Reset FRP Flash Partition Manager
+GALAXY TAB S10 PLUS - BIT - 2	SM-X820F	Factory Reset Reset FRP Flash Partition Manager
+GALAXY TAB S10 PLUS - BIT - 2	SM-X826B	Factory Reset Reset FRP Flash Partition Manager
+GALAXY F15 5G - BIT - 7	SM-E156B	Factory Reset Reset FRP Flash Partition Manager
+GALAXY TAB S10 ULTRA - BIT - 2	SM-X926B	Factory Reset Reset FRP Flash Partition Manager
+GALAXY F02S	SM-E025F	Factory Reset Reset FRP Flash Partition Manager
+GALAXY TAB A9	SM-X110	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A06 5G - BIT - 2	SM-A066B	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A23 - BIT - B	SM-A235M	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A05S	SM-A057F	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A05S	SM-A057M	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A05S	SM-A057G	Factory Reset Reset FRP Flash Partition Manager
+GALAXY S24 ULTRA 5G - BIT - 4	SM-S928B	Factory Reset Reset FRP Flash Partition Manager
+GALAXY Z FOLD 3 - BIT - C	SM-F926B	Factory Reset Reset FRP Flash Partition Manager
+GALAXY S21 5G - BIT - F	SM-G991U	Factory Reset Reset FRP Flash Partition Manager
+GALAXY S21 PLUS 5G - BIT - G	SM-S996U	Factory Reset Reset FRP Flash Partition Manager
+GALAXY M55 5G - BIT - 4	SM-M556E	Factory Reset Reset FRP Flash Partition Manager
+GALAXY S22 5G - BIT - C	SM-S901E	Factory Reset Reset FRP Flash Partition Manager
+GALAXY S22 PLUS 5G - BIT - 7	SM-S906N	Factory Reset Reset FRP Flash Partition Manager
+GALAXY S21 ULTRA - BIT - F	SM-G998U	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A23 5G - BIT - C	SM-S236DL	Factory Reset Reset FRP Flash Partition Manager
+GALAXY TAB S6 - BIT - A	SM-T867U	Factory Reset Reset FRP Flash Partition Manager
+GALAXY TAB S8 ULTRA - BIT - 9	SM-X906C	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A72 - BIT - B	SM-A725F	Factory Reset Reset FRP Flash Partition Manager
+GALAXY A72 - BIT - A	SM-A725M	Factory Reset Reset FRP Flash Partition Manager
+GALAXY S21 ULTRA - BIT - E	SM-G998U1	Factory Reset Reset FRP Flash Partition Manager
+GALAXY S22 - BIT - 1	SM-S901J / SC-G13	Factory Reset Reset FRP Flash Partition Manager
+GALAXY S10 LITE - BIT - 9	SM-G770F	Factory Reset Reset FRP Flash Partition Manager
+GALAXY Z FOLD 7 - BIT - 1	SM-F966B	Factory Reset Reset FRP Flash Partition Manager
+GALAXY Z FOLD 7 - BIT - 1	SM-F966U	Factory Reset Reset FRP Flash Partition Manager
+GALAXY F15 - BIT - A	SM-E236B	Factory Reset Reset FRP Flash Partition Manager
+#1 UNIVERSAL	DOWNLOAD_MODE	Factory Reset Flash
+GALAXY M52 5G - BIT - 7	SM-M526B	Factory Reset Reset FRP Flash Partition Manager
+GALAXY M52 5G - BIT - 7	SM-M526BR	Factory Reset Reset FRP Flash Partition Manager
+GALAXY Z FOLD 4 - BIT - A	SM-F936B	Factory Reset Reset FRP Flash Partition Manager
+GALAXY F14 - BIT - 6	SM-E145F	Factory Reset Reset FRP Flash Partition Manager
+GALAXY M06 - BIT - 1	SM-M066B	Factory Reset Reset FRP Flash Partition Manager
+CAMON 19	CI6 / CI6H	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+POVA NEO [MTK]	LE6 / LE6H	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SPARK 7	KF6	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+POP 7 PRO	BF7J	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SPARK GO (2023)	BF7	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SPARK GO 2020 / SPARK GO 2021	KE5	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+PHANTOM X PRO	AC8-H853A	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+POP 5 LITE [MTK]	BD4 / BD4A / BD4I	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SPARK 7	PR651	Factory Reset Reset FRP Flash Partition Manager
+POVA 5G	LE8	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+POVA	LD7	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SPARK 8	KG6K	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SPARK 4 LITE	BB4K	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SPARK 9	KG5P	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+POVA NEO 2	LG6N	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+POVA 4	LG7N	Factory Reset Reset FRP Flash Fix DL Image Error Partition Manager
+CAMON 18P	CH7 / CH7N	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SPARK 10 5G	KI8	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+POP 5 [MTK]	BD2	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SPARK 10C [MTK]	KI5K	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+POUVOIR 4	LC7 / LC7S	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SPARK 7 PRO	KF8	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+CAMON 20 / CAMON 20 PRO	CK6 / CK6N	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id
+POP 6 PRO	BE8	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+PHANTOM X2 [NEW SECURITY]	AD8	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id
+POP 5 LTE [SPD]	BD4 / BD4A / BD4I	Factory Reset Reset FRP Flash Partition Manager
+SPARK 10C [SPD]	KI5K	Factory Reset Reset FRP Flash Partition Manager
+SPARK 6	KE6	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+POP 5 PRO	BD4J / BD4H	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SPARK 10 PRO	KI7	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+CAMON 20 PRO 5G	CK8N	Factory Reset Reset FRP Flash Fix DL Image Error Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id
+POP 7 [SPD]	BF6	Factory Reset Reset FRP Flash Partition Manager
+POVA 4 PRO	LG8 / LG8N	Factory Reset Reset FRP Flash Partition Manager
+SPARK 10	KI5Q	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+CAMON 18T	CH6H	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SPARK 7T	KF6j / KF6p	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+POVA 2	LE7	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+CAMON 20 PRO	CK7N	Factory Reset Reset FRP Flash Partition Manager
+POVA 5	LH7N	Factory Reset Reset FRP Flash Fix DL Image Error Partition Manager Reset Tecno / Infinix Id
+SPARK POWER 2	LC8	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SPARK 8C [SPD]	KG5K	Factory Reset Reset FRP Flash Partition Manager
+SPARK GO (2022)	KG5	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SPARK 9T	KH6	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+CAMON 18	CH6 / CH6N	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SPARK 4	KC2J	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SPARK 6 AIR	KE6J	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+POVA 5 PRO	LH8N	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+SPARK 8P	KG7	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SPARK 8T	KG6P	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+POP 6	BE7	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SPARK 5 PRO	KD7	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+PHANTOM V FOLD	AD10	Factory Reset Reset FRP Flash Partition Manager
+SPARK 8 PRO	KG8	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+POVA 3	LF7N	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+CAMON iACE2X	KB2J	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SPARK GO (2024)	BG6 / BG6M	Factory Reset Reset FRP Flash Partition Manager Fix Transsion Anti Crack
+SPARK 20C - AUTH	BG7	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SPARK 6 GO	KE5K	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+CAMON I4 / CAMON 11S	CB7	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SPARK 20 PRO	KJ6	Factory Reset Reset FRP Flash Fix DL Image Error Partition Manager
+SPARK 20 - AUTH	KJ5 / KJ5N	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+PHANTOM V FLIP	AD11	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+POVA NEO [SPD]	LE6H	Factory Reset Reset FRP Flash Partition Manager
+CAMON 16	CE7 / CE7J	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+POP 7	BF6	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+POVA NEO 5G	LE6J	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SPARK 20 PRO PLUS	KJ7	Factory Reset Reset FRP Flash Partition Manager
+POVA 6 PRO 5G	LI9	Reset FRP Flash Fix DL Image Error Partition Manager Reset Tecno / Infinix Id
+POUVOIR 3 PLUS	LB8 / LB8A	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SPARK 8P	KG7H	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+POVA NEO 3	LH6 / LH6N	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+CAMON 18I	CG6	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+CAMON 17 PRO	CG8	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+CAMON 18 PREMIER	CH9	Factory Reset Reset FRP Flash Partition Manager
+CAMON 19	CI6	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+PHANTOM 9	AB7	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+CAMON 19 NEO	CH6I	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+CAMON 19 PRO 4G	CI8N	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+CAMON 19 PRO 5G	CI7N	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+CAMON 11	CF7	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+CAMON 11 PRO	CF8	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+CAMON 12	CC7	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+CAMON 12 AIR	CC6	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+CAMON 12 PRO	CC9	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+CAMON 15	CD7	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+CAMON 15 AIR	CD6	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+CAMON 15 PREMIER	CD8J	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+CAMON 15 PRO	CD8	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+CAMON 16 PREMIER	CE9	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+CAMON 16 PRO	CE8	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+POUVOIR 3 AIR	LC6	Factory Reset Reset FRP Flash EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+PHANTOM V FOLD [NEW SECURITY]	AD10	Factory Reset Reset FRP Flash Partition Manager
+CAMON 20S PRO PLUS	CK8NB	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id
+CAMON 30 4G	CL6 / CL6K	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+SPARK 9 PRO	KH7 / KH7N	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+PHANTOM X2 PRO	AD9	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id
+PHANTOM X2 [OLD SECURITY]	AD8	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id
+PHANTOM X2 PRO [NEW SECURITY]	AD9	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id
+CAMON 20 PREMIER	CK9N	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SPARK GO	KC1	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+POVA 6 NEO	LI6	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id
+CAMON 30 5G	CL7K	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+SPARK 8C [MTK]	KG5J	Factory Reset Reset FRP Flash EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+CAMON I12	KC3	Factory Reset Reset FRP Flash EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+POVA 6	LI7	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+CAMON I AIR 2 PLUS	ID3K	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager
+SPARK 20 PRO 5G	KJ8	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+SPARK 30 - AUTH	KL6	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+SPARK 30C - AUTH	KL5S / KL5N	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+SPARK GO 1	KL4 / KL4S	Factory Reset Reset FRP Flash Partition Manager Fix Transsion Anti Crack
+POVA NEO 6 5G	KL8 / KL8H	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+CAMON 30 PRO	CL8	Factory Reset Reset FRP Flash Partition Manager
+CAMON 30S	CLA5	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+CAMON 30S PRO	CLA6	Factory Reset Reset FRP Flash Fix DL Image Error Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+SPARK GO 1S - AUTH	KL4H	Factory Reset Reset FRP Flash Fix DL Image Error EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+CAMON 30 PREMIER	CL9	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+SPARK 30 PRO - AUTH	KL7	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+CAMON 40 / CAMON 40 PRO	CM5 / CM6	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+CAMON 40 PRO 5G	CM7	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+POVA CURVE 5G	LJ8K	Factory Reset Reset FRP Flash Fix DL Image Error Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+SPARK 40	KM5	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id
+SPARK GO 2	KM4	Factory Reset Reset FRP Flash Partition Manager
+POVA 7 4G	LJ6	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+CAMON 40 PREMIER	CM8	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+SPARK 40C - AUTH	KM4K	Factory Reset Reset FRP Flash Partition Manager Reset Tecno / Infinix Id Fix Transsion Anti Crack
+Y95	PD1818F	Factory Reset Reset FRP Flash Fastboot to EDL Partition Manager
+Y91C	PD1818HF	Factory Reset Reset FRP Flash Partition Manager
+Y15S	PD2140F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y16	PD2216F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y22	PD2226F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y75 5G	PD2166F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y100	PD2257F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+V23E	PD2159F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y72 5G	PD2069F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y12 / Y17	PD1901F / PD1901BF	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y56 5G	PD2230F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+V23 5G / T2X	PD2167F / PD2230F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y73	PD2078F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+V25	PD2215F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+V19	PD1969F	Factory Reset Reset FRP Demo Remove
+S1	PD1913F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y20G	PD2066F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+T1	PD2201	Factory Reset Reset FRP Flash Fastboot to EDL Partition Manager
+Y35	PD2225F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+Y30	PD1987F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y02	PD2236F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y22S	PD2228F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+Y76 5G	PD2156F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y21S / Y21A / Y21	PD2139JF / PD2139F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+X90	PD2241F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+X60 PRO	PD2059F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Partition Manager
+V27 5G	PD2269F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+V27E - AUTH FREE	PD2268F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+V27 PRO	PD2245F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y1S	PD2014F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+X90 PRO	PD2242F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y21E / Y21T / T1X / Y33T	PD2142F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+X80 PRO	PD2185F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Partition Manager
+Y36 5G [MTK]	PD2279F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y52 5G	PD2069F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+T1 5G / IQOO Z6 5G	PD2165F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+Y33S	PD2147F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y36 [QCOM]	PD2280F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+IQOO NEO 5	PD2055B	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+X60 PRO PLUS	PD2056F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+X FOLD	PD2178	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Partition Manager
+X70 / X70 PRO	PD2135F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+V25E - AUTH FREE	PD2214F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y53S	PD2103F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+X50	PD2006F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+IQOO NEO 7 - AUTH FREE	PD2238F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+IQOO Z5	PD2148F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+V21E 5G	PD2102F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y01 / Y01S / Y01A	PD2140NF	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+IQOO 11 5G	PD2243F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+V21 / V25 5G [MTK]	PD2083F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+IQOO 9T	PD2217F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+IQOO 9 PRO	PD2172F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+Z6 LITE 5G	PD2235F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+Y100A / T2	PD2251F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+V25E 5G	PD2107F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+Y19	PD1934F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+IQOO 7 LEGEND	PD2049F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+Y20	PD2034F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+Y27 4G	PD2281F / PD2281GF	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+IQOO 7	PD2055F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+V29	PD2283F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+IQOO NEO 6	PD2196F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+V23E 4G	PD2150F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y12S / Y20A	PD2060F	Factory Reset Reset FRP Flash Fastboot to EDL Partition Manager
+Y31S	PD2054F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+iQOO 9 SE 5G	PD2154F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+iQOO Z3 5G	PD2073	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+iQOO 9	PD2136F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+T1 PRO 5G	PD2193F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+X50 PRO	PD2005F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+X80	PD2183F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+X60	PD2046F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+Y51 2021 / Y31 2021	PD2050F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+ALL VIVO MTK UNIVERSAL	WITHOUT AUTH	Factory Reset Reset FRP Flash Demo Remove Bootloader Unlock Bootloader Lock RPMB Read RPMB Write EMMC / UFS Health Check Fix Auto Fastboot Partition Manager Read ExtCSD Write ExtCSD
+V29E	PD2313F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+V11I	PD1813F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y72 5G [QUALCOMM]	PD2112F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+Y11	PD1930F	Factory Reset Reset FRP Flash Fastboot to EDL Partition Manager
+U10	PD1928F	Factory Reset Reset FRP Flash Partition Manager
+Z1 PRO	PD1911F	Factory Reset Reset FRP
+V5 / V5S	PD1612F / PD1612DF	Factory Reset Reset FRP Flash Partition Manager
+Y69	PD1705	Factory Reset Reset FRP Flash Partition Manager
+T2 PRO 5G / IQOO Z7 PRO 5G	PD2285F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y71	PD1731F	Factory Reset Reset FRP Flash Partition Manager
+V11 PRO	PD1814F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+U20	PD1941F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+V17	PD1948F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y50	PD1965F	Factory Reset Reset FRP Flash Partition Manager
+S1 PRO	PD1945F	Factory Reset Reset FRP Flash Partition Manager
+X100	PD2309F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+X100 PRO	PD2324F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+V5 PLUS	PD1624F	Factory Reset Reset FRP Flash Partition Manager
+Y27S	PD2280SF	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+Y78 PLUS	PD2271F / PD2271EF	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+V30 PRO	PD2332F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+V7 PLUS	PD1708F	Factory Reset Reset FRP Flash Partition Manager
+Y28 5G	PD2318F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y55S	PD1613BF	Factory Reset Reset FRP Flash Partition Manager
+V29 PRO	PD2284F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y200 5G	PD2326F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+Y18	PD2327F / PD2327DF	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+V17 PRO	PD1931F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+V15 PRO [EMMC]	PD1832F	Factory Reset Reset FRP Flash Partition Manager
+V9 / V9 PRO	PD1730F	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+Y51 2020	PD2044F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+V40 PRO / T3 ULTRA	PD2362F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+T3 5G	PD2346	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+V30E / V40 LITE	PD2343F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+V40E 5G / IQOO Z9S 5G	PD2406F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y200E 5G / V40 SE 5G / V30 SE 5G	PD2341F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+V25 PRO	PD2204F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y300 PLUS 5G	PD2422F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+Y28E 5G / Y28S 5G / IQOO Z9 LITE 5G / T3 LITE 5G	PD2357F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+X200	PD2415F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+X200 PRO	PD2405F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y29 5G	PD2421F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+V40	PD2363F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+V50 LITE	PD2447F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+V30	PD2323JF	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+IQOO 12	PD2307F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+IQOO 13	PD2408F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+Y300 / V40SE	PD2418F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+T3X 5G	PD2353F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+Y58 5G	PD2354F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+V50E	PD2438F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y39	PD2444F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+V15 PRO [UFS]	PD1832F	Factory Reset Reset FRP Flash Fastboot to EDL Reset EFS Partition Manager
+T4X / IQOO Z10X	PD2445F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+IQOO 9 PRO	PD2338F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+#1 UNIVERSAL MEDIATEK V5	UNIVERSAL EXPLOIT	Factory Reset Reset FRP Demo Remove
+Y19	PD2443F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+V20 SE	PD2038CF	Factory Reset Reset FRP Demo Remove
+X200 FE	PD2465F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+Y400 PRO 5G	PD2451F	Factory Reset Reset FRP Flash Demo Remove Partition Manager
+V20	PD2067F	Factory Reset Reset FRP Demo Remove
+Y20T 2021	PD2093F	Factory Reset Reset FRP Demo Remove
+Y400 5G	PD2469F	Factory Reset Reset FRP Flash Demo Remove Fastboot to EDL Reset EFS Partition Manager
+REDMI 9 PRIME	LANCELOT	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+REDMI NOTE 8	GINKGO	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Bootloader Unlock Partition Manager Mi Assistant FRP
+REDMI 6A	CACTUS	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Read ExtCSD Write ExtCSD
+REDMI 7A	PINE	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+REDMI 9 / REDMI 9 ACTIV	CATTAIL	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+REDMI 9A / REDMI 9I	DANDELION	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+REDMI 12C / POCO C55	EARTH	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+REDMI NOTE 9 / REDMI 10X 4G	MERLIN	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+REDMI 6 PRO	SAKURA / SAKURA_INDIA	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager
+NOTE 12 PRO 5G / NOTE 12 PRO PLUS	RUBY	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+REDMI S2 / REDMI Y2	YSL	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager
+REDMI NOTE 11E / REDMI NOTE 11R	LIGHT	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+REDMI NOTE 8 PRO	BEGONIA	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+REDMI NOTE 11 PRO / REDMI NOTE 11 PRO PLUS	PISSARRO	Factory Reset Reset FRP Flash Reset Mi Account EMMC / UFS Health Check Partition Manager Mi Assistant FRP
+POCO M4 PRO 4G / NOTE 11S 4G	FLEUR	Factory Reset Reset FRP Flash Reset Mi Account EMMC / UFS Health Check Partition Manager Mi Assistant FRP
+POCO C51	WATER	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+REDMI A1 / REDMI A1 PLUS / POCO C50	ICE	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+REDMI NOTE 7 / REDMI NOTE 7S	LAVENDER	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+REDMI NOTE 7 PRO	VIOLET	Factory Reset Reset FRP Flash Reset Mi Account Reset EFS Partition Manager
+MI A3	LAUREL	Reset FRP Flash Reset Mi Account Partition Manager
+REDMI NOTE 6 PRO	TULIP	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager
+REDMI 8	OLIVE	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+REDMI 8A	OLIVELITE	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+REDMI 10A	DANDELION_C3L2	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+REDMI NOTE 11 5G	EVERGO	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+REDMI NOTE 10S / REDMI NOTE 11 SE	ROSEMARY	Factory Reset Reset FRP Flash Reset Mi Account Fix DL Image Error Partition Manager
+REDMI NOTE 5 PRO	WHYRED	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager
+REDMI 9 POWER / REDMI 9T	LIME	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+POCO M3	CITRUS	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+REDMI GO	TIARE	Factory Reset Reset FRP Flash Partition Manager
+REDMI A2 / A2 PLUS	WATER	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+REDMI NOTE 10	MOJITO	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+REDMI NOTE 5	VINCE	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager
+REDMI NOTE 4	MIDO	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager
+REDMI NOTE 10 5G / REDMI NOTE 10T / POCO M3 PRO	CAMELLIAN	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+REDMI 12	FIRE	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+REDMI 5A	RIVA	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager
+MI PLAY	LOTUS	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager
+REDMI NOTE 10 PRO / POCO X3 GT	CHOPIN	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+MI 11T	AGATE	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+POCO C3 / POCO C31	ANGELICAIN	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+REDMI 7	ONCLITE	Factory Reset Reset FRP Flash Reset Mi Account Reset EFS Partition Manager
+REDMI NOTE 9S / REDMI NOTE 9 PRO	CURTANA	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+MI 9 / MI 9 EXPLORER	CEPHEUS	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+REDMI NOTE 9 PRO MAX	EXCALIBUR	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+REDMI K20 PRO / REDMI 9T PRO	RAPHAEL	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+POCO X3	SURYA	Factory Reset Reset FRP Flash Reset Mi Account Reset EFS Partition Manager
+REDMI 10 / REDMI 10C / REDMI 10 POWER	FOG	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+REDMI NOTE 11 / REDMI NOTE 11 NFC	SPES / SPESN	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+MI 11X / REDMI K40 / POCO F3	ALIOTH	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+REDMI K20 / MI 9T	DAVINCI	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+REDMI NOTE 12 4G	TAPAS	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+REDMI 13C 4G / POCO C65 4G	GALE / MOON	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+REDMI A3 / POCO C61	BLUE	Factory Reset Reset FRP Flash Fix DeadBoot Partition Manager Mi Assistant FRP
+REDMI NOTE 13 5G / POCO X6 NEO 5G	GOLD	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager
+REDMI K30 PRO / POCO F2 PRO	LMI	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+REDMI A3X	KLEIN	Factory Reset Reset FRP Flash Partition Manager
+POCO F3 GT	ARES	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager
+REDMI 14C / REDMI A3 PRO / POCO C75	LAKE	Factory Reset Reset FRP Flash Partition Manager Mi Assistant FRP
+REDMI NOTE 3	KENZO	Factory Reset Reset FRP Flash Reset Mi Account Reset EFS Partition Manager
+Redmi 13C 5G	AIR	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+REDMI 11 PRIME 4G / POCO M5 4G	ROCK	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+REDMI NOTE 10 PRO / REDMI NOTE 10 PRO MAX	SWEET	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+REDMI Y3	ONC	Factory Reset Reset FRP Flash Reset Mi Account Reset EFS Partition Manager
+REDMI NOTE 9 PRO	JOYEUSE	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+POCO M2 PRO	GRAM	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+MI PAD SE	XUN	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+MI 12X	PSYCHE	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+MI PAD 6	PIPA	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+MI 10S	THYME	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+MI 10T 5G / MI 10T PRO 5G / REDMI K30S	APOLLO	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+MI 10 5G	UMI	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+REDMI K40S / POCO F4	MUNCH	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+REDMI NOTE 13 4G	SAPPHIRE	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+MI 11 LITE 5G NE	LISA	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+REDMI NOTE 12 PRO SPEED / POCO X5 PRO 5G	REDWOOD	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+MI 11	VENUS	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+MI 11I / REDMI K40 PRO / REDMI K40 PRO PLUS	HAYDN	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+MI 11T PRO	VILI	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+REDMI 10 / REDMI 10 PRIME	SELENE	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+REDMI NOTE 12R / NOTE 12 5G / POCO M6 5G	SKY	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+POCO F3 PRO	HAYDN	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+POCO X3 PRO	VAYU	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+REDMI NOTE 10 LITE	CURTANA	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+REDMI NOTE 13 PRO 4G / POCO M6 PRO 4G	EMERALD	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+REDMI NOTE 12 5G / REDMI NOTE 12R PRO	SUNSTONE	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+REDMI NOTE 12 TURBO / POCO F5	MARBLE	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+MI 11 LITE 4G	COURBET	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+MI 13T PRO / REDMI K60 ULTRA	COROT	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+REDMI NOTE 13 PRO PLUS 5G	ZIRCON	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+MI 13T	ARISTOTLE	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+REDMI K70E / POCO X6 PRO 5G	DUCHAMP	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+REDMI K50I / POCO X4 GT	XAGA	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+REDMI NOTE 11T PRO / REDMI NOTE 11T PRO PLUS	XAGA	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+MI 12T	PLATO	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+REDMI NOTE 11E PRO 5G / POCO X4 PRO 5G	VEUX / PEUX	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+REDMI NOTE 9 PRO / MI 10T LITE / MI 10I	GAUGUIN	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+REDMI NOTE 11 PRO 4G	VIVA	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+REDMI NOTE 13R / POCO M6 PLUS 5G	BREEZE	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+POCO X2	PHOENIX	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+POCO X5 5G	MOONSTONE	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+MI PAD 5	NABU	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+MI 12	CUPID	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+REDMI NOTE 14 5G	BERYL	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager Mi Assistant FRP
+REDMI A5 / POCO C71	SERENITY	Factory Reset Reset FRP Flash Partition Manager
+MI 12 PRO	ZEUS	Factory Reset Reset FRP Flash Reset Mi Account Fastboot to EDL Reset EFS Partition Manager Mi Assistant FRP
+REDMI NOTE 14 4G	TANZANITE	Factory Reset Reset FRP Flash Reset Mi Account Partition Manager
+A2	JASMINE	Factory Reset Reset FRP Flash Reset Mi Account Reset EFS Partition Manager
+NUBIA RED MAGIC 9 PRO	NX769J	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+NUBIA Z60 ULTRA	NX721J	Factory Reset Reset FRP Flash Reset EFS Partition Manager
+LIBERO 5G	A302ZT	Factory Reset Reset FRP Flash Bootloader Unlock Bootloader Lock EMMC / UFS Health Check Partition Manager
+NUBIA RED MAGIC 10 PRO	NX789J	Factory Reset Reset FRP Flash Partition Manager
+NUBIA RED MAGIC 10S PRO	NX789J	Factory Reset Reset FRP Flash Partition Manager
+NUBIA RED MAGIC 10S PRO PLUS	NX789J	Factory Reset Reset FRP Flash Partition Manager
+NUBIA RED MAGIC NOVA	NP03J	Factory Reset Reset FRP Flash Partition Manager

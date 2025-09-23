@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Sitemap: https://eskuly.org/sitemap.xml
 
 # Sitemap
 Sitemap: https://eskuly.org/sitemap.xml
