@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
         valid: false,
         error: error?.message || "No license found for this email.",
         licenses: licenses || []
-      }, { status: 404 });
+      }, { status: 200 }); // Changed from 404 to 200 for non-subscription users
     }
 
     // ابحث عن أول باقة غير منتهية

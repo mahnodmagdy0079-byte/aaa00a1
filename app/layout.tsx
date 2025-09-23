@@ -14,9 +14,38 @@ const cairo = Cairo({
 })
 
 export const metadata: Metadata = {
-  title: "باقات الاشتراك",
-  description: "اختر الباقة المثالية لك",
-  generator: "v0.app",
+  title: "TOOLY GSM - إصلاح الهواتف وإلغاء القفل بأفضل الأسعار | خدمات GSM متخصصة",
+  description: "خدمات إصلاح الهواتف وإلغاء القفل بأفضل الأسعار في مصر. Unlock Tool, Format, IMEI Check وأكثر. فريق محترف، أمان كامل، جودة مضمونة. اطلب خدمتك الآن!",
+  keywords: "إصلاح الهواتف, إلغاء القفل, Unlock Tool, Format, IMEI Check, خدمات GSM, إصلاح موبايل, فتح الهاتف, مصر",
+  authors: [{ name: "TOOLY GSM" }],
+  creator: "TOOLY GSM",
+  publisher: "TOOLY GSM",
+  robots: "index, follow",
+  openGraph: {
+    title: "TOOLY GSM - إصلاح الهواتف وإلغاء القفل بأفضل الأسعار",
+    description: "خدمات إصلاح الهواتف وإلغاء القفل بأفضل الأسعار في مصر. فريق محترف، أمان كامل، جودة مضمونة.",
+    url: "https://eskuly.org",
+    siteName: "TOOLY GSM",
+    images: [
+      {
+        url: "https://eskuly.org/tooly-gsm-logo-new.png",
+        width: 1200,
+        height: 630,
+        alt: "TOOLY GSM - خدمات إصلاح الهواتف",
+      },
+    ],
+    locale: "ar_EG",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "TOOLY GSM - إصلاح الهواتف وإلغاء القفل",
+    description: "خدمات إصلاح الهواتف وإلغاء القفل بأفضل الأسعار في مصر",
+    images: ["https://eskuly.org/tooly-gsm-logo-new.png"],
+  },
+  alternates: {
+    canonical: "https://eskuly.org",
+  },
 }
 
 export default function RootLayout({
@@ -26,16 +55,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ar" dir="rtl" className={`${cairo.variable} ${GeistSans.variable} ${GeistMono.variable}`}>
-      <head>
-        <style>{`
-html {
-  font-family: ${cairo.style.fontFamily}, ${GeistSans.style.fontFamily};
-  --font-sans: ${GeistSans.variable};
-  --font-mono: ${GeistMono.variable};
-  --font-arabic: ${cairo.variable};
-}
-        `}</style>
-      </head>
       <body>
         <LanguageProvider>{children}</LanguageProvider>
       </body>

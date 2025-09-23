@@ -118,6 +118,8 @@ export default function PricingPage() {
         home: "الرئيسية",
         packages: "الباقات",
         services: "خدمات",
+        downloads: "التحميل",
+        supportedModels: "الموديلات المدعومة",
       },
       plans: [
         {
@@ -212,6 +214,8 @@ export default function PricingPage() {
         home: "Home",
         packages: "Packages",
         services: "Services",
+        downloads: "Downloads",
+        supportedModels: "Supported Models",
       },
       plans: [
         {
@@ -282,7 +286,7 @@ export default function PricingPage() {
                     size="sm"
                     className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white shadow-lg rounded-lg px-4 py-2 text-base"
                   >
-                    لوحة التحكم
+                    {language === "ar" ? "لوحة التحكم" : "Dashboard"}
                   </Button>
                   <Button
                     onClick={handleLogout}
@@ -290,7 +294,7 @@ export default function PricingPage() {
                     variant="outline"
                     className="border-orange-500/50 text-orange-400 hover:bg-orange-500 hover:text-white bg-black/40 backdrop-blur-sm rounded-lg px-4 py-2 text-base"
                   >
-                    تسجيل الخروج
+                    {language === "ar" ? "تسجيل الخروج" : "Logout"}
                   </Button>
                 </>
               ) : (
@@ -300,7 +304,7 @@ export default function PricingPage() {
                     size="sm"
                     className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white rounded-lg px-4 py-2 text-base"
                   >
-                    إنشاء حساب
+                    {currentContent.signUpBtn}
                   </Button>
                   <Button
                     onClick={() => (window.location.href = "/auth/signin")}
@@ -308,7 +312,7 @@ export default function PricingPage() {
                     variant="outline"
                     className="hover:bg-orange-500 hover:text-white backdrop-blur-sm rounded-lg px-4 py-2 text-base text-white bg-transparent border-transparent"
                   >
-                    تسجيل الدخول
+                    {currentContent.signInBtn}
                   </Button>
                 </>
               )}
@@ -326,6 +330,18 @@ export default function PricingPage() {
                   className="text-white hover:text-orange-300 transition-all duration-300 font-medium text-base px-4 py-2 rounded-full hover:bg-orange-500/10"
                 >
                   {currentContent.nav.services}
+                </a>
+                <a
+                  href="/downloads"
+                  className="text-white hover:text-orange-300 transition-all duration-300 font-medium text-base px-4 py-2 rounded-full hover:bg-orange-500/10"
+                >
+                  {currentContent.nav.downloads}
+                </a>
+                <a
+                  href="/supported-models"
+                  className="text-white hover:text-orange-300 transition-all duration-300 font-medium text-base px-4 py-2 rounded-full hover:bg-orange-500/10"
+                >
+                  {currentContent.nav.supportedModels}
                 </a>
                 <a
                   href="/packages"
@@ -413,6 +429,20 @@ export default function PricingPage() {
                   className="text-white hover:text-orange-400 transition-colors duration-300 font-medium py-2 text-base"
                 >
                   {currentContent.nav.services}
+                </a>
+                <a
+                  href="/downloads"
+                  className="text-white hover:text-orange-400 transition-colors duration-300 font-medium py-2 text-base"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {currentContent.nav.downloads}
+                </a>
+                <a
+                  href="/supported-models"
+                  className="text-white hover:text-orange-400 transition-colors duration-300 font-medium py-2 text-base"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {currentContent.nav.supportedModels}
                 </a>
 
                 {/* Mobile Auth Buttons */}
@@ -514,25 +544,21 @@ export default function PricingPage() {
             <div className="text-center" style={{ marginTop: "9cm" }}>
               {/* Feature badges */}
               <div className="flex flex-wrap justify-center gap-4 mb-8">
-                <div className="bg-orange-500/40 backdrop-blur-sm border border-orange-500/50 rounded-full px-4 py-2">
-                  <span className="text-white text-base font-medium">مهنية في الخدمة</span>
-                </div>
-                <div className="bg-orange-500/40 backdrop-blur-sm border border-orange-500/50 rounded-full px-4 py-2">
-                  <span className="text-white text-base font-medium">شغال علي مدار الساعه</span>
-                </div>
-                <div className="bg-orange-500/40 backdrop-blur-sm border border-orange-500/50 rounded-full px-4 py-2">
-                  <span className="text-white text-base font-medium">أمان كامل: فلوسك محمية لحد ما الخدمة تتم</span>
-                </div>
+                {currentContent.features.slice(0, 3).map((badge: string, i: number) => (
+                  <div key={i} className="bg-orange-500/40 backdrop-blur-sm border border-orange-500/50 rounded-full px-4 py-2">
+                    <span className="text-white text-base font-medium">{badge}</span>
+                  </div>
+                ))}
               </div>
 
               {/* Main Title */}
               <h1 className="text-2xl md:text-3xl font-bold text-white mb-6 leading-tight font-arabic lg:text-5xl">
-                إصلح تليفونك في أسرع وقت وأرخص سعر
+                {currentContent.title}
               </h1>
 
               {/* Subtitle */}
               <p className="text-2xl md:text-3xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed lg:text-2xl">
-                بدل ما تكلم فني واحد، اعرض تليفونك وأكتر من فني يديك سعره... وانت اللي تختار
+                {currentContent.subtitle}
               </p>
 
               {/* CTA Button */}
@@ -544,7 +570,7 @@ export default function PricingPage() {
                 >
                   <span className="flex items-center gap-3">
                     <Smartphone className="w-6 h-6" />
-                    اطلب الآن
+                    {currentContent.ctaButton}
                     <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" />
                   </span>
                 </Button>
@@ -583,6 +609,8 @@ export default function PricingPage() {
           </div>
         </div>
       </div>
+
+    {/* Removed inline Downloads and Supported Models sections; they are standalone pages now */}
 
       {/* Features Section */}
       <div
@@ -663,10 +691,10 @@ export default function PricingPage() {
                 <Users className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 group-hover:text-orange-400 transition-colors duration-300">
-                مهنية في الخدمة
+                {currentContent.whyFeatures[0].title}
               </h3>
               <p className="text-gray-300 leading-relaxed group-hover:text-white transition-colors duration-300 text-lg">
-                فريق من المحترفين المدربين على أعلى مستوى لضمان جودة الخدمة
+                {currentContent.whyFeatures[0].desc}
               </p>
             </div>
 
@@ -676,10 +704,10 @@ export default function PricingPage() {
                 <Shield className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 group-hover:text-orange-400 transition-colors duration-300">
-                جودة مضمونة كل الوقت
+                {currentContent.whyFeatures[1].title}
               </h3>
               <p className="text-gray-300 leading-relaxed group-hover:text-white transition-colors duration-300 text-lg">
-                نضمن لك أفضل جودة في الخدمة مع متابعة مستمرة لضمان رضاك التام
+                {currentContent.whyFeatures[1].desc}
               </p>
             </div>
 
@@ -689,10 +717,10 @@ export default function PricingPage() {
                 <DollarSign className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 group-hover:text-orange-400 transition-colors duration-300">
-                أمان كامل: فلوسك محمية لحد ما الخدمة تتم
+                {currentContent.whyFeatures[2].title}
               </h3>
               <p className="text-gray-300 leading-relaxed group-hover:text-white transition-colors duration-300 text-lg">
-                نظام دفع آمن يحمي أموالك حتى اكتمال الخدمة بنجاح وحصولك على النتيجة المطلوبة
+                {currentContent.whyFeatures[2].desc}
               </p>
             </div>
           </div>

@@ -169,7 +169,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({
           success: false,
           error: `رصيدك غير كافي لشراء هذه الأداة. تحتاج ${price} جنيه.`,
-        }, { status: 400 });
+        }, { status: 200 }); // Changed from 400 to 200 for insufficient balance
       }
 
       // خصم من المحفظة

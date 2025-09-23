@@ -79,20 +79,22 @@ export default function Dashboard() {
   const [userRequests, setUserRequests] = useState<any[]>([])
   const [isAdmin, setIsAdmin] = useState(false)
 
-    // معلومات المستخدم: جلب عنوان IP (مؤقتاً معطل)
+  	// معلومات المستخدم: جلب عنوان IP عبر ipgeolocation.io
     const [userIp, setUserIp] = useState("")
-    // useEffect(() => {
-    //   const fetchIp = async () => {
-    //     try {
-    //       const res = await fetch("https://api.ipify.org?format=json")
-    //       const data = await res.json()
-    //       setUserIp(data.ip)
-    //     } catch (err) {
-    //       setUserIp("")
-    //     }
-    //   }
-    //   fetchIp()
-    // }, [])
+    useEffect(() => {
+      const fetchIp = async () => {
+        try {
+          const res = await fetch("/api/user/ipinfo", { cache: "no-store" })
+          if (res.ok) {
+            const data = await res.json()
+            setUserIp((data && data.ip) || "N/A")
+            return
+          }
+        } catch {}
+        setUserIp("N/A")
+      }
+      fetchIp()
+    }, [])
 
   const router = useRouter()
 
@@ -104,6 +106,7 @@ export default function Dashboard() {
       subscribed: "مشترك",
       notSubscribed: "غير مشترك",
       daysRemaining: "يوم متبقي",
+      expiredSince: (d: number) => `منتهي الصلاحية (منذ ${d} يوم)`,
       addPhone: "عرض هاتف للإصلاح",
       makePhone: "عرض التليفونات",
       getTool: "طلب أداة",
@@ -131,19 +134,53 @@ export default function Dashboard() {
       phoneNumber: "رقم الهاتف",
       requestDate: "تاريخ الطلب",
       paymentConfirmation: "سيتم تفعيل باقتك خلال 24 ساعة من تأكيد الدفع",
-      phoneListingsTitle: "هي اعرض التليفونات",
+      phoneListingsTitle: "عرض التليفونات",
       phoneListingsSubtitle: "تصفح الهواتف المعروضة للإصلاح أو أضف هاتفك",
       toolRequestTitle: "طلب أداة تقنية",
       toolRequestSubtitle: "احصل على الأدوات التقنية المتقدمة التي تحتاجها لحل مشاكل الأجهزة بسهولة وسرعة",
       
       
       adminPanel: "لوحة التحكم",
+      information: "المعلومات",
+      viewRecords: "عرض السجل",
+      recordsTitle: "سجل طلباتك",
+      recordsSubtitle: "عرض جميع طلبات الأدوات السابقة",
+      noPreviousRequests: "لا توجد طلبات سابقة",
+      willAppearHere: "ستظهر طلباتك هنا بعد إرسالها",
+      userInfo: "معلومات المستخدم",
+      email: "البريد الإلكتروني:",
+      subscriptionStatus: "حالة الاشتراك:",
+      packageTypeLabel: "نوع الباقة:",
+      daysRemainingLabel: "الأيام المتبقية:",
+      walletBalance: "رصيد المحفظة:",
+      systemInfo: "معلومات النظام",
+      ipAddress: "عنوان IP:",
+      activeRequests: "الطلبات النشطة:",
+      totalRequests: "إجمالي الطلبات:",
+      listedPhones: "الهواتف المعروضة:",
+      toolsInPackage: "الأدوات المتاحة في باقتك",
+      noToolsAvailable: "لا توجد أدوات متاحة. يرجى الاشتراك في إحدى الباقات.",
+      additionalInfo: "معلومات إضافية",
+      usageTips: "نصائح للاستخدام",
+      tip1: "• تأكد من إدخال معرف الجهاز بشكل صحيح",
+      tip2: "• يمكنك تتبع حالة طلباتك في قسم \"عرض السجل\"",
+      tip3: "• رصيد المحفظة يمكن استخدامه لشراء أدوات إضافية",
+      tip4: "• للدعم الفني، يرجى التواصل معنا",
+      comingSoonTitle: "قريباً",
+      comingSoonSubtitle: "قسم عرض التليفونات قيد التطوير وسيكون متاحاً قريباً",
+      wallet: "المحفظة",
+      currency: "جنيه",
+      active: "نشط",
+      expired: "منتهي",
+      notesLabel: "ملاحظات:",
+      purchasingError: "حدث خطأ أثناء شراء الأداة. حاول مرة أخرى.",
     },
     en: {
       welcome: "Welcome",
       subscribed: "Subscribed",
       notSubscribed: "Not Subscribed",
       daysRemaining: "days remaining",
+      expiredSince: (d: number) => `Expired (since ${d} days)`,
       addPhone: "List Phone for Repair",
       makePhone: "Phone Listings",
       getTool: "Get Tool",
@@ -178,6 +215,39 @@ export default function Dashboard() {
       subscriberRequest: "Subscriber Tool Request",
       nonSubscriberRequest: "Non-Subscriber Tool Request",
       adminPanel: "Admin Panel",
+      information: "Information",
+      viewRecords: "View Records",
+      recordsTitle: "Your Requests History",
+      recordsSubtitle: "View all your previous tool requests",
+      noPreviousRequests: "No previous requests",
+      willAppearHere: "Your requests will appear here after submission",
+      userInfo: "User Information",
+      email: "Email:",
+      subscriptionStatus: "Subscription Status:",
+      packageTypeLabel: "Package Type:",
+      daysRemainingLabel: "Days Remaining:",
+      walletBalance: "Wallet Balance:",
+      systemInfo: "System Information",
+      ipAddress: "IP Address:",
+      activeRequests: "Active Requests:",
+      totalRequests: "Total Requests:",
+      listedPhones: "Listed Phones:",
+      toolsInPackage: "Available Tools in Your Package",
+      noToolsAvailable: "No tools available. Please subscribe to a package.",
+      additionalInfo: "Additional Information",
+      usageTips: "Usage Tips",
+      tip1: "• Make sure to enter the device ID correctly",
+      tip2: "• You can track your requests in 'View Records'",
+      tip3: "• Wallet balance can be used to buy additional tools",
+      tip4: "• For technical support, please contact us",
+      comingSoonTitle: "COMING SOON",
+      comingSoonSubtitle: "The phone listings section is under development and will be available soon",
+      wallet: "Wallet",
+      currency: "EGP",
+      active: "Active",
+      expired: "Expired",
+      notesLabel: "Notes:",
+      purchasingError: "An error occurred while purchasing the tool. Please try again.",
     },
   }
 
@@ -453,10 +523,15 @@ export default function Dashboard() {
   }
 
   const getSubscriptionStatus = () => {
-
     if (!licenseData) return { text: currentContent.notSubscribed, color: "text-gray-400" }
     if (daysRemaining > 0) return { text: currentContent.subscribed, color: "text-green-400" }
-    return { text: `منتهي الصلاحية (منذ ${Math.abs(daysRemaining)} يوم)`, color: "text-red-400" }
+    const absDays = Math.abs(daysRemaining)
+    const expiredText = (currentContent as any).expiredSince
+      ? (currentContent as any).expiredSince(absDays)
+      : language === "ar"
+        ? `منتهي الصلاحية (منذ ${absDays} يوم)`
+        : `Expired (since ${absDays} days)`
+    return { text: expiredText, color: "text-red-400" }
   }
 
   const getPackageType = () => {
@@ -509,9 +584,15 @@ export default function Dashboard() {
     const now = new Date()
     const diffInMinutes = Math.floor((now.getTime() - date.getTime()) / (1000 * 60))
 
-    if (diffInMinutes < 60) return `${diffInMinutes} دقيقة`
-    if (diffInMinutes < 1440) return `${Math.floor(diffInMinutes / 60)} ساعة`
-    return `${Math.floor(diffInMinutes / 1440)} يوم`
+    if (language === "ar") {
+      if (diffInMinutes < 60) return `${diffInMinutes} دقيقة`
+      if (diffInMinutes < 1440) return `${Math.floor(diffInMinutes / 60)} ساعة`
+      return `${Math.floor(diffInMinutes / 1440)} يوم`
+    } else {
+      if (diffInMinutes < 60) return `${diffInMinutes} min`
+      if (diffInMinutes < 1440) return `${Math.floor(diffInMinutes / 60)} hr`
+      return `${Math.floor(diffInMinutes / 1440)} d`
+    }
   }
 
   const fetchUserRequests = async (userEmail: string) => {
@@ -665,8 +746,8 @@ export default function Dashboard() {
                   />
                 </svg>
                 <div className="text-right">
-                  <p className="text-xs text-green-100">المحفظة</p>
-                  <p className="text-sm font-bold text-white">{walletBalance} جنيه</p>
+                  <p className="text-xs text-green-100">{currentContent.wallet}</p>
+                  <p className="text-sm font-bold text-white">{walletBalance} {currentContent.currency}</p>
                 </div>
               </div>
 
@@ -720,7 +801,7 @@ export default function Dashboard() {
         </div>
       </header>
 
-      <div className="flex" dir="ltr">
+      <div className="flex" dir={language === "ar" ? "rtl" : "ltr"}>
         {/* Left Sidebar */}
         <aside className="w-64 bg-gray-900 border-r border-gray-800 min-h-screen">
           <nav className="p-4">
@@ -735,7 +816,7 @@ export default function Dashboard() {
                 }`}
               >
                 <Info className="w-5 h-5" />
-                <span>المعلومات</span>
+                <span>{currentContent.information}</span>
               </button>
 
               <button
@@ -759,7 +840,7 @@ export default function Dashboard() {
                 }`}
               >
                 <FileText className="w-5 h-5" />
-                <span>عرض السجل</span>
+                <span>{currentContent.viewRecords}</span>
               </button>
 
               {isAdmin && (
@@ -788,10 +869,10 @@ export default function Dashboard() {
                   <Smartphone className="w-16 h-16 text-white" />
                 </div>
                 <h1 className="text-6xl font-bold text-white mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                  COMING SOON
+                  {currentContent.comingSoonTitle}
                 </h1>
                 <p className="text-gray-400 text-xl max-w-md mx-auto">
-                  قسم عرض التليفونات قيد التطوير وسيكون متاحاً قريباً
+                  {currentContent.comingSoonSubtitle}
                 </p>
               </div>
             </div>
@@ -805,8 +886,8 @@ export default function Dashboard() {
           {activeSection === "view-records" && (
             <div className="space-y-8">
               <div className="text-center">
-                <h2 className="text-3xl font-bold text-white mb-4">سجل طلباتك</h2>
-                <p className="text-gray-300">عرض جميع طلبات الأدوات السابقة</p>
+                <h2 className="text-3xl font-bold text-white mb-4">{currentContent.recordsTitle}</h2>
+                <p className="text-gray-300">{currentContent.recordsSubtitle}</p>
               </div>
 
               <div className="space-y-4">
@@ -852,13 +933,17 @@ export default function Dashboard() {
                           <span className="text-gray-300">{timeText}</span>
                           <div className="flex items-center gap-2">
                             <div className={`w-2 h-2 rounded-full ${isActive ? "bg-green-400" : "bg-orange-400"}`} />
-                            <span className="text-gray-400">{request.status_ar || (isActive ? "نشط" : "منتهي")}</span>
+                            <span className="text-gray-400">
+                              {language === "ar"
+                                ? (request.status_ar || (isActive ? currentContent.active : currentContent.expired))
+                                : (request.status_en || (isActive ? currentContent.active : currentContent.expired))}
+                            </span>
                           </div>
                         </div>
 
                         {request.notes && request.notes !== "EMPTY" && (
                           <div className="mt-4 pt-4 border-t border-white/10">
-                            <span className="text-gray-400 text-sm">ملاحظات: </span>
+                            <span className="text-gray-400 text-sm">{currentContent.notesLabel} </span>
                             <span className="text-white text-sm">{request.notes}</span>
                           </div>
                         )}
@@ -868,8 +953,8 @@ export default function Dashboard() {
                 ) : (
                   <div className="text-center py-12">
                     <FileText className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                    <p className="text-gray-300 text-lg">لا توجد طلبات سابقة</p>
-                    <p className="text-gray-400">ستظهر طلباتك هنا بعد إرسالها</p>
+                    <p className="text-gray-300 text-lg">{currentContent.noPreviousRequests}</p>
+                    <p className="text-gray-400">{currentContent.willAppearHere}</p>
                   </div>
                 )}
               </div>
@@ -879,8 +964,8 @@ export default function Dashboard() {
           {activeSection === "information" && (
             <div className="space-y-8">
               <div className="text-center">
-                <h2 className="text-3xl font-bold text-white mb-4">المعلومات</h2>
-                <p className="text-gray-300">معلومات عن النظام والخدمات المتاحة</p>
+                <h2 className="text-3xl font-bold text-white mb-4">{currentContent.information}</h2>
+                <p className="text-gray-300">{currentContent.recordsSubtitle}</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -889,33 +974,33 @@ export default function Dashboard() {
                   <CardHeader>
                     <CardTitle className="text-white flex items-center gap-2">
                       <User className="w-5 h-5" />
-                      معلومات المستخدم
+                      {currentContent.userInfo}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="flex justify-between">
-                      <span className="text-gray-400">البريد الإلكتروني:</span>
+                      <span className="text-gray-400">{currentContent.email}</span>
                       <span className="text-white">{user?.email}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-400">حالة الاشتراك:</span>
+                      <span className="text-gray-400">{currentContent.subscriptionStatus}</span>
                       <span className={`${getSubscriptionStatus().color}`}>
                         {getSubscriptionStatus().text}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-400">نوع الباقة:</span>
+                      <span className="text-gray-400">{currentContent.packageTypeLabel}</span>
                       <span className="text-orange-400">{getPackageType()}</span>
                     </div>
                     {licenseData && (
                       <div className="flex justify-between">
-                        <span className="text-gray-400">الأيام المتبقية:</span>
-                        <span className="text-white">{daysRemaining} يوم</span>
+                        <span className="text-gray-400">{currentContent.daysRemainingLabel}</span>
+                        <span className="text-white">{daysRemaining} {language === "ar" ? "يوم" : "days"}</span>
                       </div>
                     )}
                     <div className="flex justify-between">
-                      <span className="text-gray-400">رصيد المحفظة:</span>
-                      <span className="text-green-400">{walletBalance} جنيه</span>
+                      <span className="text-gray-400">{currentContent.walletBalance}</span>
+                      <span className="text-green-400">{walletBalance} {currentContent.currency}</span>
                     </div>
                   </CardContent>
                 </Card>
@@ -925,24 +1010,24 @@ export default function Dashboard() {
                   <CardHeader>
                     <CardTitle className="text-white flex items-center gap-2">
                       <Info className="w-5 h-5" />
-                      معلومات النظام
+                      {currentContent.systemInfo}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="flex justify-between">
-                      <span className="text-gray-400">عنوان IP:</span>
-                      <span className="text-white">{userIp || "جاري التحميل..."}</span>
+                      <span className="text-gray-400">{currentContent.ipAddress}</span>
+                      <span className="text-white">{userIp || (language === "ar" ? "جاري التحميل..." : "Loading...")}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-400">الطلبات النشطة:</span>
+                      <span className="text-gray-400">{currentContent.activeRequests}</span>
                       <span className="text-white">{activeToolRequests.length}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-400">إجمالي الطلبات:</span>
+                      <span className="text-gray-400">{currentContent.totalRequests}</span>
                       <span className="text-white">{userRequests.length}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-400">الهواتف المعروضة:</span>
+                      <span className="text-gray-400">{currentContent.listedPhones}</span>
                       <span className="text-white">{phoneListings.length}</span>
                     </div>
                   </CardContent>
@@ -953,7 +1038,7 @@ export default function Dashboard() {
                   <CardHeader>
                     <CardTitle className="text-white flex items-center gap-2">
                       <Wrench className="w-5 h-5" />
-                      الأدوات المتاحة في باقتك
+                      {currentContent.toolsInPackage}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -972,7 +1057,7 @@ export default function Dashboard() {
                     </div>
                     {getAvailableTools().length === 0 && (
                       <p className="text-gray-400 text-center py-4">
-                        لا توجد أدوات متاحة. يرجى الاشتراك في إحدى الباقات.
+                        {currentContent.noToolsAvailable}
                       </p>
                     )}
                   </CardContent>
@@ -983,7 +1068,7 @@ export default function Dashboard() {
                   <CardHeader>
                     <CardTitle className="text-white flex items-center gap-2">
                       <MessageCircle className="w-5 h-5" />
-                      معلومات إضافية
+                      {currentContent.additionalInfo}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
@@ -991,12 +1076,12 @@ export default function Dashboard() {
                       <div className="flex items-start gap-3">
                         <Info className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
                         <div>
-                          <h4 className="text-blue-400 font-semibold mb-2">نصائح للاستخدام</h4>
+                          <h4 className="text-blue-400 font-semibold mb-2">{currentContent.usageTips}</h4>
                           <ul className="text-gray-300 text-sm space-y-1">
-                            <li>• تأكد من إدخال معرف الجهاز بشكل صحيح</li>
-                            <li>• يمكنك تتبع حالة طلباتك في قسم "عرض السجل"</li>
-                            <li>• رصيد المحفظة يمكن استخدامه لشراء أدوات إضافية</li>
-                            <li>• للدعم الفني، يرجى التواصل معنا</li>
+                            <li>{currentContent.tip1}</li>
+                            <li>{currentContent.tip2}</li>
+                            <li>{currentContent.tip3}</li>
+                            <li>{currentContent.tip4}</li>
                           </ul>
                         </div>
                       </div>

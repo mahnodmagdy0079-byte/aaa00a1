@@ -1,13 +1,14 @@
 "use client"
 import { useState, useEffect } from "react"
-import { ArrowLeft, Menu, X } from "lucide-react"
+import { useLanguage } from "@/contexts/LanguageContext"
+import { ArrowLeft, Menu, X, Info } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import Link from "next/link"
 import Image from "next/image"
 
 export default function ToolsPage() {
-  const [language, setLanguage] = useState<"ar" | "en">("ar")
+  const { language, setLanguage } = useLanguage()
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [userPlan, setUserPlan] = useState("")
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -51,6 +52,7 @@ export default function ToolsPage() {
       hour: "ساعة",
       egp: "جنيه",
       getAccess: "احصل على الوصول",
+      details: "التفاصيل",
       nav: {
         home: "الرئيسية",
         packages: "الباقات",
@@ -130,6 +132,7 @@ export default function ToolsPage() {
       hour: "hour",
       egp: "EGP",
       getAccess: "Get Access",
+      details: "Details",
       nav: {
         home: "Home",
         packages: "Packages",
@@ -202,6 +205,20 @@ export default function ToolsPage() {
   }
 
   const currentContent = content[language]
+
+  // Function to get the correct URL for each tool
+  const getToolUrl = (toolName: string) => {
+    const urlMap: { [key: string]: string } = {
+      "UNLOCK TOOL": "/tools/unlock-tool",
+      "AMT": "/tools/amt",
+      "TSM TOOL": "/tools/tsm-tool",
+      "CF TOOL": "/tools/cf-tool",
+      "TFM TOOL": "/tools/tfm-tool",
+      "Cheetah TOOL": "/tools/cheetah-tool",
+      "Global Unlocker Pro": "/tools/global-unlocker-pro"
+    }
+    return urlMap[toolName] || "/tools"
+  }
 
   return (
     <div className="min-h-screen bg-black text-white" dir={language === "ar" ? "rtl" : "ltr"}>
@@ -461,11 +478,22 @@ export default function ToolsPage() {
                       )}
                     </div>
 
-                    <Link href="/auth/signin" className="w-full">
-                      <Button className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold py-2 rounded-lg transition-all duration-300">
-                        {currentContent.getAccess}
-                      </Button>
-                    </Link>
+                    <div className="flex gap-2 w-full">
+                      <Link href={getToolUrl(tool.name)} className="flex-1">
+                        <Button 
+                          variant="outline"
+                          className="w-full border-orange-500/50 text-orange-400 hover:bg-orange-500 hover:text-white bg-transparent font-semibold py-2 rounded-lg transition-all duration-300"
+                        >
+                          <Info className="w-4 h-4 ml-2" />
+                          {currentContent.details}
+                        </Button>
+                      </Link>
+                      <Link href="/auth/signin" className="flex-1">
+                        <Button className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold py-2 rounded-lg transition-all duration-300">
+                          {currentContent.getAccess}
+                        </Button>
+                      </Link>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
