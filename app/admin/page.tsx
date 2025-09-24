@@ -28,6 +28,7 @@ import {
   deleteToolAccount,
   loadTools as loadToolsAction,
 } from "./actions"
+import { updateAppMinVersion } from "./actions"
 
 interface UserWithLicense {
   id: string
@@ -126,6 +127,12 @@ export default function AdminPage() {
   const [toolAccounts, setToolAccounts] = useState<any[]>([])
   const [isLoadingToolAccounts, setIsLoadingToolAccounts] = useState(false)
   const [showAddAccountModal, setShowAddAccountModal] = useState(false)
+  // App update form state
+  const [appVersion, setAppVersion] = useState<string>("1.0.0")
+  const [appForceUpdate, setAppForceUpdate] = useState<boolean>(true)
+  const [appDownloadUrl, setAppDownloadUrl] = useState<string>("https://your-site/downloads/ToolyGSM-Setup-1.0.0.exe")
+  const [appMessage, setAppMessage] = useState<string>("يرجى التحديث إلى الإصدار 1.0.0")
+  const [isSavingAppConfig, setIsSavingAppConfig] = useState(false)
 
   // Tool form state
   const [toolForm, setToolForm] = useState({
@@ -434,6 +441,12 @@ export default function AdminPage() {
       label: "الإعدادات",
       active: activeSection === "settings",
       onClick: () => setActiveSection("settings"),
+    },
+    {
+      icon: Package,
+      label: "التطبيق",
+      active: activeSection === "app",
+      onClick: () => setActiveSection("app"),
     },
   ]
 
@@ -811,6 +824,81 @@ export default function AdminPage() {
                 <h1 className="text-3xl font-bold text-white mb-2">الإعدادات</h1>
                 <p className="text-gray-400">إدارة الإعدادات العامة</p>
                 {/* Settings form */}
+              </div>
+            )}
+
+            {activeSection === "app" && (
+              <div>
+                <h1 className="text-3xl font-bold text-white mb-2">التطبيق</h1>
+                <p className="text-gray-400 mb-6">نشر تحديثات برنامج سطح المكتب</p>
+                <div className="bg-gray-900 border border-gray-700 rounded-lg p-6 max-w-2xl">
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-white text-sm font-medium mb-2">رقم الإصدار (SemVer):</label>
+                      <input
+                        type="text"
+                        value={appVersion}
+                        onChange={(e) => setAppVersion(e.target.value)}
+                        placeholder="1.0.0"
+                        className="w-full bg-gray-700 border border-gray-600 text-white rounded-lg px-3 py-2"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-white text-sm font-medium mb-2">رابط التحميل:</label>
+                      <input
+                        type="url"
+                        value={appDownloadUrl}
+                        onChange={(e) => setAppDownloadUrl(e.target.value)}
+                        placeholder="https://example.com/ToolyGSM-Setup-1.0.0.exe"
+                        className="w-full bg-gray-700 border border-gray-600 text-white rounded-lg px-3 py-2"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-white text-sm font-medium mb-2">رسالة للمستخدم:</label>
+                      <input
+                        type="text"
+                        value={appMessage}
+                        onChange={(e) => setAppMessage(e.target.value)}
+                        placeholder="يرجى التحديث إلى الإصدار 1.0.0"
+                        className="w-full bg-gray-700 border border-gray-600 text-white rounded-lg px-3 py-2"
+                      />
+                    </div>
+                    <div>
+                      <label className="flex items-center gap-2 text-white text-sm">
+                        <input
+                          type="checkbox"
+                          checked={appForceUpdate}
+                          onChange={(e) => setAppForceUpdate(e.target.checked)}
+                          className="rounded"
+                        />
+                        تحديث إجباري
+                      </label>
+                    </div>
+                    <div className="pt-4">
+                      <Button
+                        disabled={isSavingAppConfig}
+                        onClick={async () => {
+                          setIsSavingAppConfig(true)
+                          try {
+                            const res = await updateAppMinVersion(appVersion, appForceUpdate, appDownloadUrl, appMessage)
+                            if (res.success) {
+                              alert("تم حفظ إعدادات التطبيق وتفعيلها")
+                            } else {
+                              alert(`فشل حفظ الإعدادات: ${res.error || 'خطأ غير معروف'}`)
+                            }
+                          } catch (e: any) {
+                            alert(`فشل حفظ الإعدادات: ${e?.message || 'خطأ غير معروف'}`)
+                          } finally {
+                            setIsSavingAppConfig(false)
+                          }
+                        }}
+                        className="bg-green-600 hover:bg-green-700 text-white"
+                      >
+                        {isSavingAppConfig ? "جاري الحفظ..." : "حفظ وتفعيل"}
+                      </Button>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
           </div>

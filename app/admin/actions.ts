@@ -879,6 +879,21 @@ export async function loadTools() {
   return { tools: toolsWithCount, error: null }
 }
 
+export async function updateAppMinVersion(minSupportedVersion: string, forceUpdate: boolean, downloadUrl: string, message: string) {
+  "use server"
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || ""}/api/app/min-version/update`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ minSupportedVersion, forceUpdate, downloadUrl, message })
+  })
+  try {
+    const json = await res.json()
+    return json
+  } catch (e: any) {
+    return { success: false, error: e?.message || 'Failed to update app version' }
+  }
+}
+
 export async function expireToolRequests() {
   "use server"
   try {

@@ -66,6 +66,12 @@ namespace toolygsm1
 
         private async void BtnLogin_Click(object sender, EventArgs e)
         {
+            // تحقق الحد الأدنى للإصدار قبل أي تسجيل دخول
+            var enforceOk = await EnforceMinVersionOrExitAsync();
+            if (!enforceOk)
+            {
+                return; // تم إنهاء التطبيق داخل الدالة
+            }
             email = txtUsername.Text;
             string password = txtPassword.Text;
             var loginResult = await GetUserObjectAsync(email, password);
@@ -86,6 +92,79 @@ namespace toolygsm1
                 LogError("LoginAttempt", new Exception("Invalid credentials"));
                 MessageBox.Show("اسم المستخدم أو كلمة المرور غير صحيحة!", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private Version GetCurrentAppVersion()
+        {
+            try
+            {
+                var asm = System.Reflection.Assembly.GetExecutingAssembly();
+                var ver = asm.GetName().Version;
+                if (ver != null) return new Version(ver.Major, ver.Minor, ver.Build);
+            }
+            catch { }
+            // fallback ثابت لو النسخة غير متوفرة
+            return new Version(1, 0, 0);
+        }
+
+        private bool IsVersionLess(Version a, Version b)
+        {
+            if (a == null || b == null) return false;
+            return a.CompareTo(b) < 0;
+        }
+
+        private async Task<bool> EnforceMinVersionOrExitAsync()
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    var apiBaseUrl = SecurityConfig.GetApiBaseUrl();
+                    client.BaseAddress = new Uri(apiBaseUrl);
+                    client.DefaultRequestHeaders.Add("Origin", apiBaseUrl);
+                    client.DefaultRequestHeaders.Add("User-Agent", "TOOLY-GSM-Desktop/1.0");
+                    var resp = await client.GetAsync("/api/app/min-version");
+                    var json = await resp.Content.ReadAsStringAsync();
+                    var obj = JObject.Parse(json);
+                    if (obj["success"]?.ToString()?.ToLower() == "true")
+                    {
+                        var minStr = obj["minSupportedVersion"]?.ToString() ?? "0.0.0";
+                        var force = obj["forceUpdate"]?.ToString()?.ToLower() == "true";
+                        var downloadUrl = obj["downloadUrl"]?.ToString() ?? "";
+                        var message = obj["message"]?.ToString() ?? "";
+
+                        Version minVer;
+                        if (!Version.TryParse(minStr, out minVer)) minVer = new Version(0, 0, 0);
+                        var current = GetCurrentAppVersion();
+
+                        if (force && IsVersionLess(current, minVer))
+                        {
+                            var text = string.IsNullOrWhiteSpace(message) ?
+                                $"الإصدار الحالي ({current}) غير مدعوم. الحد الأدنى: {minVer}. يرجى التحديث." : message;
+                            var result = MessageBox.Show(text + "\n\nهل تريد تحميل التحديث الآن؟", "تحديث مطلوب",
+                                MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                            if (result == DialogResult.OK)
+                            {
+                                try
+                                {
+                                    if (!string.IsNullOrWhiteSpace(downloadUrl))
+                                        System.Diagnostics.Process.Start(downloadUrl);
+                                }
+                                catch { }
+                                Application.Exit();
+                                return false;
+                            }
+                            else
+                            {
+                                Application.Exit();
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            catch { }
+            return true;
         }
 
         private async Task<JObject> GetUserObjectAsync(string email, string password)
