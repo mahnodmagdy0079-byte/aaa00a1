@@ -881,14 +881,28 @@ export async function loadTools() {
 
 export async function updateAppMinVersion(minSupportedVersion: string, forceUpdate: boolean, downloadUrl: string, message: string) {
   "use server"
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || ""}/api/app/min-version/update`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ minSupportedVersion, forceUpdate, downloadUrl, message })
-  })
   try {
-    const json = await res.json()
-    return json
+    const supabase = await createAdminClient()
+    // Deactivate previous actives
+    await supabase.from("app_config").update({ is_active: false }).eq("is_active", true)
+    // Insert new config row
+    const { data, error } = await supabase
+      .from("app_config")
+      .insert({
+        min_supported_version: minSupportedVersion,
+        force_update: forceUpdate,
+        download_url: downloadUrl,
+        message,
+        is_active: true,
+        updated_at: new Date().toISOString(),
+      })
+      .select("id")
+      .single()
+
+    if (error) {
+      return { success: false, error: error.message }
+    }
+    return { success: true, id: data?.id }
   } catch (e: any) {
     return { success: false, error: e?.message || 'Failed to update app version' }
   }
