@@ -1500,35 +1500,22 @@ namespace toolygsm1
                             
                             if (purchaseObj["success"]?.ToString().ToLower() == "true")
                             {
-                                // إذا كان هناك حساب مخصص، بدء الأوميشن
+                                // إذا كان هناك حساب مخصص، بدء الأوتوميشن (سيتحقق لاحقاً داخل الفروع)
                                 var account = purchaseObj["account"];
                                 LogError("AccountDebug", new Exception($"Account object: {account?.ToString()}, Type: {account?.Type}"));
                                 
-                                if (account != null && account.Type != JTokenType.Null)
-                                {
-                                    var username = account["username"]?.ToString();
-                                    var password = account["password"]?.ToString();
-                                    var accountId = account["account_id"]?.ToString();
-                                    
-                                    LogError("AccountInfo", new Exception($"Account: {username}, Password: {password?.Substring(0, Math.Min(3, password?.Length ?? 0))}***, ID: {accountId}"));
-                                    
-                                    if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
-                                    {
-                                        LogError("AutomationStart", new Exception($"Starting automation with username: {username}"));
-                                        // سيتم بدء الأوميشن لمرة واحدة أدناه حسب حالة isReuse
-                                    }
-                                    else
-                                    {
-                                        LogError("AccountValidation", new Exception($"Username or password is empty. Username: '{username}', Password: '{password?.Substring(0, Math.Min(3, password?.Length ?? 0))}***'"));
-                                    }
-                                }
-                                else
-                                {
-                                    LogError("AccountInfo", new Exception("No account assigned for this tool"));
-                                }
-                                
                                 // فحص إذا كان هذا طلب إعادة استخدام
                                 var isReuse = purchaseObj["isReuse"]?.ToString().ToLower() == "true";
+
+                                // تحديد نوع الأداة (TSM) بشكل موثوق من عدة حقول محتملة
+                                Func<string, bool> isTsmName = (n) => !string.IsNullOrWhiteSpace(n) && n.IndexOf("tsm", StringComparison.OrdinalIgnoreCase) >= 0;
+                                bool isTsmTool =
+                                    isTsmName(toolName) ||
+                                    isTsmName(purchaseObj["toolName"]?.ToString()) ||
+                                    isTsmName(purchaseObj["tool"]?["name"]?.ToString()) ||
+                                    isTsmName(purchaseObj["toolRequest"]?["tool_name"]?.ToString()) ||
+                                    isTsmName(purchaseObj["account"]?["tool_name"]?.ToString());
+                                LogError("ToolDetection", new Exception($"isTsmTool={isTsmTool}, toolName='{toolName}'"));
                                 
                                 if (!isReuse)
                                 {
@@ -1545,16 +1532,88 @@ namespace toolygsm1
                                             var toolRequestId = purchaseObj["toolRequest"]?["id"]?.ToString();
                                             
                                             LogError("FirstTimeAutomation", new Exception($"Starting first-time automation with username: {username}, Request ID: {toolRequestId}"));
-                                            StartUnlockToolAutomation(username, password, toolRequestId);
+                                            if (isTsmTool)
+                                            {
+                                                // جهّز قائمة حسابات بديلة إن أرسلها السيرفر
+                                                var accountsList = new List<(string Username, string Password)>();
+                                                accountsList.Add((username, password));
+                                                var altArr = purchaseObj["alternateAccounts"] as JArray ?? purchaseObj["accounts"] as JArray;
+                                                if (altArr != null)
+                                                {
+                                                    foreach (var a in altArr)
+                                                    {
+                                                        var u = a?["username"]?.ToString();
+                                                        var p = a?["password"]?.ToString();
+                                                        if (!string.IsNullOrEmpty(u) && !string.IsNullOrEmpty(p))
+                                                            accountsList.Add((u, p));
+                                                    }
+                                                }
+                                                // جلب حسابات إضافية من السيرفر إن توفرت (next-account)
+                                                try
+                                                {
+                                                    var more = await FetchAdditionalTsmAccountsAsync(purchaseObj["toolRequest"]?["id"]?.ToString(), toolName);
+                                                    if (more.Accounts != null && more.Accounts.Count > 0)
+                                                    {
+                                                        foreach (var acc in more.Accounts)
+                                                        {
+                                                            if (!accountsList.Any(x => x.Username == acc.Username))
+                                                                accountsList.Add(acc);
+                                                        }
+                                                    }
+                                                    else if (accountsList.Count == 0 && !string.IsNullOrEmpty(more.NextAvailableAt))
+                                                    {
+                                                        var userMessage = "لا توجد حسابات متاحة لهذه الأداة حالياً";
+                                                        userMessage += $"\nأقرب وقت توافر متوقع: {more.NextAvailableAt}";
+                                                        return new PurchaseResult { Success = false, ErrorMessage = userMessage };
+                                                    }
+                                                }
+                                                catch (Exception ex)
+                                                {
+                                                    LogError("FetchAdditionalTsmAccounts", ex);
+                                                }
+                                                // استخدم وضع تجربة عدة حسابات لـ TSM إذا توفرت قائمة
+                                                if (accountsList.Count > 1)
+                                                {
+                                                    System.Threading.Tasks.Task.Run(() =>
+                                                    {
+                                                        try
+                                                        {
+                                                            TsmToolAutomation.StartTsmToolAutomation(accountsList, toolRequestId, SecurityConfig.GetApiBaseUrl(), userToken);
+                                                        }
+                                                        catch (Exception ex)
+                                                        {
+                                                            LogError("TsmToolAutomationMulti", ex);
+                                                        }
+                                                    });
+                                                }
+                                                else
+                                                {
+                                                    StartTsmToolAutomation(username, password, toolRequestId);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                StartUnlockToolAutomation(username, password, toolRequestId);
+                                            }
                                         }
                                         else
                                         {
                                             LogError("AccountValidation", new Exception($"Username or password is empty. Username: '{username}', Password: '{password?.Substring(0, Math.Min(3, password?.Length ?? 0))}***'"));
+                                            var nextAvailableAt = ExtractNextAvailability(purchaseObj);
+                                            var userMessage = "كل الحسابات مستخدمة الآن";
+                                            if (!string.IsNullOrEmpty(nextAvailableAt))
+                                                userMessage += $"\nأقرب وقت توافر متوقع: {nextAvailableAt}";
+                                            return new PurchaseResult { Success = false, ErrorMessage = userMessage };
                                         }
                                     }
                                     else
                                     {
                                         LogError("AccountInfo", new Exception("No account provided for first-time purchase"));
+                                        var nextAvailableAt = ExtractNextAvailability(purchaseObj);
+                                        var userMessage = "لا توجد حسابات متاحة لهذه الأداة حالياً";
+                                        if (!string.IsNullOrEmpty(nextAvailableAt))
+                                            userMessage += $"\nأقرب وقت توافر متوقع: {nextAvailableAt}";
+                                        return new PurchaseResult { Success = false, ErrorMessage = userMessage };
                                     }
                                 }
                                 else
@@ -1572,16 +1631,85 @@ namespace toolygsm1
                                             var toolRequestId = purchaseObj["toolRequest"]?["id"]?.ToString();
                                             
                                             LogError("ReuseAutomation", new Exception($"Starting reuse automation with username: {username}, Request ID: {toolRequestId}"));
-                                            StartUnlockToolAutomation(username, password, toolRequestId);
+                                            if (isTsmTool)
+                                            {
+                                                var accountsList = new List<(string Username, string Password)>();
+                                                accountsList.Add((username, password));
+                                                var altArr = purchaseObj["alternateAccounts"] as JArray ?? purchaseObj["accounts"] as JArray;
+                                                if (altArr != null)
+                                                {
+                                                    foreach (var a in altArr)
+                                                    {
+                                                        var u = a?["username"]?.ToString();
+                                                        var p = a?["password"]?.ToString();
+                                                        if (!string.IsNullOrEmpty(u) && !string.IsNullOrEmpty(p))
+                                                            accountsList.Add((u, p));
+                                                    }
+                                                }
+                                                try
+                                                {
+                                                    var more = await FetchAdditionalTsmAccountsAsync(purchaseObj["toolRequest"]?["id"]?.ToString(), toolName);
+                                                    if (more.Accounts != null && more.Accounts.Count > 0)
+                                                    {
+                                                        foreach (var acc in more.Accounts)
+                                                        {
+                                                            if (!accountsList.Any(x => x.Username == acc.Username))
+                                                                accountsList.Add(acc);
+                                                        }
+                                                    }
+                                                    else if (accountsList.Count == 0 && !string.IsNullOrEmpty(more.NextAvailableAt))
+                                                    {
+                                                        var userMessage = "لا توجد حسابات متاحة لهذه الأداة حالياً";
+                                                        userMessage += $"\nأقرب وقت توافر متوقع: {more.NextAvailableAt}";
+                                                        return new PurchaseResult { Success = false, ErrorMessage = userMessage };
+                                                    }
+                                                }
+                                                catch (Exception ex)
+                                                {
+                                                    LogError("FetchAdditionalTsmAccounts", ex);
+                                                }
+                                                if (accountsList.Count > 1)
+                                                {
+                                                    System.Threading.Tasks.Task.Run(() =>
+                                                    {
+                                                        try
+                                                        {
+                                                            TsmToolAutomation.StartTsmToolAutomation(accountsList, toolRequestId, SecurityConfig.GetApiBaseUrl(), userToken);
+                                                        }
+                                                        catch (Exception ex)
+                                                        {
+                                                            LogError("TsmToolAutomationMulti", ex);
+                                                        }
+                                                    });
+                                                }
+                                                else
+                                                {
+                                                    StartTsmToolAutomation(username, password, toolRequestId);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                StartUnlockToolAutomation(username, password, toolRequestId);
+                                            }
                                         }
                                         else
                                         {
                                             LogError("AccountValidation", new Exception($"Username or password is empty. Username: '{username}', Password: '{password?.Substring(0, Math.Min(3, password?.Length ?? 0))}***'"));
+                                            var nextAvailableAt = ExtractNextAvailability(purchaseObj);
+                                            var userMessage = "كل الحسابات مستخدمة الآن";
+                                            if (!string.IsNullOrEmpty(nextAvailableAt))
+                                                userMessage += $"\nأقرب وقت توافر متوقع: {nextAvailableAt}";
+                                            return new PurchaseResult { Success = false, ErrorMessage = userMessage };
                                         }
                                     }
                                     else
                                     {
                                         LogError("AccountInfo", new Exception("No account assigned for this tool"));
+                                        var nextAvailableAt = ExtractNextAvailability(purchaseObj);
+                                        var userMessage = "لا توجد حسابات متاحة لهذه الأداة حالياً";
+                                        if (!string.IsNullOrEmpty(nextAvailableAt))
+                                            userMessage += $"\nأقرب وقت توافر متوقع: {nextAvailableAt}";
+                                        return new PurchaseResult { Success = false, ErrorMessage = userMessage };
                                     }
                                 }
                                 
@@ -1595,8 +1723,11 @@ namespace toolygsm1
                                 // معالجة آمنة للأخطاء
                                 var errorMsg = purchaseObj["error"]?.ToString() ?? "خطأ غير معروف";
                                 LogError("PurchaseError", new Exception($"API Error: {errorMsg}"));
-                                
-                                // تصنيف الأخطاء وإعطاء رسائل آمنة
+
+                                // محاولة استخراج أقرب وقت توافر من الاستجابة إن وُجد
+                                var nextAvailableAt = ExtractNextAvailability(purchaseObj);
+
+                                // تصنيف الأخطاء وإعطاء رسائل دقيقة
                                 if (errorMsg.Contains("insufficient") || errorMsg.Contains("balance"))
                                 {
                                     return new PurchaseResult { Success = false, ErrorMessage = "رصيدك غير كاف لشراء هذه الأداة" };
@@ -1609,13 +1740,29 @@ namespace toolygsm1
                                 {
                                     return new PurchaseResult { Success = false, ErrorMessage = "تم تجاوز الحد المسموح من الطلبات. يرجى المحاولة لاحقاً" };
                                 }
-                                else if (errorMsg.Contains("No available accounts"))
+                                else if (errorMsg.IndexOf("no available accounts", StringComparison.OrdinalIgnoreCase) >= 0)
                                 {
-                                    return new PurchaseResult { Success = false, ErrorMessage = "لا توجد حسابات متاحة لهذه الأداة حالياً. يرجى المحاولة لاحقاً" };
+                                    var userMessage = "لا توجد حسابات متاحة لهذه الأداة حالياً";
+                                    if (!string.IsNullOrEmpty(nextAvailableAt))
+                                        userMessage += $"\nأقرب وقت توافر متوقع: {nextAvailableAt}";
+                                    return new PurchaseResult { Success = false, ErrorMessage = userMessage };
+                                }
+                                else if (errorMsg.IndexOf("in use", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                                         errorMsg.IndexOf("reserved", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                                         errorMsg.IndexOf("busy", StringComparison.OrdinalIgnoreCase) >= 0)
+                                {
+                                    var userMessage = "كل الحسابات مستخدمة الآن";
+                                    if (!string.IsNullOrEmpty(nextAvailableAt))
+                                        userMessage += $"\nأقرب وقت توافر متوقع: {nextAvailableAt}";
+                                    return new PurchaseResult { Success = false, ErrorMessage = userMessage };
                                 }
                                 else
                                 {
-                                    return new PurchaseResult { Success = false, ErrorMessage = $"حدث خطأ أثناء معالجة طلبك: {errorMsg}" };
+                                    // رسالة عامة مع إبقاء النص الأصلي للمساعدة في الدعم
+                                    var userMessage = $"حدث خطأ أثناء معالجة طلبك: {errorMsg}";
+                                    if (!string.IsNullOrEmpty(nextAvailableAt))
+                                        userMessage += $"\nأقرب وقت توافر متوقع: {nextAvailableAt}";
+                                    return new PurchaseResult { Success = false, ErrorMessage = userMessage };
                                 }
                             }
                         }
@@ -1661,6 +1808,42 @@ namespace toolygsm1
             }
         }
 
+		// استخراج أقرب موعد توافر من استجابة الخادم إن وُجد (تنسيقات محتملة)
+		private string ExtractNextAvailability(JObject purchaseObj)
+		{
+			try
+			{
+				// الاحتمالات: fields مثل nextAvailableAt, next_available_at, nextAvailability, next_time, earliestEndTime
+				string[] keys = new[] { "nextAvailableAt", "next_available_at", "nextAvailability", "next_time", "earliestEndTime", "earliest_end_time" };
+				foreach (var k in keys)
+				{
+					var v = purchaseObj[k]?.ToString();
+					if (!string.IsNullOrWhiteSpace(v))
+					{
+						if (DateTime.TryParse(v, out var dt))
+							return dt.ToString("yyyy-MM-dd HH:mm");
+						return v;
+					}
+				}
+				// احتمال أن تأتي ضمن accountsBusy مثل [{end_time: ...}]
+				var busyArr = purchaseObj["accountsBusy"] as JArray;
+				if (busyArr != null && busyArr.Count > 0)
+				{
+					var times = new List<DateTime>();
+					foreach (var a in busyArr)
+					{
+						var et = a?["end_time"]?.ToString() ?? a?["endTime"]?.ToString();
+						if (!string.IsNullOrWhiteSpace(et) && DateTime.TryParse(et, out var dt))
+							times.Add(dt);
+					}
+					if (times.Count > 0)
+						return times.Min().ToString("yyyy-MM-dd HH:mm");
+				}
+			}
+			catch { }
+			return null;
+		}
+
         // دالة منع النسخ العام من التطبيق
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
@@ -1685,6 +1868,57 @@ namespace toolygsm1
                 e.SuppressKeyPress = true;
             }
         }
+
+		private async Task<(List<(string Username, string Password)> Accounts, string NextAvailableAt)> FetchAdditionalTsmAccountsAsync(string toolRequestId, string toolName)
+		{
+			var result = (Accounts: new List<(string Username, string Password)>(), NextAvailableAt: (string)null);
+			try
+			{
+				var apiBaseUrl = SecurityConfig.GetApiBaseUrl();
+				using (var client = new HttpClient())
+				{
+					client.BaseAddress = new Uri(apiBaseUrl);
+					client.DefaultRequestHeaders.Add("Origin", apiBaseUrl);
+					client.DefaultRequestHeaders.Add("User-Agent", "TOOLY-GSM-Desktop/1.0");
+					if (!string.IsNullOrEmpty(userToken) && SecurityConfig.IsValidToken(userToken))
+					{
+						client.DefaultRequestHeaders.Add("Authorization", $"Bearer {userToken}");
+					}
+					var body = new JObject
+					{
+						["toolRequestId"] = toolRequestId ?? string.Empty,
+						["toolName"] = toolName ?? string.Empty
+					};
+					var content = new StringContent(body.ToString(), Encoding.UTF8, "application/json");
+					var response = await client.PostAsync("/api/tools/next-account", content);
+					var json = await response.Content.ReadAsStringAsync();
+					LogError("FetchAdditionalTsmAccountsAsync", new Exception($"HTTP {response.StatusCode}: {json}"));
+					if (!response.IsSuccessStatusCode)
+						return result;
+					var obj = JObject.Parse(json);
+					if (obj["success"]?.ToString()?.ToLower() == "true")
+					{
+						var arr = obj["accounts"] as JArray;
+						if (arr != null)
+						{
+							foreach (var a in arr)
+							{
+								var u = a?["username"]?.ToString();
+								var p = a?["password"]?.ToString();
+								if (!string.IsNullOrEmpty(u) && !string.IsNullOrEmpty(p))
+									result.Accounts.Add((u, p));
+							}
+						}
+						result.NextAvailableAt = obj["nextAvailableAt"]?.ToString() ?? obj["next_available_at"]?.ToString();
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				LogError("FetchAdditionalTsmAccountsAsync", ex);
+			}
+			return result;
+		}
 
         // دالة منع النسخ والتحديد للنصوص الحساسة
         private void PreventTextSelection(Control control)
@@ -1746,6 +1980,31 @@ namespace toolygsm1
                 LogError("StartUnlockToolAutomation", new Exception($"Error starting automation for username: {username}, Request ID: {toolRequestId}. Error: {ex.Message}"));
             }
         }
+
+		private void StartTsmToolAutomation(string username, string password, string toolRequestId = null)
+		{
+			try
+			{
+				LogError("StartTsmToolAutomation", new Exception($"Starting TSM automation for username: {username}, Request ID: {toolRequestId}"));
+				var apiBaseUrl = SecurityConfig.GetApiBaseUrl();
+				var token = userToken;
+				System.Threading.Tasks.Task.Run(() =>
+				{
+					try
+					{
+						TsmToolAutomation.StartTsmToolAutomation(username, password, toolRequestId, apiBaseUrl, token);
+					}
+					catch (Exception ex)
+					{
+						LogError("TsmToolAutomation", new Exception($"Error in TSM automation task: {ex.Message}"));
+					}
+				});
+			}
+			catch (Exception ex)
+			{
+				LogError("StartTsmToolAutomation", ex);
+			}
+		}
 
         // تنظيف البيانات الحساسة عند إغلاق البرنامج
         protected override void OnFormClosed(FormClosedEventArgs e)

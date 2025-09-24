@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Automation\UnlockToolAutomation.cs" />
+    <Compile Include="Automation\TsmToolAutomation.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
