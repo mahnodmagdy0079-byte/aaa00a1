@@ -3,6 +3,33 @@ import type { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
 
 export async function middleware(request: NextRequest) {
+  // Basic Auth for /admin route
+  const { pathname } = request.nextUrl
+  if (pathname.startsWith('/admin')) {
+    const authHeader = request.headers.get('authorization') || ''
+    const [scheme, encoded] = authHeader.split(' ')
+
+    const unauthorizedResponse = new NextResponse('Authentication required', {
+      status: 401,
+      headers: {
+        'WWW-Authenticate': 'Basic realm="Admin", charset="UTF-8"',
+      },
+    })
+
+    if (scheme !== 'Basic' || !encoded) {
+      return unauthorizedResponse
+    }
+
+    try {
+      const decoded = atob(encoded)
+      const [username, password] = decoded.split(':')
+      if (username !== 'hodh' || password !== 'hodh') {
+        return unauthorizedResponse
+      }
+    } catch (_error) {
+      return unauthorizedResponse
+    }
+  }
   // إضافة رؤوس الأمان الأساسية
   const response = await updateSession(request)
   

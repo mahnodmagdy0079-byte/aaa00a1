@@ -95,6 +95,9 @@ export default function AdminPage() {
   const [activeSection, setActiveSection] = useState("dashboard")
   const [registeredUsers, setRegisteredUsers] = useState<UserWithLicense[]>([])
   const [isLoadingRegisteredUsers, setIsLoadingRegisteredUsers] = useState(false)
+  const [userSearchEmail, setUserSearchEmail] = useState<string>("")
+  const [userPage, setUserPage] = useState<number>(1)
+  const [userPageSize, setUserPageSize] = useState<number>(10)
   const [selectedUserForLicense, setSelectedUserForLicense] = useState<string>("")
   const [showLicenseModal, setShowLicenseModal] = useState(false)
   const [showEditModal, setShowEditModal] = useState(false)
@@ -451,15 +454,15 @@ export default function AdminPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-black" dir="rtl">
+    <div className="min-h-screen bg-gradient-to-br from-black via-zinc-900 to-black" dir="rtl">
       <div className="flex">
         {/* Sidebar */}
         <div
-          className={`fixed inset-y-0 right-0 z-20 flex-shrink-0 w-64 bg-gray-800 transition-all duration-300 ${sidebarOpen ? "lg:w-64" : "lg:w-0"}`}
+          className={`fixed inset-y-0 right-0 z-20 flex-shrink-0 w-64 bg-zinc-900 border-l border-zinc-800 transition-all duration-300 ${sidebarOpen ? "lg:w-64" : "lg:w-0"}`}
         >
           <div className="flex flex-col h-full">
             {/* Sidebar header */}
-            <div className="flex items-center justify-center h-16 bg-gray-900">
+            <div className="flex items-center justify-center h-16 bg-zinc-950 border-b border-zinc-800">
               <h1 className="text-xl font-bold text-white">لوحة التحكم</h1>
             </div>
             {/* Sidebar links */}
@@ -468,23 +471,29 @@ export default function AdminPage() {
                 <button
                   key={item.label}
                   onClick={item.onClick}
-                  className={`flex items-center p-2 rounded-lg text-white hover:bg-gray-700 ${item.active ? "bg-gray-700" : ""}`}
+                  className={`flex items-center p-2 rounded-lg text-zinc-200 hover:bg-zinc-800 ${item.active ? "bg-zinc-800 border border-zinc-700" : ""}`}
                 >
-                  {item.icon && <item.icon className="w-5 h-5" />}
-                  <span className="ml-3">{item.label}</span>
+                  {item.icon && <item.icon className="w-5 h-5 text-zinc-300" />}
+                  <span className="ml-3 whitespace-nowrap">{item.label}</span>
                 </button>
               ))}
             </nav>
           </div>
         </div>
         {/* Main content */}
-        <main className={`flex-1 p-6 ${sidebarOpen ? "mr-64" : "mr-0"} transition-all duration-300`}>
-          <div className="max-w-7xl mx-auto">
+        <main className={`flex-1 ${sidebarOpen ? "mr-64" : "mr-0"} transition-all duration-300`}>
+          <div className="sticky top-0 z-10 bg-zinc-950/60 backdrop-blur border-b border-zinc-800 px-6 py-3">
+            <div className="max-w-7xl mx-auto flex items-center justify-between">
+              <div className="text-white font-semibold">لوحة التحكم</div>
+              <div className="text-xs text-zinc-400">ثيم داكن</div>
+            </div>
+          </div>
+          <div className="max-w-7xl mx-auto p-6">
             {/* Dashboard section */}
             {activeSection === "dashboard" && (
               <div>
                 <h1 className="text-3xl font-bold text-white mb-2">لوحة التحكم</h1>
-                <p className="text-gray-400">نظرة عامة على الأداء العام</p>
+                <p className="text-zinc-400">نظرة عامة على الأداء العام</p>
                 {/* Dashboard stats */}
                 {isLoadingStats ? (
                   <div className="text-center py-8">
@@ -494,7 +503,7 @@ export default function AdminPage() {
                 ) : (
                   <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 mt-6">
                     {/* Total users */}
-                    <Card className="bg-gray-900 border-gray-700">
+                    <Card className="bg-zinc-900/80 border-zinc-800 border shadow">
                       <CardHeader>
                         <CardTitle className="flex items-center gap-2 text-white">
                           <Users className="w-5 h-5 text-blue-500" />
@@ -502,11 +511,11 @@ export default function AdminPage() {
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-gray-300 text-2xl font-bold">{stats.totalUsers}</p>
+                        <p className="text-zinc-200 text-2xl font-bold">{stats.totalUsers}</p>
                       </CardContent>
                     </Card>
                     {/* Active licenses */}
-                    <Card className="bg-gray-900 border-gray-700">
+                    <Card className="bg-zinc-900/80 border-zinc-800 border shadow">
                       <CardHeader>
                         <CardTitle className="flex items-center gap-2 text-white">
                           <Package className="w-5 h-5 text-green-500" />
@@ -514,11 +523,11 @@ export default function AdminPage() {
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-gray-300 text-2xl font-bold">{stats.activeLicenses}</p>
+                        <p className="text-zinc-200 text-2xl font-bold">{stats.activeLicenses}</p>
                       </CardContent>
                     </Card>
                     {/* Pending requests */}
-                    <Card className="bg-gray-900 border-gray-700">
+                    <Card className="bg-zinc-900/80 border-zinc-800 border shadow">
                       <CardHeader>
                         <CardTitle className="flex items-center gap-2 text-white">
                           <Bell className="w-5 h-5 text-red-500" />
@@ -526,11 +535,11 @@ export default function AdminPage() {
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-gray-300 text-2xl font-bold">{stats.pendingRequests}</p>
+                        <p className="text-zinc-200 text-2xl font-bold">{stats.pendingRequests}</p>
                       </CardContent>
                     </Card>
                     {/* Total listings */}
-                    <Card className="bg-gray-900 border-gray-700">
+                    <Card className="bg-zinc-900/80 border-zinc-800 border shadow">
                       <CardHeader>
                         <CardTitle className="flex items-center gap-2 text-white">
                           <CreditCard className="w-5 h-5 text-yellow-500" />
@@ -538,7 +547,7 @@ export default function AdminPage() {
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-gray-300 text-2xl font-bold">{stats.totalListings}</p>
+                        <p className="text-zinc-200 text-2xl font-bold">{stats.totalListings}</p>
                       </CardContent>
                     </Card>
                   </div>
@@ -550,49 +559,87 @@ export default function AdminPage() {
             {activeSection === "users" && (
               <div>
                 <h1 className="text-3xl font-bold text-white mb-2">المستخدمين</h1>
-                <p className="text-gray-400">إدارة المستخدمين والباقات والمحافظ</p>
+                <p className="text-zinc-400 mb-4">إدارة المستخدمين والباقات والمحافظ</p>
+                <div className="mb-4 flex items-center gap-3">
+                  <input
+                    type="email"
+                    value={userSearchEmail}
+                    onChange={(e) => setUserSearchEmail(e.target.value)}
+                    placeholder="ابحث بالبريد الإلكتروني..."
+                    className="w-full max-w-md bg-zinc-900 border border-zinc-800 text-white rounded-lg px-3 py-2 placeholder-zinc-500"
+                  />
+                  <Button
+                    onClick={() => setUserSearchEmail(userSearchEmail.trim())}
+                    className="bg-blue-600 hover:bg-blue-700 text-white"
+                    size="sm"
+                  >
+                    بحث
+                  </Button>
+                  {userSearchEmail && (
+                    <Button
+                      variant="outline"
+                      onClick={() => setUserSearchEmail("")}
+                      className="border-zinc-700 text-zinc-300 hover:bg-zinc-800"
+                      size="sm"
+                    >
+                      مسح
+                    </Button>
+                  )}
+                </div>
                 {isLoadingRegisteredUsers ? (
-                  <div className="text-center py-8">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500 mx-auto"></div>
-                    <p className="text-sm text-gray-400 mt-2">جاري تحميل المستخدمين...</p>
+                  <div className="space-y-2">
+                    {Array.from({ length: 4 }).map((_, i) => (
+                      <div key={i} className="h-12 w-full rounded-md bg-zinc-800/50 animate-pulse" />
+                    ))}
                   </div>
                 ) : (
-                  <div className="overflow-x-auto">
+                  <div className="overflow-x-auto rounded-lg border border-zinc-800 bg-zinc-900/50">
                     <table className="w-full text-sm">
                       <thead>
-                        <tr className="border-b border-gray-700">
-                          <th className="text-right py-3 px-4 text-gray-300 font-medium">الاسم</th>
-                          <th className="text-right py-3 px-4 text-gray-300 font-medium">البريد الإلكتروني</th>
-                          <th className="text-right py-3 px-4 text-gray-300 font-medium">رقم الهاتف</th>
-                          <th className="text-right py-3 px-4 text-gray-300 font-medium">رصيد المحفظة</th>
-                          <th className="text-right py-3 px-4 text-gray-300 font-medium">الباقة</th>
-                          <th className="text-right py-3 px-4 text-gray-300 font-medium">تاريخ انتهاء الباقة</th>
-                          <th className="text-right py-3 px-4 text-gray-300 font-medium">الإجراءات</th>
+                        <tr className="border-b border-zinc-800 bg-zinc-950/40">
+                          <th className="text-right py-3 px-4 text-zinc-300 font-medium">الاسم</th>
+                          <th className="text-right py-3 px-4 text-zinc-300 font-medium">البريد الإلكتروني</th>
+                          <th className="text-right py-3 px-4 text-zinc-300 font-medium">رقم الهاتف</th>
+                          <th className="text-right py-3 px-4 text-zinc-300 font-medium">رصيد المحفظة</th>
+                          <th className="text-right py-3 px-4 text-zinc-300 font-medium">الباقة</th>
+                          <th className="text-right py-3 px-4 text-zinc-300 font-medium">تاريخ انتهاء الباقة</th>
+                          <th className="text-right py-3 px-4 text-zinc-300 font-medium">الإجراءات</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {registeredUsers.map((user) => (
-                          <tr key={user.id} className="border-b border-gray-800 hover:bg-gray-800">
+                        {(() => {
+                          const filtered = userSearchEmail
+                            ? registeredUsers.filter(u => (u.email || "").toLowerCase().includes(userSearchEmail.toLowerCase()))
+                            : registeredUsers
+                          const total = filtered.length
+                          const totalPages = Math.max(1, Math.ceil(total / userPageSize))
+                          const currentPage = Math.min(userPage, totalPages)
+                          const start = (currentPage - 1) * userPageSize
+                          const end = start + userPageSize
+                          const pageItems = filtered.slice(start, end)
+                          // render rows
+                          return pageItems.map((user) => (
+                          <tr key={user.id} className="border-b border-zinc-800 hover:bg-zinc-800/60">
                             <td className="py-3 px-4 text-white font-medium">
                               {user.full_name?.split("@")[0] || "غير محدد"}
                             </td>
-                            <td className="py-3 px-4 text-gray-300">{user.email}</td>
-                            <td className="py-3 px-4 text-gray-300">{user.phone || "غير محدد"}</td>
+                            <td className="py-3 px-4 text-zinc-300">{user.email}</td>
+                            <td className="py-3 px-4 text-zinc-300">{user.phone || "غير محدد"}</td>
                             <td className="py-3 px-4 text-yellow-400 font-medium">
                               {user.walletBalance?.toFixed(2) || "0.00"} جنيه
                             </td>
-                            <td className="py-3 px-4 text-gray-300">
+                            <td className="py-3 px-4 text-zinc-300">
                               {user.hasActiveLicense ? (
                                 <span className="text-green-400">{user.licenseInfo?.package_name}</span>
                               ) : (
                                 <span className="text-red-400">لا توجد باقة</span>
                               )}
                             </td>
-                            <td className="py-3 px-4 text-gray-300">
+                            <td className="py-3 px-4 text-zinc-300">
                               {user.hasActiveLicense && user.licenseInfo?.end_date ? (
                                 new Date(user.licenseInfo.end_date).toLocaleDateString("ar-EG")
                               ) : (
-                                <span className="text-gray-500">غير محدد</span>
+                                <span className="text-zinc-500">غير محدد</span>
                               )}
                             </td>
                             <td className="py-3 px-4">
@@ -651,9 +698,44 @@ export default function AdminPage() {
                               </div>
                             </td>
                           </tr>
-                        ))}
+                          ))
+                        })()}
                       </tbody>
                     </table>
+                    {/* Pagination controls */}
+                    <div className="flex items-center justify-between p-3 border-t border-zinc-800 bg-zinc-950/40">
+                      <div className="flex items-center gap-2 text-zinc-400 text-sm">
+                        <span>عدد الصفوف:</span>
+                        <select
+                          className="bg-zinc-900 border border-zinc-800 text-white rounded px-2 py-1"
+                          value={userPageSize}
+                          onChange={(e) => { setUserPage(1); setUserPageSize(parseInt(e.target.value) || 10) }}
+                        >
+                          {[10, 20, 50].map(s => (<option key={s} value={s}>{s}</option>))}
+                        </select>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Button
+                          variant="outline"
+                          className="border-zinc-700 text-zinc-300 hover:bg-zinc-800"
+                          size="sm"
+                          onClick={() => setUserPage(p => Math.max(1, p - 1))}
+                        >
+                          السابق
+                        </Button>
+                        <span className="text-zinc-400 text-sm">
+                          صفحة {userPage}
+                        </span>
+                        <Button
+                          variant="outline"
+                          className="border-zinc-700 text-zinc-300 hover:bg-zinc-800"
+                          size="sm"
+                          onClick={() => setUserPage(p => p + 1)}
+                        >
+                          التالي
+                        </Button>
+                      </div>
+                    </div>
 
                     {registeredUsers.length === 0 && (
                       <div className="text-center py-8">
