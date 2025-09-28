@@ -14,16 +14,40 @@ function VerifyEmailContent() {
   const { language, setLanguage } = useLanguage()
 
   useEffect(() => {
+    // Check for error parameters in URL hash (from Supabase redirect)
+    const hashParams = new URLSearchParams(window.location.hash.substring(1))
+    const error = hashParams.get('error')
+    const errorCode = hashParams.get('error_code')
+    const errorDescription = hashParams.get('error_description')
+    
+    if (error) {
+      // Handle Supabase errors
+      if (errorCode === 'otp_expired') {
+        setError(language === "ar" ? "انتهت صلاحية رابط التأكيد. يرجى طلب رابط جديد" : "Verification link has expired. Please request a new link")
+      } else if (error === 'access_denied') {
+        setError(language === "ar" ? "تم رفض الوصول. يرجى المحاولة مرة أخرى" : "Access denied. Please try again")
+      } else {
+        setError(language === "ar" ? "حدث خطأ في تأكيد البريد الإلكتروني" : "Email verification error")
+      }
+      setIsVerifying(false)
+      return
+    }
+    
+    // Check for token and email in search params
     const token = searchParams.get('token')
     const email = searchParams.get('email')
     
     if (token && email) {
       verifyEmail(token, email)
     } else {
-      setError(language === "ar" ? "رابط غير صحيح" : "Invalid link")
+      // If no error and no token, assume success (user might have already verified)
+      setIsSuccess(true)
       setIsVerifying(false)
+      setTimeout(() => {
+        router.push("/auth/signin")
+      }, 3000)
     }
-  }, [searchParams, language])
+  }, [searchParams, language, router])
 
   const verifyEmail = async (token: string, email: string) => {
     try {
@@ -138,12 +162,20 @@ function VerifyEmailContent() {
               <div>
                 <p className="text-red-400 font-semibold text-lg mb-2">{currentContent.error}</p>
                 <p className="text-slate-300 text-sm mb-6">{error}</p>
-                <button
-                  onClick={() => router.push("/auth/signin")}
-                  className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-4 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-slate-800"
-                >
-                  {currentContent.backToSignIn}
-                </button>
+                <div className="space-y-3">
+                  <button
+                    onClick={() => router.push("/auth/signin")}
+                    className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-4 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-slate-800"
+                  >
+                    {currentContent.backToSignIn}
+                  </button>
+                  <button
+                    onClick={() => router.push("/auth/signup")}
+                    className="w-full bg-gray-700/50 hover:bg-gray-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-slate-800"
+                  >
+                    {language === "ar" ? "إنشاء حساب جديد" : "Create New Account"}
+                  </button>
+                </div>
               </div>
             </div>
           )}
