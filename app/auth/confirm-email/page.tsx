@@ -1,11 +1,11 @@
 "use client"
 
 import type React from "react"
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useLanguage } from "@/contexts/LanguageContext"
 
-export default function ConfirmEmailPage() {
+function ConfirmEmailContent() {
   const [email, setEmail] = useState("")
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -138,5 +138,17 @@ export default function ConfirmEmailPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function ConfirmEmailPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center">
+        <div className="w-16 h-16 border-2 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    }>
+      <ConfirmEmailContent />
+    </Suspense>
   )
 }
