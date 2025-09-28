@@ -12,8 +12,8 @@ export async function POST(req: NextRequest) {
   if (rateLimitResponse) return rateLimitResponse;
   try {
 
-    const { name, email, password } = await req.json()
-    if (!name || !email || !password) {
+    const { name, email, phone, password } = await req.json()
+    if (!name || !email || !phone || !password) {
       return NextResponse.json({ error: "All fields are required" }, { status: 400 })
     }
 
@@ -24,8 +24,9 @@ export async function POST(req: NextRequest) {
       options: {
         data: {
           full_name: name,
+          phone: phone,
         },
-        emailRedirectTo: process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/dashboard`,
+        emailRedirectTo: process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || `https://eskuly.org/auth/verify-email`,
       },
     })
 

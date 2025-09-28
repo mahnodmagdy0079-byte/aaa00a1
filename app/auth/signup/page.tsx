@@ -8,6 +8,7 @@ import { useLanguage } from "@/contexts/LanguageContext"
 export default function SignUpPage() {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
+  const [phone, setPhone] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
@@ -41,7 +42,7 @@ export default function SignUpPage() {
       const res = await fetch("/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password })
+        body: JSON.stringify({ name, email, phone, password })
       })
       const result = await res.json()
 
@@ -76,6 +77,7 @@ export default function SignUpPage() {
       subtitle: "أدخل بياناتك لإنشاء حساب جديد",
       name: "الاسم الكامل",
       email: "البريد الإلكتروني",
+      phone: "رقم الهاتف",
       password: "كلمة المرور",
       confirmPassword: "تأكيد كلمة المرور",
       signUp: "إنشاء حساب",
@@ -88,6 +90,7 @@ export default function SignUpPage() {
       subtitle: "Enter your details to create a new account",
       name: "Full Name",
       email: "Email",
+      phone: "Phone Number",
       password: "Password",
       confirmPassword: "Confirm Password",
       signUp: "Sign Up",
@@ -100,7 +103,7 @@ export default function SignUpPage() {
   const currentContent = content[language]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-black text-white flex items-center justify-center p-4">
       {/* Language Toggle */}
       <button
         onClick={() => setLanguage(language === "ar" ? "en" : "ar")}
@@ -121,10 +124,10 @@ export default function SignUpPage() {
       </a>
 
       <div className="w-full max-w-md">
-        <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8 shadow-2xl">
+        <div className="bg-gray-900/80 backdrop-blur-sm border border-orange-500/20 rounded-2xl p-8 shadow-2xl">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-white mb-2">{currentContent.title}</h1>
-            <p className="text-slate-400">{currentContent.subtitle}</p>
+            <p className="text-gray-400">{currentContent.subtitle}</p>
           </div>
 
           {error && (
@@ -146,7 +149,7 @@ export default function SignUpPage() {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                 required
                 disabled={isLoading}
               />
@@ -158,9 +161,22 @@ export default function SignUpPage() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                 required
                 disabled={isLoading}
+              />
+            </div>
+
+            <div>
+              <label className="block text-white font-medium mb-2">{currentContent.phone}</label>
+              <input
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                required
+                disabled={isLoading}
+                placeholder={language === "ar" ? "مثال: +201234567890" : "Example: +201234567890"}
               />
             </div>
 
@@ -170,7 +186,7 @@ export default function SignUpPage() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                 required
                 disabled={isLoading}
                 minLength={6}
@@ -183,7 +199,7 @@ export default function SignUpPage() {
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                 required
                 disabled={isLoading}
                 minLength={6}
@@ -193,14 +209,14 @@ export default function SignUpPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-orange-500/50 text-white font-semibold py-3 px-4 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-slate-800"
+              className="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-orange-500/50 text-white font-semibold py-3 px-4 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-gray-900"
             >
               {isLoading ? currentContent.loading : currentContent.signUp}
             </button>
           </form>
 
           <div className="mt-8 text-center">
-            <p className="text-slate-400">
+            <p className="text-gray-400">
               {currentContent.haveAccount}{" "}
               <a href="/auth/signin" className="text-orange-400 hover:text-orange-300 font-medium">
                 {currentContent.signIn}
