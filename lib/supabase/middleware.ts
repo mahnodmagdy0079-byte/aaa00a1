@@ -18,8 +18,8 @@ export async function updateSession(request: NextRequest) {
   // تحقق من الجلسة باستخدام JWT الخاص بنا من Cookie 'token' فقط
   const token = request.cookies.get('token')?.value
 
-  // Allow access to home page, auth pages, admin, packages, and tools without redirect
-  const allowedPaths = ["/", "/auth", "/admin", "/packages", "/tools"]
+  // Allow access to home page, auth pages, admin, packages, tools, downloads, and supported-models without redirect
+  const allowedPaths = ["/", "/auth", "/admin", "/packages", "/tools", "/downloads", "/supported-models"]
   const isAllowedPath = allowedPaths.some(
     (path) => request.nextUrl.pathname === path || request.nextUrl.pathname.startsWith(path + "/"),
   )

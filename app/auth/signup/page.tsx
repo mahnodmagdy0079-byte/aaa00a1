@@ -59,16 +59,8 @@ export default function SignUpPage() {
       }
 
       if (result.user) {
-        setSuccess(
-          language === "ar"
-            ? "تم إنشاء الحساب بنجاح! تحقق من بريدك الإلكتروني لتأكيد الحساب"
-            : "Account created successfully! Check your email to confirm your account",
-        )
-
-        // Redirect to signin page after successful signup
-        setTimeout(() => {
-          router.push("/auth/signin")
-        }, 2000)
+        // Redirect to confirmation page with email
+        router.push(`/auth/confirm-email?email=${encodeURIComponent(email)}`)
       }
     } catch (err) {
 

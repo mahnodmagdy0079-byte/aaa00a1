@@ -134,7 +134,7 @@ export default function SiteNav() {
                   : "text-white hover:text-orange-300 hover:bg-orange-500/10"
               }`}
             >
-              {language === "ar" ? "خدمات" : "Services"}
+              {language === "ar" ? "الأسعار" : "Pricing"}
             </Link>
             <Link 
               href="/downloads" 
