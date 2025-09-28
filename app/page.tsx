@@ -543,7 +543,7 @@ export default function PricingPage() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid lg:grid-cols-1 gap-12 items-center">
             {/* Left Content - now centered */}
-            <div className="text-center" style={{ marginTop: "9cm" }}>
+            <div className="text-center">
               {/* Feature badges */}
               <div className="flex flex-wrap justify-center gap-4 mb-8">
                 {currentContent.features.slice(0, 3).map((badge: string, i: number) => (
@@ -684,7 +684,7 @@ export default function PricingPage() {
       </div>
 
       {/* Feature Cards Section */}
-      <div className="py-20 bg-black relative" style={{ marginTop: "9cm", marginBottom: "4cm" }}>
+      <div className="py-20 bg-black relative">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {/* Feature Card 1 */}

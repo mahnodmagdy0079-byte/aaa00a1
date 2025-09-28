@@ -1920,6 +1920,58 @@ namespace toolygsm1
 			return result;
 		}
 
+		private async Task<(List<(string Username, string Password)> Accounts, string NextAvailableAt)> FetchAdditionalUnlockToolAccountsAsync(string toolRequestId, string toolName)
+		{
+			var result = (Accounts: new List<(string Username, string Password)>(), NextAvailableAt: (string)null);
+			try
+			{
+				var apiBaseUrl = SecurityConfig.GetApiBaseUrl();
+				using (var client = new HttpClient())
+				{
+					client.BaseAddress = new Uri(apiBaseUrl);
+					client.DefaultRequestHeaders.Add("Origin", apiBaseUrl);
+					client.DefaultRequestHeaders.Add("User-Agent", "TOOLY-GSM-Desktop/1.0");
+					if (!string.IsNullOrEmpty(userToken) && SecurityConfig.IsValidToken(userToken))
+					{
+						client.DefaultRequestHeaders.Add("Authorization", $"Bearer {userToken}");
+					}
+					var body = new JObject
+					{
+						["toolRequestId"] = toolRequestId ?? string.Empty,
+						["toolName"] = toolName ?? string.Empty,
+						["limit"] = 5 // جلب حتى 5 حسابات للـ UNLOCK TOOL
+					};
+					var content = new StringContent(body.ToString(), Encoding.UTF8, "application/json");
+					var response = await client.PostAsync("/api/tools/next-account", content);
+					var json = await response.Content.ReadAsStringAsync();
+					LogError("FetchAdditionalUnlockToolAccountsAsync", new Exception($"HTTP {response.StatusCode}: {json}"));
+					if (!response.IsSuccessStatusCode)
+						return result;
+					var obj = JObject.Parse(json);
+					if (obj["success"]?.ToString()?.ToLower() == "true")
+					{
+						var arr = obj["accounts"] as JArray;
+						if (arr != null)
+						{
+							foreach (var a in arr)
+							{
+								var u = a?["username"]?.ToString();
+								var p = a?["password"]?.ToString();
+								if (!string.IsNullOrEmpty(u) && !string.IsNullOrEmpty(p))
+									result.Accounts.Add((u, p));
+							}
+						}
+						result.NextAvailableAt = obj["nextAvailableAt"]?.ToString() ?? obj["next_available_at"]?.ToString();
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				LogError("FetchAdditionalUnlockToolAccountsAsync", ex);
+			}
+			return result;
+		}
+
         // دالة منع النسخ والتحديد للنصوص الحساسة
         private void PreventTextSelection(Control control)
         {
@@ -1956,14 +2008,35 @@ namespace toolygsm1
                 var token = userToken;
                 
                 // بدء الأوميشن في thread منفصل
-                System.Threading.Tasks.Task.Run(() =>
+                System.Threading.Tasks.Task.Run(async () =>
                 {
                     try
                     {
                         LogError("UnlockToolAutomation", new Exception($"Task started for username: {username}, Request ID: {toolRequestId}"));
                         
-                        // استدعاء دالة الأوتوميشن وتمرير بيانات الحساب + معرف الطلب + معلومات الـ API
-                        UnlockToolAutomation.StartUnlockToolAutomation(username, password, toolRequestId, apiBaseUrl, token);
+                        // إنشاء قائمة الحسابات مع الحساب الأول
+                        var accounts = new List<(string Username, string Password)>();
+                        accounts.Add((username, password));
+                        
+                        // جلب حسابات إضافية من قاعدة البيانات
+                        var additionalAccounts = await FetchAdditionalUnlockToolAccountsAsync(toolRequestId, "UNLOCK TOOL");
+                        if (additionalAccounts.Accounts != null && additionalAccounts.Accounts.Count > 0)
+                        {
+                            accounts.AddRange(additionalAccounts.Accounts);
+                            LogError("UnlockToolAutomation", new Exception($"Fetched {additionalAccounts.Accounts.Count} additional accounts for UNLOCK TOOL"));
+                        }
+                        
+                        // استدعاء دالة الأوتوميشن مع قائمة الحسابات
+                        if (accounts.Count > 1)
+                        {
+                            LogError("UnlockToolAutomation", new Exception($"Starting multi-account automation with {accounts.Count} accounts"));
+                            UnlockToolAutomation.StartUnlockToolAutomation(accounts, toolRequestId, apiBaseUrl, token);
+                        }
+                        else
+                        {
+                            LogError("UnlockToolAutomation", new Exception($"Starting single-account automation"));
+                            UnlockToolAutomation.StartUnlockToolAutomation(username, password, toolRequestId, apiBaseUrl, token);
+                        }
                         
                         LogError("UnlockToolAutomation", new Exception($"Automation completed for username: {username}, Request ID: {toolRequestId}"));
                     }

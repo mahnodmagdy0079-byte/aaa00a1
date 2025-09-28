@@ -55,7 +55,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ar" dir="rtl" className={`${cairo.variable} ${GeistSans.variable} ${GeistMono.variable}`}>
-      <body>
+      <body className="bg-black text-white min-h-screen">
         <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>

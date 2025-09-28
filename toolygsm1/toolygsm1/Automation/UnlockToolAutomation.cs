@@ -21,7 +21,7 @@ namespace toolygsm1.Automation
         {
             try
             {
-                BlockInput(true); // ??? ?????? ?? ?????? ?????????
+                BlockInput(true); // ??? ?????? ?? ?????? ????????? 
                 var unblockTimer = new System.Timers.Timer(120000); // ???????
                 unblockTimer.Elapsed += (s, e) => { BlockInput(false); unblockTimer.Stop(); };
                 unblockTimer.AutoReset = false;
@@ -77,6 +77,98 @@ namespace toolygsm1.Automation
             catch (Exception ex)
             {
                 BlockInput(false);
+                MessageBox.Show($"Error occurred: {ex.Message}", "UnlockTool", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // بدء الأتوميشن مع قائمة حسابات متعددة (مثل TSM)
+        public static void StartUnlockToolAutomation(System.Collections.Generic.List<(string Username, string Password)> accounts,
+                                                  string toolRequestId, string apiBaseUrl, string bearerToken)
+        {
+            try
+            {
+                if (accounts == null || accounts.Count == 0)
+                {
+                    ReportStatus(apiBaseUrl, bearerToken, toolRequestId, "failed", "No accounts provided to try.");
+                    MessageBox.Show("No accounts provided to try.", "UnlockTool", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                BlockInput(true); // ??? ?????? ?? ?????? ????????? 
+                var unblockTimer = new System.Timers.Timer(300000); // 5 ?????? ?????? ?????? ???????
+                unblockTimer.Elapsed += (s, e) => { BlockInput(false); unblockTimer.Stop(); };
+                unblockTimer.AutoReset = false;
+                unblockTimer.Start();
+
+                for (int i = 0; i < accounts.Count; i++)
+                {
+                    var acc = accounts[i];
+                    var targetWindow = FindUnlockToolWindow();
+                    if (targetWindow == null)
+                    {
+                        ReportStatus(apiBaseUrl, bearerToken, toolRequestId, "failed", "UnlockTool program not found. Make sure it's open.");
+                        MessageBox.Show("UnlockTool program not found. Make sure it's open.", "UnlockTool", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        BlockInput(false);
+                        return;
+                    }
+
+                    bool firstAttempt = true;
+                    int maxAttempts = 2;
+                    bool accountFailed = false;
+
+                    for (int attempt = 1; attempt <= maxAttempts; attempt++)
+                    {
+                        bool loginSuccess = PerformLoginSequence(targetWindow, firstAttempt, acc.Username, acc.Password);
+                        if (loginSuccess)
+                        {
+                            Thread.Sleep(30000); // ???????? 30 ?????
+                            if (IsStillOnLoginPage(targetWindow))
+                            {
+                                if (attempt < maxAttempts)
+                                    firstAttempt = false;
+                            }
+                            else
+                            {
+                                // Report success to API (fire-and-forget)
+                                ReportStatus(apiBaseUrl, bearerToken, toolRequestId, "success");
+                                BlockInput(false);
+                                MessageBox.Show("Operation completed successfully.", "UnlockTool", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            // إذا فشل، جرّب المحاولة التالية أو الحساب التالي
+                            if (attempt < maxAttempts)
+                            {
+                                firstAttempt = false;
+                                continue;
+                            }
+                            else
+                            {
+                                accountFailed = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    // إذا فشل الحساب الحالي، جرّب الحساب التالي دون إظهار رسالة للمستخدم إلا في آخر حساب
+                    if (accountFailed)
+                    {
+                        if (i == accounts.Count - 1)
+                        {
+                            ReportStatus(apiBaseUrl, bearerToken, toolRequestId, "failed", "All accounts failed. Still on login page.");
+                            MessageBox.Show("All accounts failed. Still on login page.", "UnlockTool", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                        continue;
+                    }
+                }
+                BlockInput(false);
+            }
+            catch (Exception ex)
+            {
+                BlockInput(false);
+                ReportStatus(apiBaseUrl, bearerToken, toolRequestId, "failed", ex.Message);
                 MessageBox.Show($"Error occurred: {ex.Message}", "UnlockTool", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -310,7 +402,7 @@ namespace toolygsm1.Automation
             catch { }
         }
 
-        private static void ReportStatus(string apiBaseUrl, string bearerToken, string toolRequestId, string status)
+        private static void ReportStatus(string apiBaseUrl, string bearerToken, string toolRequestId, string status, string message = null)
         {
             try
             {
@@ -325,12 +417,26 @@ namespace toolygsm1.Automation
                     client.DefaultRequestHeaders.UserAgent.ParseAdd("ToolyGSM-Desktop/1.0");
                     client.DefaultRequestHeaders.Accept.ParseAdd("application/json");
 
-                    var json = "{\"toolRequestId\":\"" + toolRequestId + "\",\"status\":\"" + status + "\"}";
+                    string json;
+                    if (!string.IsNullOrWhiteSpace(message))
+                    {
+                        // Include a short message for server visibility
+                        json = "{\"toolRequestId\":\"" + toolRequestId + "\",\"status\":\"" + status + "\",\"notes\":\"" + EscapeJson(message) + "\"}";
+                    }
+                    else
+                    {
+                        json = "{\"toolRequestId\":\"" + toolRequestId + "\",\"status\":\"" + status + "\"}";
+                    }
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
                     var _ = client.PostAsync("/api/tool-requests/update-status", content).Result;
                 }
             }
             catch { }
+        }
+
+        private static string EscapeJson(string value)
+        {
+            try { return value?.Replace("\\", "\\\\").Replace("\"", "\\\"") ?? string.Empty; } catch { return string.Empty; }
         }
 
         private static AutomationElement FindAgreeButton(AutomationElement disclaimerWindow)

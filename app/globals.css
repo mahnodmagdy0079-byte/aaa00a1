@@ -121,4 +121,20 @@
   body {
     @apply bg-background text-foreground;
   }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #000000 !important;
+    overflow-x: hidden;
+  }
+  #__next {
+    min-height: 100vh;
+    background-color: #000000 !important;
+  }
+  main {
+    background-color: #000000 !important;
+  }
+  .min-h-screen {
+    background-color: #000000 !important;
+  }
 }
