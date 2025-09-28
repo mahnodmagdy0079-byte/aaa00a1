@@ -1,6 +1,17 @@
+# Robots.txt for eskuly.org
 User-agent: *
 Allow: /
-Sitemap: https://eskuly.org/sitemap.xml
+Allow: /packages/
+Allow: /tools/
+Allow: /downloads/
+Allow: /supported-models/
+Allow: /tools/unlock-tool/
+Allow: /tools/amt/
+Allow: /tools/tsm-tool/
+Allow: /tools/cf-tool/
+Allow: /tools/tfm-tool/
+Allow: /tools/cheetah-tool/
+Allow: /tools/global-unlocker-pro/
 
 # Sitemap
 Sitemap: https://eskuly.org/sitemap.xml
@@ -13,3 +24,23 @@ Disallow: /admin/
 Disallow: /api/
 Disallow: /auth/
 Disallow: /dashboard/
+Disallow: /_next/
+Disallow: /static/
+Disallow: /private/
+
+# Allow all search engines explicitly
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 1

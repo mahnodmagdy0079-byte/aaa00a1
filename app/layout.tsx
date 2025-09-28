@@ -5,6 +5,7 @@ import { GeistMono } from "geist/font/mono"
 import { Cairo } from "next/font/google"
 import "./globals.css"
 import { LanguageProvider } from "@/contexts/LanguageContext"
+import SEOHead from "@/components/seo-head"
 
 const cairo = Cairo({
   subsets: ["arabic", "latin"],
@@ -15,12 +16,28 @@ const cairo = Cairo({
 
 export const metadata: Metadata = {
   title: "TOOLY GSM - إصلاح الهواتف وإلغاء القفل (Unlock Tool • FRP) | خدمات GSM",
-  description: "خدمات إصلاح الهواتف وإلغاء القفل بأفضل الأسعار في مصر. Unlock Tool, FRP Tool, Format, IMEI Check وأكثر. فريق محترف، أمان كامل، جودة مضمونة. احصل على شير Unlock Tool وFRP Tool فورًا وابدأ الآن!",
+  description: "خدمات إصلاح الهواتف وإلغاء القفل بأفضل الأسعار في مصر. Unlock Tool, FRP Tool, Format, IMEI Check. فريق محترف، أمان كامل، جودة مضمونة.",
   keywords: "إصلاح الهواتف, إلغاء القفل, Unlock Tool, FRP, FRP Tool, Format, IMEI Check, خدمات GSM, إصلاح موبايل, فتح الهاتف, مصر, شير Unlock Tool, شير FRP",
   authors: [{ name: "TOOLY GSM" }],
   creator: "TOOLY GSM",
   publisher: "TOOLY GSM",
-  robots: "index, follow",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    google: "your-google-verification-code",
+  },
+  alternates: {
+    canonical: "https://eskuly.org",
+  },
   openGraph: {
     title: "TOOLY GSM - إصلاح الهواتف وإلغاء القفل بأفضل الأسعار",
     description: "خدمات إصلاح الهواتف وإلغاء القفل بأفضل الأسعار في مصر. فريق محترف، أمان كامل، جودة مضمونة.",
@@ -55,6 +72,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ar" dir="rtl" className={`${cairo.variable} ${GeistSans.variable} ${GeistMono.variable}`}>
+      <head>
+        <meta name="robots" content="index, follow" />
+        <meta name="googlebot" content="index, follow" />
+        <link rel="canonical" href="https://eskuly.org" />
+      </head>
       <body className="bg-black text-white min-h-screen">
         <LanguageProvider>{children}</LanguageProvider>
       </body>

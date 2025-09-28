@@ -33,6 +33,15 @@ export async function middleware(request: NextRequest) {
   // إضافة رؤوس الأمان الأساسية
   const response = await updateSession(request)
   
+  // إضافة رؤوس SEO
+  if (pathname === '/' || pathname.startsWith('/packages') || pathname.startsWith('/tools') || pathname.startsWith('/downloads') || pathname.startsWith('/supported-models')) {
+    response.headers.set('X-Robots-Tag', 'index, follow')
+  } else if (pathname.startsWith('/admin') || pathname.startsWith('/api') || pathname.startsWith('/auth') || pathname.startsWith('/dashboard')) {
+    response.headers.set('X-Robots-Tag', 'noindex, nofollow')
+  } else {
+    response.headers.set('X-Robots-Tag', 'index, follow')
+  }
+  
   // إضافة رؤوس الأمان
   response.headers.set('X-Content-Type-Options', 'nosniff')
   response.headers.set('X-Frame-Options', 'DENY')
