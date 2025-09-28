@@ -111,7 +111,7 @@ export default function DownloadsPage() {
                   : "The first smart platform to share GSM tools automatically and securely"}
               </p>
               <div className="flex justify-center md:justify-start">
-                <a href="/downloads/tooly-gsm-latest.zip" download>
+                <a href="https://mega.nz/file/tuwgBKSK#ccUzLdZ5nCoNEUjbO-an-N8B7mHhFuYuwoWwL2jhwHI" target="_blank" rel="noopener noreferrer">
                   <Button className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white min-w-[220px] text-base md:text-lg px-8 py-4">
                     <span>{language === "ar" ? "تحميل البرنامج" : "Download App"}</span>
                   </Button>
